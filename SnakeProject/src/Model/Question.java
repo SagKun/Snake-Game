@@ -1,9 +1,82 @@
 package Model;
 
-public class Question extends SnakeFood{
+import java.util.ArrayList;
 
-	public Question(int x, int y) {
-		super(x, y);
-		// TODO Auto-generated constructor stub
+public class Question extends SnakeFood{
+	
+	//defines if it is an easy, medium or hard level question
+	private ColorLevel level;
+	//how many points the player will lose if he answer wrong
+	private int setBack;
+	//all the 4 answers
+	private ArrayList<String> answers = new ArrayList<String>(4);
+	//the right answer
+	private String rightAnswar;
+	
+	
+	
+	public Question(int x, int y, FruitType type, int points, int secondsBuffer, int extraLength, ColorLevel level,
+			int setBack, ArrayList<String> answers, String rightAnswar) {
+		super(x, y, type, points, secondsBuffer, extraLength);
+		this.level = level;
+		this.setBack = setBack;
+		this.answers = answers;
+		this.rightAnswar = rightAnswar;
 	}
+
+
+
+	public ColorLevel getLevel() {
+		return level;
+	}
+
+
+
+	public void setLevel(ColorLevel level) {
+		this.level = level;
+	}
+
+
+
+	public int getSetBack() {
+		return setBack;
+	}
+
+
+
+	public void setSetBack(int setBack) {
+		this.setBack = setBack;
+	}
+
+
+
+	public ArrayList<String> getAnswers() {
+		return answers;
+	}
+
+
+
+	public void setAnswers(ArrayList<String> answers) {
+		this.answers = answers;
+	}
+
+
+
+	public String getRightAnswar() {
+		return rightAnswar;
+	}
+
+
+
+	public void setRightAnswar(String rightAnswar) {
+		this.rightAnswar = rightAnswar;
+	}
+	
+	
+	
+	
+	
+	
+
+
 }

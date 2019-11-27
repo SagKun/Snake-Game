@@ -1,29 +1,32 @@
 package Model;
 
+/*this class defines a object in the board of the game
+ every gameObject will have x and y parameters that will define is location in the board.
+*/
 public abstract class GameObject {
 	public static final int SIZE = 20;
-	protected int X, Y;
+	protected int x, y;
 	
 	public GameObject(int x, int y){
 		
-		this.X = x;
-		this.Y = y;
+		this.x = x;
+		this.y = y;
 	}
 
-	public int getX() {
-		return X;
+	public int getx() {
+		return x;
 	}
 
-	public int getY() {
-		return Y;
+	public int gety() {
+		return y;
 	}
 
-	public void setX(int x) {
-		X = x;
+	public void setx(int x) {
+		this.x = x;
 	}
 
-	public void setY(int y) {
-		Y = y;
+	public void sety(int y) {
+		this.y = y;
 	}
 	
 	
