@@ -11,7 +11,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+<<<<<<< HEAD
 public class GameController {
+=======
+public class GameController{
+>>>>>>> branch 'Developing1' of https://github.com/SagKun/Snake-Spiderman-Group.git
 
 	/**
 	 * Actual state of the game
