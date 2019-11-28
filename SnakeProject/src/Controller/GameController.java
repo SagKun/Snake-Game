@@ -1,7 +1,6 @@
 package Controller;
 
 import java.net.URISyntaxException;
-
 import Model.*;
 import View.MainView;
 import javafx.animation.AnimationTimer;
@@ -39,6 +38,7 @@ public class GameController{
 	 * Variable to change snake's speed at point intervals
 	 */
 	private int speedPointsConstraint;
+	
 	private Snake snake;
 	private BodyPart head;
 	private MainView view; 
@@ -48,6 +48,10 @@ public class GameController{
 	 */
 	private MediaPlayer audio;
 	
+	/**
+	 * Constructor of GameController, Sets all directions to false to keep the snake still.
+	 * creating the screen and board and plays the music.
+	 */
 	public GameController() {
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
