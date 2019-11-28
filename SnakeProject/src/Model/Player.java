@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 //This class will have data on the player nickname and score in a game
 public class Player implements Comparable<Player>, Serializable {
@@ -12,11 +13,14 @@ public class Player implements Comparable<Player>, Serializable {
 	private String nickname;
 	//the score that the player achieved in the game
 	private Integer score;
+	//The date which the player played this game
+	private Calendar dateOfGame;
 	
-	public Player(String nickname, int score) {
+	public Player(String nickname, int score, Calendar dateOfGame) {
 		super();
 		this.nickname = nickname;
 		this.score = score;
+		this.dateOfGame = dateOfGame;
 	}
 
 	public String getNickname() {
@@ -33,6 +37,16 @@ public class Player implements Comparable<Player>, Serializable {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+	
+	
+
+	public Calendar getDateOfGame() {
+		return dateOfGame;
+	}
+
+	public void setDateOfGame(Calendar dateOfGame) {
+		this.dateOfGame = dateOfGame;
 	}
 
 	//a method to compare between two players scores
