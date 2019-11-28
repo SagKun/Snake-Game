@@ -1,11 +1,17 @@
 package Model;
 
+import java.io.Serializable;
+
 //This class will have data on the player nickname and score in a game
-public class Player {
+public class Player implements Comparable<Player>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//The nickname the player picked
 	private String nickname;
 	//the score that the player achieved in the game
-	private int score;
+	private Integer score;
 	
 	public Player(String nickname, int score) {
 		super();
@@ -21,12 +27,18 @@ public class Player {
 		this.nickname = nickname;
 	}
 
-	public int getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	//a method to compare between two players scores
+	@Override
+	public int compareTo(Player o) {
+	return this.score.compareTo(o.score);
 	}
 	
 	
