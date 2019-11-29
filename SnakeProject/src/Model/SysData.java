@@ -12,10 +12,8 @@ import java.util.ArrayList;
 
 
 
-public class SysData implements Serializable {
+public class SysData{
 
-	private static final long serialVersionUID = 1L;
-	
 	private ArrayList<Question> importedQuestions;
 	//The data structure that saves the high scores
 	public static ArrayList<Player> highScores = new ArrayList<Player>();
