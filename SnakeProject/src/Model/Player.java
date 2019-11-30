@@ -54,6 +54,11 @@ public class Player implements Comparable<Player>, Serializable {
 	public int compareTo(Player o) {
 	return this.score.compareTo(o.score);
 	}
+
+	@Override
+	public String toString() {
+		return "Player [nickname=" + nickname + ", score=" + score + ", dateOfGame=" + dateOfGame + "]";
+	}
 	
 	
 	

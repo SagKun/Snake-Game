@@ -1,3 +1,5 @@
+package Model;
+
 
 import Model.FruitType;
 import Model.GameObject;

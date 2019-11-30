@@ -3,9 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Controller.Controller;
+
 import View.MainView;
-import View.ScoreView;
 import javafx.animation.*;
 import javafx.util.Duration;
 
