@@ -32,7 +32,10 @@ public class SnakeFood extends GameObject {
 		this.extraLength = extraLength;
 	}
 
-
+	public SnakeFood(int x,int y)
+	{
+		super(x, y);
+	}
 
 	public FruitType getType() {
 		return type;
