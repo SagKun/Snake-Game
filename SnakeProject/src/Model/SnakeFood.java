@@ -12,32 +12,77 @@ public class SnakeFood extends GameObject {
 	 * Color of normal fruit
 	 */
 	// public static final Color FRUIT_COLOR; TBD maybe an image
-	
+
 	//the type of the fruit
 	private FoodType type;
 	//how many points the player would get for eating this food
-	private int points;
+	private final int points;
 	//how much seconds it will take another food of this type to apear in the board
-	private int secondsBuffer;
+	private final int secondsBuffer;
 	//how many units to length the snake will get after eating this food
-	private int extraLength;
+	private final int extraLength;
 	//how many lifes to add to the player
-	private int extraLife;
-	
-	
-	
-	public SnakeFood(int x, int y, FoodType type, int points, int secondsBuffer, int extraLength, int extraLife) {
+	private final int extraLife;
+
+
+
+	public SnakeFood(int x, int y, FoodType type) {
 		super(x, y);
 		this.type = type;
-		this.points = points;
-		this.secondsBuffer = secondsBuffer;
-		this.extraLength = extraLength;
-		this.extraLife = extraLife;
+		if(type == FoodType.Banana) {
+			points = 15;
+			secondsBuffer = 10;
+			extraLength = 1;
+			extraLife = 0;
+		}
+		else if(type == FoodType.Apple) {
+			points = 10;
+			secondsBuffer = 5;
+			extraLength = 1;
+			extraLife = 0;
+		}
+		else if(type == FoodType.Pear) {
+			points = 20;
+			secondsBuffer = 0;
+			extraLength = 1;
+			extraLife = 0;
+		}
+		else if(type == FoodType.Mouse) {
+			points = 30;
+			secondsBuffer = 60;
+			extraLength = 2;
+			extraLife = 1;
+		}
+		else {
+			points = 0;
+			secondsBuffer = 0;
+			extraLength = 0;
+			extraLife = 0;
+		}
+			
 	}
+	
+	
 
-	public SnakeFood(int x,int y)
+	public SnakeFood(int x,int y, ColorLevel level)
 	{
 		super(x, y);
+		secondsBuffer = 0;
+		extraLength = 0;
+		extraLife = 0;
+		if(level == ColorLevel.EASY) {
+			points = 1;
+		}
+		else if(level == ColorLevel.MODERATE) {
+			points = 2;
+		}
+		else if(level == ColorLevel.HARD) {
+			points = 3;
+		}
+		else
+			points = 0;
+			
+		
 	}
 
 	public FoodType getType() {
@@ -58,9 +103,6 @@ public class SnakeFood extends GameObject {
 
 
 
-	public void setPoints(int points) {
-		this.points = points;
-	}
 
 
 
@@ -70,9 +112,6 @@ public class SnakeFood extends GameObject {
 
 
 
-	public void setSecondsBuffer(int secondsBuffer) {
-		this.secondsBuffer = secondsBuffer;
-	}
 
 
 
@@ -82,11 +121,9 @@ public class SnakeFood extends GameObject {
 
 
 
-	public void setExtraLength(int extraLength) {
-		this.extraLength = extraLength;
-	}
-	
-	
+
+
+
 
 	public int getExtraLife() {
 		return extraLife;
@@ -94,9 +131,7 @@ public class SnakeFood extends GameObject {
 
 
 
-	public void setExtraLife(int extraLife) {
-		this.extraLife = extraLife;
-	}
+
 
 
 
@@ -105,7 +140,7 @@ public class SnakeFood extends GameObject {
 		return "SnakeFood [type=" + type + ", points=" + points + ", secondsBuffer=" + secondsBuffer + ", extraLength="
 				+ extraLength + "]";
 	}
-	
-	
+
+
 
 }

@@ -18,24 +18,24 @@ public class Question extends SnakeFood{
 	private String correct_ans;
 	
 
-	public Question(int x, int y, FoodType type, int points, int secondsBuffer, int extraLength, int extraLife, ColorLevel level,
-			int setBack, ArrayList<String> answers, String question, String team, String correct_ans) {
-		super(x, y, type, points, secondsBuffer, extraLength,extraLife);
-		this.level = level;
-		this.setBack = setBack;
-		this.answers = answers;
-		this.Question = question;
-		this.team = team;
-		this.correct_ans = correct_ans;
-	}
 	
 	public Question(int x,int y,String question, ColorLevel level, ArrayList<String> answers, String correct_ans,String team) {
-		super(x,y);
+		super(x,y, level);
 		Question = question;
 		this.level = level;
-		this.team=team;
+		this.team = team;
 		this.answers = answers;
 		this.correct_ans = correct_ans;
+		if(level == ColorLevel.EASY) {
+			setBack = -10;
+		}
+		else if(level == ColorLevel.MODERATE) {
+
+			setBack = -20;
+		}
+		else if(level == ColorLevel.HARD) {
+			setBack = -30;
+		}
 	}
 	
 
