@@ -50,15 +50,7 @@ public class GameController {
 	 * MediaPlayer object, controls the music played in game
 	 */
 	private MediaPlayer audio;
-<<<<<<< HEAD
-	
-	/**
-	 * Constructor of GameController, Sets all directions to false to keep the snake still.
-	 * creating the screen and board and plays the music.
-	 */
-=======
 
->>>>>>> 2b62d626b6d8e75416c89ab2f4fcde0317d03408
 	public GameController() {
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;

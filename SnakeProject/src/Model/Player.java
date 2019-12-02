@@ -16,11 +16,11 @@ public class Player implements Comparable<Player>, Serializable {
 	//The date which the player played this game
 	private Calendar dateOfGame;
 	
-	public Player(String nickname, int score, Calendar dateOfGame) {
+	public Player(String nickname, int score) {
 		super();
 		this.nickname = nickname;
 		this.score = score;
-		this.dateOfGame = dateOfGame;
+		dateOfGame = Calendar.getInstance();
 	}
 
 	public String getNickname() {

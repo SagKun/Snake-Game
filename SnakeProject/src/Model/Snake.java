@@ -49,8 +49,8 @@ public class Snake {
 		else {
 			
 			body.clear();
-			head.setx(headX);
-			head.sety(headY);
+			head.setX(headX);
+			head.setY(headY);
 			size = 0;
 			setStart();
 		}
