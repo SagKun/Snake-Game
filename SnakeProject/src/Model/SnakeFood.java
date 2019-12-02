@@ -35,7 +35,10 @@ public class SnakeFood extends GameObject {
 		this.extraLife = extraLife;
 	}
 
-
+	public SnakeFood(int x,int y)
+	{
+		super(x, y);
+	}
 
 	public FoodType getType() {
 		return type;
