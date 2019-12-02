@@ -18,5 +18,6 @@ public class BodyPart extends GameObject {
 		super(x, y);
 		
 	}
-
+	 	
+	
 }

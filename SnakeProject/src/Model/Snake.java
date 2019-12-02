@@ -91,4 +91,11 @@ public class Snake {
 		body.add(new BodyPart(x,y));
 		++size;
 	}
+
+	@Override
+	public String toString() {
+		return "Snake [head=" + head + ", size=" + size + "]";
+	}
+	
+	
 }

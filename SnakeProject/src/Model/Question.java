@@ -15,9 +15,9 @@ public class Question extends SnakeFood{
 	
 	
 	
-	public Question(int x, int y, FruitType type, int points, int secondsBuffer, int extraLength, ColorLevel level,
+	public Question(int x, int y, FoodType type, int points, int secondsBuffer, int extraLength,int extraLife, ColorLevel level,
 			int setBack, ArrayList<String> answers, String rightAnswar) {
-		super(x, y, type, points, secondsBuffer, extraLength);
+		super(x, y, type, points, secondsBuffer, extraLength, extraLife);
 		this.level = level;
 		this.setBack = setBack;
 		this.answers = answers;
@@ -70,6 +70,13 @@ public class Question extends SnakeFood{
 
 	public void setRightAnswar(String rightAnswar) {
 		this.rightAnswar = rightAnswar;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Question [level=" + level + ", setBack=" + setBack + "]";
 	}
 	
 	
