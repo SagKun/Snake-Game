@@ -38,6 +38,11 @@ public class Question extends SnakeFood{
 		}
 	}
 	
+	//TODO
+	public Question(int x, int y,ColorLevel level) {
+		super(x,y,level);
+	}
+	
 
 	public ColorLevel getLevel() {
 		return level;
