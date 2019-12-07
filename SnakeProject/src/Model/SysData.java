@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
 
 public class SysData{
 
-	private static ArrayList<Question> questionsDB;
+	public static ArrayList<Question> questionsDB=new ArrayList<Question>();
 	//The data structure that saves the high scores
 	public static ArrayList<Player> highScores = new ArrayList<Player>();
 	//The name of the file we write the high scores to
@@ -82,12 +82,13 @@ public class SysData{
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
-		try (Reader reader = new FileReader("Data\\Questions.json")) {
+		try (Reader reader = new FileReader("src\\Data\\Questions.json")) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 			JSONArray jsonArray = (JSONArray) jsonObject.get("questions");
 			jsonArray.forEach(question -> parseQuestion( (JSONObject) question ));
 			System.out.println("All questions were read from file");
+			reader.close();
 			}
 			
 
@@ -100,7 +101,7 @@ public class SysData{
 	}
 	//parses each json object from the file to a question object
 	
-	private static void parseQuestion(JSONObject jsonQuestion) {
+	public static void parseQuestion(JSONObject jsonQuestion) {
 		ArrayList<String> answers=new ArrayList<String>();
 		String question = (String) jsonQuestion.get("question"); 
 		JSONArray jsonArray = (JSONArray) jsonQuestion.get("answers");
@@ -120,7 +121,7 @@ public class SysData{
 	//saves the question object to json file
 	//***********currently the file name is different from the original file until this will be tested properly*********
 	@SuppressWarnings("unchecked")
-	private static void writeToFile()
+	public static void writeToFile()
 	{
 		JSONObject fullObject = new JSONObject();
 		JSONArray list = new JSONArray();
@@ -133,14 +134,16 @@ public class SysData{
 			}
 			question.put("answers",answers);
 			question.put("correct_ans",q.getCorrect_ans());
-			question.put("level",ColorLevel.getValue(q.getLevel()));
+			question.put("level",Integer.toString(ColorLevel.getValue(q.getLevel())));
 			question.put("team",q.getTeam());
 			list.add(question);
 		}
-		fullObject.put("Questions", list);
-		System.out.println("all data was written to file successfully.");
-		try (FileWriter file = new FileWriter("Data\\Question.json")) {
+		fullObject.put("questions", list);
+		
+		try (FileWriter file = new FileWriter("src\\Data\\Questions.json")) {
 			file.write(fullObject.toJSONString());
+			System.out.println("all data was written to file successfully.");
+			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

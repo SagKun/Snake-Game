@@ -89,11 +89,15 @@ public class Question extends SnakeFood{
 
 
 
+	
+	
+
 	@Override
 	public String toString() {
-		return "Question [level=" + level + ", setBack=" + setBack + "]";
+		return "Question [level=" + level + ", setBack=" + setBack + ", answers=" + answers + ", Question=" + Question
+				+ ", team=" + team + ", correct_ans=" + correct_ans + "]";
 	}
-	
+
 
 	@Override
 	public boolean equals(Object obj) {

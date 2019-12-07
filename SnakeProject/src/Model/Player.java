@@ -52,7 +52,7 @@ public class Player implements Comparable<Player>, Serializable {
 	//a method to compare between two players scores
 	@Override
 	public int compareTo(Player o) {
-	return this.score.compareTo(o.score);
+	return o.score.compareTo(this.score);
 	}
 
 	@Override
