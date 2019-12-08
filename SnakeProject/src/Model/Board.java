@@ -9,7 +9,9 @@ import javafx.animation.Timeline;
 
 public class Board {
 
-	private ArrayList<SnakeFood> ObjectList;	
+	private ArrayList<SnakeFood> ObjectList;
+	
+	private MainView mainView;
 
 	/**
 	 * 
@@ -112,8 +114,9 @@ public class Board {
 		while(collision) {
 
 			helpS = helpO = false;
-			foodX = (rand.nextInt(BWIDTH)*GameObject.SIZE)+GameObject.SIZE/2;
-			foodY = (rand.nextInt(BHEIGHT)*GameObject.SIZE)+GameObject.SIZE/2;
+			//For later use
+			foodX = (rand.nextInt(mainView.getWidth())*GameObject.SIZE)+GameObject.SIZE/2;
+			foodY = (rand.nextInt(mainView.getHeight())*GameObject.SIZE)+GameObject.SIZE/2;
 
 			for(int i = 0; i < snake.getSize(); ++i){
 
@@ -184,7 +187,7 @@ public class Board {
 		}
 
 		// Checks if the snake has hit the board borders
-		if (headX > MainView.WIDTH || headX < 0) {
+		if (headX > mainView.getWidth() || headX < 0) {
 			life--;
 			if (life > 0)
 				semiReset();
@@ -194,7 +197,7 @@ public class Board {
 			}
 		}
 
-		else if (headY < 0 || headY > MainView.HEIGHT) {
+		else if (headY < 0 || headY > mainView.getHeight()) {
 			life--;
 			if (life > 0) {
 				semiReset();
