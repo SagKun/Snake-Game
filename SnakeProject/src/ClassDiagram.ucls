@@ -75,7 +75,7 @@
   </class>  
   <enumeration id="9" language="java" name="Model.GameState" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/Model/GameState.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="597" y="562"/>    
+    <position height="-1" width="-1" x="958" y="301"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -103,7 +103,7 @@
   <class id="12" language="java" name="Controller.HistoryController" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/Controller/HistoryController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="941" y="1156"/>    
+    <position height="-1" width="-1" x="1088" y="1153"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -123,7 +123,7 @@
   <class id="14" language="java" name="Controller.WizardController" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/Controller/WizardController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1217" y="1153"/>    
+    <position height="-1" width="-1" x="1234" y="944"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -133,7 +133,7 @@
   <class id="15" language="java" name="Controller.MainController" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/Controller/MainController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="729" y="1155"/>    
+    <position height="-1" width="-1" x="1168" y="579"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -142,7 +142,7 @@
   </class>  
   <class id="16" language="java" name="View.GameView" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/View/GameView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1283" y="838"/>    
+    <position height="-1" width="-1" x="1308" y="581"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -151,7 +151,7 @@
   </class>  
   <class id="17" language="java" name="View.WizardView" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/View/WizardView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1284" y="692"/>    
+    <position height="-1" width="-1" x="1229" y="700"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -160,7 +160,7 @@
   </class>  
   <class id="18" language="java" name="View.HistoryView" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/View/HistoryView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1278" y="967"/>    
+    <position height="-1" width="-1" x="746" y="1152"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -169,184 +169,278 @@
   </class>  
   <class id="19" language="java" name="View.MainView" project="Snake-Spiderman-Group-Project" 
     file="/Snake-Spiderman-Group-Project/SnakeProject/src/View/MainView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1280" y="558"/>    
+    <position height="-1" width="-1" x="904" y="580"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="20">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <association id="21">    
-    <bendpoint x="1192" y="42"/>    
-    <bendpoint x="1054" y="41"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="22" name="snake"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
+  <association id="20">    
+    <bendpoint x="212" y="261"/>    
+    <bendpoint x="278" y="264"/>    
+    <bendpoint x="307" y="265"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="type">        
+        <position height="20" width="35" x="237" y="284"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="24">    
-    <bendpoint x="873" y="-130"/>    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="25" name="body"/>      
-      <multiplicity id="26" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="27">    
+  <generalization id="23">    
     <end type="SOURCE" refId="2"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="29">    
-    <bendpoint x="720" y="47"/>    
-    <bendpoint x="872" y="46"/>    
+  <association id="24">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="30" name="snake"/>      
-      <multiplicity id="31" minimum="0" maximum="1"/>    
+      <attribute id="25" name="state">        
+        <position height="0" width="0" x="361" y="-261"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="0" width="0" x="361" y="-261"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="32">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="33" name="ObjectList"/>      
-      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
+  <association id="27">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="28" name="state">        
+        <position height="20" width="42" x="1042" y="215"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="361" y="-261"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="35">    
-    <bendpoint x="145" y="1055"/>    
-    <bendpoint x="145" y="1141"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="36" name="level"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
+  <association id="30">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="31" name="board">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="32" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="38">    
+  <association id="33">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="39" name="highScores"/>      
-      <multiplicity id="40" minimum="0" maximum="2147483647"/>    
+      <attribute id="34" name="highScores">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="41">    
+  <generalization id="36">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="37">    
+    <bendpoint x="583" y="354"/>    
+    <bendpoint x="581" y="548"/>    
+    <bendpoint x="836" y="551"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="38" name="mainView">        
+        <position height="20" width="66" x="764" y="524"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="18" width="28" x="798" y="556"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <bendpoint x="873" y="-130"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="41" name="body">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="44" name="wizardController"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
     <bendpoint x="476" y="130"/>    
     <bendpoint x="306" y="130"/>    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="42" name="head">        
+      <attribute id="47" name="head">        
         <position height="20" width="39" x="309" y="-41"/>      
       </attribute>      
-      <multiplicity id="43" minimum="0" maximum="1">        
+      <multiplicity id="48" minimum="0" maximum="1">        
         <position height="18" width="28" x="310" y="-62"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="44">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="45" name="scores"/>      
-      <multiplicity id="46" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
+  <association id="49">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="48" name="questionsDB">        
+      <attribute id="50" name="questionsDB">        
         <position height="20" width="90" x="359" y="742"/>      
       </attribute>      
-      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
+      <multiplicity id="51" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="50">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="51" name="state">        
-        <position height="20" width="42" x="681" y="476"/>      
-      </attribute>      
-      <multiplicity id="52" minimum="0" maximum="1"/>    
+  <association id="52">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="53" name="gameController"/>      
+      <multiplicity id="54" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="53">    
+  <association id="55">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="56" name="ObjectList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <bendpoint x="1192" y="42"/>    
+    <bendpoint x="1054" y="41"/>    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="54" name="view"/>      
-      <multiplicity id="55" minimum="0" maximum="1"/>    
+      <attribute id="59" name="snake">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="62" name="view">        
+        <position height="20" width="35" x="966" y="459"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-376" y="22"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="56">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="57" name="state"/>      
-      <multiplicity id="58" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="59">    
+  <generalization id="64">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="65">    
     <bendpoint x="873" y="-73"/>    
     <bendpoint x="375" y="-83"/>    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="60" name="head">        
+      <attribute id="66" name="head">        
         <position height="20" width="39" x="401" y="-104"/>      
       </attribute>      
-      <multiplicity id="61" minimum="0" maximum="1">        
+      <multiplicity id="67" minimum="0" maximum="1">        
         <position height="18" width="28" x="442" y="-100"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="62">    
-    <bendpoint x="212" y="261"/>    
-    <bendpoint x="243" y="258"/>    
-    <bendpoint x="278" y="264"/>    
-    <bendpoint x="329" y="310"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="63" name="type">        
-        <position height="20" width="35" x="237" y="284"/>      
-      </attribute>      
-      <multiplicity id="64" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="65">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="66" name="board"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <association id="68">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="69" name="historyController"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="72" name="mainController"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <bendpoint x="145" y="1055"/>    
+    <bendpoint x="145" y="1141"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="75" name="level">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="76" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
     <bendpoint x="1293" y="-178"/>    
     <bendpoint x="382" y="-178"/>    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="69" name="head">        
+      <attribute id="78" name="head">        
         <position height="20" width="39" x="395" y="-198"/>      
       </attribute>      
-      <multiplicity id="70" minimum="0" maximum="1"/>    
+      <multiplicity id="79" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <bendpoint x="720" y="47"/>    
+    <bendpoint x="872" y="46"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="81" name="snake">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="82" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="84" name="scores">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
