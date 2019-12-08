@@ -1,15 +1,25 @@
 package View;
 
 import Controller.MainController;
+import Model.*;
+
 
 public class MainView {
 
 	private MainController mainController;
-	private int width,height;
+	
+	public static final int width = 500;
+	public static final int height = 500;
+	
+	private Board board;
+	
+	private Snake snake;
 	
 	
-	
-	
+	public MainView() {
+		board = new Board();
+		snake = board.getSnake();
+	}
 	
 	public int getWidth() {
 		return width;
@@ -17,10 +27,18 @@ public class MainView {
 	public int getHeight() {
 		return height;
 	}
-	public void setWidth(int width) {
-		this.width = width;
+	
+	public Board getBoard() {
+		return board;
 	}
-	public void setHeight(int height) {
-		this.height = height;
+	public Snake getSnake() {
+		return snake;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
+	public void setSnake(Snake snake) {
+		this.snake = snake;
 	}
 }

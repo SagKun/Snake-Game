@@ -49,6 +49,8 @@ public class Board {
 		state = GameState.Started;
 		score = 0;
 		life = 3;
+		System.out.println("Created Snake\nInitialized score to 0\nInitialized lives to 3");
+
 	}
 
 	/**
@@ -115,8 +117,8 @@ public class Board {
 
 			helpS = helpO = false;
 			//For later use
-			foodX = (rand.nextInt(mainView.getWidth())*GameObject.SIZE)+GameObject.SIZE/2;
-			foodY = (rand.nextInt(mainView.getHeight())*GameObject.SIZE)+GameObject.SIZE/2;
+			foodX = (rand.nextInt(mainView.width)*GameObject.SIZE)+GameObject.SIZE/2;
+			foodY = (rand.nextInt(mainView.height)*GameObject.SIZE)+GameObject.SIZE/2;
 
 			for(int i = 0; i < snake.getSize(); ++i){
 
@@ -253,10 +255,13 @@ public class Board {
 	public void addObject(int foodX, int foodY, String type, boolean isFruit) {
 
 		if (isFruit){
-			ObjectList.add(new SnakeFood(foodX, foodY, FoodType.valueOf(type))); 
+			ObjectList.add(new SnakeFood(foodX, foodY, FoodType.valueOf(type)));
+			System.out.println("Created new object on board - "+FoodType.valueOf(type));
 		}
 		else{
 			ObjectList.add(new Question(foodX, foodY, ColorLevel.valueOf(type)));
+			System.out.println("Created new object on board - "+ColorLevel.valueOf(type) + "Question");
+
 			//TODO להוסיף קונסטרקטור אצל שאלה
 		}		
 
@@ -306,7 +311,15 @@ public class Board {
 		life = 3;
 	}
 
+
 	//******************************** GETTERS & SETTERS ******************************************
 
+	public Snake getSnake() {
+		return snake;
+	}
+
+	public void setSnake(Snake snake) {
+		this.snake = snake;
+	}
 
 }

@@ -37,10 +37,7 @@ public class GameController {
 	 * Variable to control snake's speed
 	 */
 	private int speedConstraint;
-	/**
-	 * Variable to change snake's speed at point intervals
-	 */
-	private int speedPointsConstraint;
+
 	
 	private Snake snake;
 	private BodyPart head;
@@ -59,11 +56,6 @@ public class GameController {
 		head = snake.getHead();
 		board = view.getBoard();
 		keyActive = true;
-		try {
-			audio = new Sound().getAudio();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
 		resume();
 	}
 
@@ -105,7 +97,8 @@ public class GameController {
 				// when game paused
 				if (pause && !resume) {
 					state = GameState.Paused;
-					view.render();
+					//TODO handle this situation
+					//view.render();
 					stop();
 				}
 				// when game resumed
@@ -133,8 +126,8 @@ public class GameController {
 				}
 
 				update(); // updating the game parameters, positions, etc.
-				view.render(); // rendering the scene
-				movement(view.getScene()); // handling user key input on actual scene
+				//view.render(); // rendering the scene
+				//movement(view.getScene()); // handling user key input on actual scene
 			}
 		}.start(); // starting the timer
 
@@ -148,7 +141,6 @@ public class GameController {
 		dx = dy = 0;
 		up = down = left = right = false;
 		speedConstraint = 3;
-		speedPointsConstraint = 50;
 	}
 
 	/**
@@ -156,21 +148,11 @@ public class GameController {
 	 */
 	private void update() {
 
-		board.updateFruit(); // updates the state of fruits
+		board.initializeObjects(); // updates the state of fruits
 		// board.updateObstacles(); // updating the obstacles on board
 		board.checkEaten(); // check if a fruit has been eaten
-		board.updateScore(); // updating score(passing it to scoreView class to show it on screen)
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred
 			state = GameState.Finished; //
-		}
-		setSound(); // updating the sound
-
-		// setting snake speed due to gathered points
-		if (speedConstraint > 2 && board.getScore() >= speedPointsConstraint)
-			speedConstraint = 2; // snake will move faster
-		if ((speedConstraint == 2) && (board.getScore() - speedPointsConstraint) >= 10) {
-			speedPointsConstraint += 30; // next interval 30 points further
-			speedConstraint = 3; // back to original speed
 		}
 	}
 
@@ -280,7 +262,7 @@ public class GameController {
 			head.setY(head.getY() + (dy * GameObject.SIZE));
 
 			// Right
-			if (head.getX() > MainView.WIDTH) {
+			if (head.getX() > view.getWidth()) {
 				state = GameState.Finished;
 			}
 			// Left
@@ -292,7 +274,7 @@ public class GameController {
 				state = GameState.Finished;
 			}
 			// Down
-			else if (head.getY() > MainView.HEIGHT) {
+			else if (head.getY() > view.getHeight()) {
 				state = GameState.Finished;
 			}
 
@@ -311,19 +293,6 @@ public class GameController {
 	}
 
 	/**
-	 * Method responsible for music in game
-	 */
-	private void setSound() {
-
-		if (state == GameState.Running)
-			audio.play(); // play music or resume when it was paused, when game is running
-		if (state == GameState.Paused)
-			audio.pause(); // pause music when game is paused
-		if (state == GameState.Finished)
-			audio.stop(); // stop the music when game is finished
-	}
-
-	/**
 	 * Static method for returning the actual state of game for the Model and View
 	 * classes
 	 * 
@@ -333,12 +302,4 @@ public class GameController {
 		return state;
 	}
 
-	/**
-	 * Returns the stage, pass it to Main class
-	 * 
-	 * @return The game stage
-	 */
-	public Stage getStage() {
-		return view.getStage();
-	}
 }
