@@ -1,14 +1,11 @@
 package Main;
 
-import Test.Test;
-import View.MainView;
+import Model.Level;
 
 public class Main{
 
 	public static void main(String args[]) {
 		
-		MainView mainView = new MainView();
 		
-		mainView.getBoard().initializeObjects();
 	}	
 }

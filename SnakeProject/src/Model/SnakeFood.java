@@ -64,19 +64,19 @@ public class SnakeFood extends GameObject {
 	
 	
 
-	public SnakeFood(int x,int y, ColorLevel level)
+	public SnakeFood(int x,int y, Level level)
 	{
 		super(x, y);
 		secondsBuffer = 0;
 		extraLength = 0;
 		extraLife = 0;
-		if(level == ColorLevel.EASY) {
+		if(level == Level.EASY) {
 			points = 1;
 		}
-		else if(level == ColorLevel.MODERATE) {
+		else if(level == Level.MODERATE) {
 			points = 2;
 		}
-		else if(level == ColorLevel.HARD) {
+		else if(level == Level.HARD) {
 			points = 3;
 		}
 		else

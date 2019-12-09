@@ -19,8 +19,8 @@ public class Snake {
 	//The current size of the snake
 	private int size;
 	//this fields define the current location of the snake(with initilization of the starting point)
-	private int headX = tempWidth/2 + GameObject.SIZE/2;
-	private int headY = tempHeight/2 + GameObject.SIZE/2;
+	private final int headX = tempWidth/2 + GameObject.SIZE/2;
+	private final int headY = tempHeight/2 + GameObject.SIZE/2;
 
 	public Snake() {
 		

@@ -5,59 +5,62 @@ import java.util.ArrayList;
 public class Question extends SnakeFood{
 	
 	//defines if it is an easy, medium or hard level question
-	private ColorLevel level;
+	private Level level;
 	//how many points the player will lose if he answer wrong
-	private int setBack;
+	private int reducePoints;
 	//all the 4 answers
-	private ArrayList<String> answers = new ArrayList<String>(4);
+	private ArrayList<String> answers = new ArrayList<String>();
 	//the question the player needs to answer
 	private String Question;
-	//the team that wrote the question
-	private String team;
+	//the person that wrote the question
+	private String author;
 	//the correct answer
 	private String correct_ans;
 	
 
 	
-	public Question(int x,int y,String question, ColorLevel level, ArrayList<String> answers, String correct_ans,String team) {
+	public Question(int x,int y,String question, Level level, ArrayList<String> answers, String correct_ans,String team) {
 		super(x,y, level);
 		Question = question;
 		this.level = level;
-		this.team = team;
+		this.author = team;
 		this.answers = answers;
 		this.correct_ans = correct_ans;
-		if(level == ColorLevel.EASY) {
-			setBack = -10;
-		}
-		else if(level == ColorLevel.MODERATE) {
-
-			setBack = -20;
-		}
-		else if(level == ColorLevel.HARD) {
-			setBack = -30;
-		}
+		this.reducePoints = calculateReductionSize(level);
 	}
 	
-	//TODO
-	public Question(int x, int y,ColorLevel level) {
-		super(x,y,level);
+	public Question(int foodX, int foodY, Level valueOf) {
+		// TODO Auto-generated constructor stub
+		super(foodX,foodY,valueOf);	
 	}
-	
 
-	public ColorLevel getLevel() {
+	private int calculateReductionSize(Level level) {
+		if(level == Level.EASY) {
+			return -10;
+		}
+		else if(level == Level.MODERATE) {
+
+			return -20;
+		}
+		else {
+			return -30;
+		}
+	}
+
+	public Level getLevel() {
 		return level;
 	}
 
-	public void setLevel(ColorLevel level) {
+	public void setLevel(Level level) {
 		this.level = level;
 	}
 
 	public int getSetBack() {
-		return setBack;
+		return reducePoints;
 	}
 
 	public void setSetBack(int setBack) {
-		this.setBack = setBack;
+		this.reducePoints = setBack;
 	}
 
 	public ArrayList<String> getAnswers() {
@@ -77,11 +80,11 @@ public class Question extends SnakeFood{
 	}
 
 	public String getTeam() {
-		return team;
+		return author;
 	}
 
 	public void setTeam(String team) {
-		this.team = team;
+		this.author = team;
 	}
 
 	public String getCorrect_ans() {
@@ -99,8 +102,8 @@ public class Question extends SnakeFood{
 
 	@Override
 	public String toString() {
-		return "Question [level=" + level + ", setBack=" + setBack + ", answers=" + answers + ", Question=" + Question
-				+ ", team=" + team + ", correct_ans=" + correct_ans + "]";
+		return "Question [level=" + level + ", setBack=" + reducePoints + ", answers=" + answers + ", Question=" + Question
+				+ ", team=" + author + ", correct_ans=" + correct_ans + "]";
 	}
 
 

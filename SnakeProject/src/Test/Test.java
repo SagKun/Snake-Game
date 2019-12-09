@@ -2,7 +2,7 @@ package Test;
 
 import java.util.ArrayList;
 
-import Model.ColorLevel;
+import Model.Level;
 import Model.FoodType;
 import Model.Player;
 import Model.Question;
@@ -47,13 +47,13 @@ public class Test {
 		System.out.println(mouse);
 		System.out.println("Setting Questions: ");
 		System.out.println("Creating Easy Question");
-		Question easy = new Question(0, 0, null, ColorLevel.EASY, null, null, null);
+		Question easy = new Question(0, 0, null, Level.EASY, null, null, null);
 		System.out.println(easy);
 		System.out.println("Creating Moderate Question");
-		Question med = new Question(0, 0, null, ColorLevel.MODERATE, null, null, null);
+		Question med = new Question(0, 0, null, Level.MODERATE, null, null, null);
 		System.out.println(med);
 		System.out.println("Creating Hard Question");
-		Question hard = new Question(0, 0, null, ColorLevel.HARD, null, null, null);
+		Question hard = new Question(0, 0, null, Level.HARD, null, null, null);
 		System.out.println(hard);
 		System.out.println("Finished");
 	}

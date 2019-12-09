@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Controller.GameController;
-import View.MainView;
+import View.*;
 import javafx.animation.Timeline;
 
 public class Board {
 
 	private ArrayList<SnakeFood> ObjectList;
 	
-	private MainView mainView;
+	private GameView mainView;
 
 	/**
 	 * 
@@ -29,10 +29,7 @@ public class Board {
 	 * Random number for generating points to place objects on them
 	 */
 	Random rand; 
-	/**
-	 * State of the game
-	 */
-	private GameState state;
+
 	/**
 	 * Timers for food and it's effect
 	 */
@@ -46,11 +43,9 @@ public class Board {
 		snake = new Snake();
 		rand = new Random();
 		head = snake.getHead();
-		state = GameState.Started;
 		score = 0;
 		life = 3;
 		System.out.println("Created Snake\nInitialized score to 0\nInitialized lives to 3");
-
 	}
 
 	/**
@@ -69,7 +64,7 @@ public class Board {
 			addObject(objectX, objectY, f.name(), isFruit);
 		}
 
-		for(ColorLevel c : ColorLevel.values()) {
+		for(Level c : Level.values()) {
 			place = placeFruit();
 			objectX = place[0];
 			objectY = place[1];
@@ -97,7 +92,7 @@ public class Board {
 			place = placeFruit();
 			objectX = place[0];
 			objectY = place[1];
-			addObject(objectX, objectY,((ColorLevel)Type).name(),!isFruit);
+			addObject(objectX, objectY,((Level)Type).name(),!isFruit);
 		}		
 	}
 
@@ -119,6 +114,8 @@ public class Board {
 			//For later use
 			foodX = (rand.nextInt(mainView.width)*GameObject.SIZE)+GameObject.SIZE/2;
 			foodY = (rand.nextInt(mainView.height)*GameObject.SIZE)+GameObject.SIZE/2;
+			
+			//TODO If pear place in random corner which isnt current pear place
 
 			for(int i = 0; i < snake.getSize(); ++i){
 
@@ -237,7 +234,7 @@ public class Board {
 				}
 
 				else{ 															//if the snake ate a question
-					ColorLevel level = ((Question)ObjectList.get(i)).getLevel();
+					Level level = ((Question)ObjectList.get(i)).getLevel();
 					//TODO צריך לבצע קריאה לפונקציה שמחזירה בהתאם לתשובת המשתמש על השאלה
 					//את הניקוד + אורך + חיים
 
@@ -259,8 +256,8 @@ public class Board {
 			System.out.println("Created new object on board - "+FoodType.valueOf(type));
 		}
 		else{
-			ObjectList.add(new Question(foodX, foodY, ColorLevel.valueOf(type)));
-			System.out.println("Created new object on board - "+ColorLevel.valueOf(type) + "Question");
+			ObjectList.add(new Question(foodX, foodY, Level.valueOf(type)));
+			System.out.println("Created new object on board - "+Level.valueOf(type) + "Question");
 
 			//TODO להוסיף קונסטרקטור אצל שאלה
 		}		

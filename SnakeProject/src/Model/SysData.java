@@ -112,7 +112,7 @@ public class SysData{
 		String correct_ans  = (String) jsonQuestion.get("correct_ans");
 		String level = (String) jsonQuestion.get("level");
 		String team = (String) jsonQuestion.get("team");
-	Question q= new Question(0,0,question,ColorLevel.getLevel(Integer.parseInt(level)),answers,correct_ans,team);
+	Question q= new Question(0,0,question,Level.getLevel(Integer.parseInt(level)),answers,correct_ans,team);
 	questionsDB.add(q);
 	System.out.println(q.getQuestion()+ " was imported successfully.");
 	}
@@ -134,7 +134,7 @@ public class SysData{
 			}
 			question.put("answers",answers);
 			question.put("correct_ans",q.getCorrect_ans());
-			question.put("level",Integer.toString(ColorLevel.getValue(q.getLevel())));
+			question.put("level",Integer.toString(Level.getValue(q.getLevel())));
 			question.put("team",q.getTeam());
 			list.add(question);
 		}

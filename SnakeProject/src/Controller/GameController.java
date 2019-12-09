@@ -1,15 +1,12 @@
 package Controller;
 
-import java.net.URISyntaxException;
-
 import Model.*;
+import View.GameView;
 import View.MainView;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
 
 public class GameController {
 
@@ -20,7 +17,7 @@ public class GameController {
 	/**
 	 * Boolean variables describing user input
 	 */
-	private boolean up, down, right, left, pause, resume, start;
+	private boolean up, down, right, left, pause, resume, start,startup;
 	/**
 	 * Boolean block to prevent pressing keys too fast, so that the snake's head
 	 * could turn around. For example, when snake was moving left, pressing the up
@@ -38,24 +35,21 @@ public class GameController {
 	 */
 	private int speedConstraint;
 
-	
+
 	private Snake snake;
 	private BodyPart head;
-	private MainView view;
+	private GameView view;
 	private Board board;
-	/**
-	 * MediaPlayer object, controls the music played in game
-	 */
-	private MediaPlayer audio;
+
 
 	public GameController() {
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
-		view = new MainView();
+		view = new GameView();
 		snake = view.getSnake();
 		head = snake.getHead();
 		board = view.getBoard();
-		keyActive = true;
+		keyActive = startup = true;
 		resume();
 	}
 
@@ -124,32 +118,22 @@ public class GameController {
 					}
 					++i;
 				}
-
 				update(); // updating the game parameters, positions, etc.
-				//view.render(); // rendering the scene
+				//TODO Show "press arrows to move on screen"    view.render(); 
 				//movement(view.getScene()); // handling user key input on actual scene
 			}
 		}.start(); // starting the timer
-
 	}
 
-	/**
-	 * Restarting the game by setting basic parameters to their primary values
-	 */
-	private void restart() {
-		state = GameState.Running;
-		dx = dy = 0;
-		up = down = left = right = false;
-		speedConstraint = 3;
-	}
 
 	/**
 	 * The update method
 	 */
 	private void update() {
-
-		board.initializeObjects(); // updates the state of fruits
-		// board.updateObstacles(); // updating the obstacles on board
+		if(startup) {
+			board.initializeObjects();
+			startup = false;
+		}// updates the state of fruits
 		board.checkEaten(); // check if a fruit has been eaten
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred
 			state = GameState.Finished; //
@@ -291,6 +275,18 @@ public class GameController {
 			}
 		}
 	}
+
+	/**
+	 * Restarting the game by setting basic parameters to their primary values
+	 */
+	private void restart() {
+		state = GameState.Running;
+		dx = dy = 0;
+		up = down = left = right = false;
+		speedConstraint = 3;
+	}
+
+
 
 	/**
 	 * Static method for returning the actual state of game for the Model and View
