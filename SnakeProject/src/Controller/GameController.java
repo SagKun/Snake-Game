@@ -1,5 +1,9 @@
 package Controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import Model.*;
 import View.GameView;
 import View.MainView;
@@ -31,9 +35,9 @@ public class GameController {
 	 */
 	private int dx, dy;
 	/**
-	 * Variable to control snake's speed
+	 * Variable to control snake's speed and mouse speed
 	 */
-	private int speedConstraint;
+	private int speedConstraint,mouseSpeedConstraint;
 
 
 	private Snake snake;
@@ -60,7 +64,7 @@ public class GameController {
 
 		new AnimationTimer() {
 
-			int i = 0;
+			int i = 0, j = 0;
 
 			@Override
 			public void handle(long now) {
@@ -105,18 +109,27 @@ public class GameController {
 					restart();
 					start = false;
 				}
-				// when game finished
 				if (state == GameState.Finished) {
+					//TODO
+				}
+				// when game is done
+				if (state == GameState.GameOver) {
 					stop();
 				}
 				// when game is running, make movement
 				if (state == GameState.Running) {
 					if (i == speedConstraint) { // control the speed of snake
-						move(dx, dy);
+						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
 						i = 0; // counter to slow down the snake
 					}
 					++i;
+					
+					if (j == mouseSpeedConstraint) { // control the speed of snake
+						mouseMove();
+						j = 0; // counter to slow down the mouse
+					}
+					++j;
 				}
 				update(); // updating the game parameters, positions, etc.
 				//TODO Show "press arrows to move on screen"    view.render(); 
@@ -135,9 +148,11 @@ public class GameController {
 			startup = false;
 		}// updates the state of fruits
 		board.checkEaten(); // check if a fruit has been eaten
-		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred
+		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
+		else if(board.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
+			state = GameState.GameOver;
 	}
 
 	/**
@@ -233,7 +248,7 @@ public class GameController {
 	 * @param dx - movement in X-axis, 1 for right, -1 for left
 	 * @param dy - movement in Y-axis, 1 for down, -1 for up
 	 */
-	private void move(int dx, int dy) {
+	private void snakeMove(int dx, int dy) {
 
 		if (dx != 0 || dy != 0) { // if snake is meant to move
 
@@ -244,23 +259,6 @@ public class GameController {
 			head.setX(head.getX() + (dx * GameObject.SIZE));
 			// move head in Y-axis
 			head.setY(head.getY() + (dy * GameObject.SIZE));
-
-			// Right
-			if (head.getX() > view.getWidth()) {
-				state = GameState.Finished;
-			}
-			// Left
-			else if (head.getX() < 0) {
-				state = GameState.Finished;
-			}
-			// Up
-			else if (head.getY() < 0) {
-				state = GameState.Finished;
-			}
-			// Down
-			else if (head.getY() > view.getHeight()) {
-				state = GameState.Finished;
-			}
 
 			// moving the snake's body, each point gets the position of the one in front
 			for (int i = 1; i < snake.getSize(); ++i) {
@@ -277,6 +275,63 @@ public class GameController {
 	}
 
 	/**
+	 * Method to handle mouse's position and movement on board
+	 * 
+	 */
+	private void mouseMove() {
+		Random rand = new Random();
+		List<String> movingOptions = Arrays.asList("UP","DOWN","LEFT","RIGHT");
+		Boolean canMove = false;
+
+		int mouseX = board.getMouse().getX();
+		int mouseY = board.getMouse().getY();
+		int nextX,nextY;
+
+		while(!canMove) {
+			int index = rand.nextInt(movingOptions.size());
+			switch(movingOptions.get(index)){
+
+			case "UP":
+				nextX = mouseX;
+				nextY = mouseY - GameObject.SIZE;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+				}
+				break;
+
+			case "DOWN":
+				nextX = 0;
+				nextY = mouseY + GameObject.SIZE;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+				}
+				break;
+
+			case "LEFT":
+				nextX = mouseX - GameObject.SIZE;
+				nextY = mouseY;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+				}
+				break;
+
+			case "RIGHT":
+				nextX = mouseX + GameObject.SIZE;
+				nextY = mouseY;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+				}
+				break;
+			}
+		}
+	}
+
+
+	/**
 	 * Restarting the game by setting basic parameters to their primary values
 	 */
 	private void restart() {
@@ -284,8 +339,8 @@ public class GameController {
 		dx = dy = 0;
 		up = down = left = right = false;
 		speedConstraint = 3;
+		mouseSpeedConstraint = 6;
 	}
-
 
 
 	/**

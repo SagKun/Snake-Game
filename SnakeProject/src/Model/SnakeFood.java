@@ -4,8 +4,6 @@ package Model;
 import Model.FoodType;
 import Model.GameObject;
 
-import javafx.scene.paint.Color;
-
 //
 public class SnakeFood extends GameObject {
 	/**

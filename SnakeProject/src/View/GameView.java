@@ -5,8 +5,6 @@ import Model.*;
 
 public class GameView {
 
-	private GameController gameController;
-
 	private Board board;
 
 	private Snake snake;
@@ -21,6 +19,8 @@ public class GameView {
 		snake = board.getSnake();
 	}
 
+	
+	
 
 	public Board getBoard() {
 		return board;
