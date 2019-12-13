@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.fxml.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.graphics.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.media.jar"/>
-	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.properties"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.swing.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.web.jar"/>
 	<classpathentry kind="output" path="SnakeProject/bin"/>
