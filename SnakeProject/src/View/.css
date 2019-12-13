@@ -1,0 +1,27 @@
+#borderPane_Custom{
+	-fx-background-image: url("Photos/Background.jpg");
+	-fx-opacity: 0.9;
+}
+
+.jfx-button{
+	-fx-background-color: linear-gradient(to bottom , #C6ECAE , #A3C28F);
+	-fx-background-radius: 10;
+	-fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+	-fx-effect: dropshadow( gaussian , #A3C28F , 4,0,6,5 );
+	-fx-font-color: white;
+	-fx-font-family: Arial;
+	-fx-font-size: 20px;
+	-fx-font-weight:bold;
+}
+
+#Snake_Label{
+	-fx-font-size: 60px;
+	-fx-font-family: Georgia;
+	-fx-text-fill: #A99646;
+	-fx-opacity:0.98;
+	-fx-effect: dropshadow(gaussian,#A99646,8,0,2,2);
+}
+
+#Snake_Image{
+	-fx-effect: dropshadow(gaussian,black,4,0,4,4);
+}

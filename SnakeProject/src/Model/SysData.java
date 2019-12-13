@@ -27,7 +27,7 @@ public class SysData{
 	public static ArrayList<Player> highScores = new ArrayList<Player>();
 	//The name of the file we write the high scores to
 	public static final String fileName = "highScores.ser";
-	
+
 	//a method to save the high scores to a file
 	public static boolean saveHighScores() {
 		try {
@@ -78,7 +78,7 @@ public class SysData{
 	//reads the question.json file
 	/*important! this should be called only in system startup
 	 * (this method clears the importedQuestions list and initializes it again with the values from the json file)
-	*/
+	 */
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
@@ -89,18 +89,18 @@ public class SysData{
 			jsonArray.forEach(question -> parseQuestion( (JSONObject) question ));
 			System.out.println("All questions were read from file");
 			reader.close();
-			}
-			
+		}
 
-		 catch (IOException e) {
+
+		catch (IOException e) {
 			e.printStackTrace();
-		 } catch (ParseException e) {
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	//parses each json object from the file to a question object
-	
+
 	public static void parseQuestion(JSONObject jsonQuestion) {
 		ArrayList<String> answers=new ArrayList<String>();
 		String question = (String) jsonQuestion.get("question"); 
@@ -108,16 +108,17 @@ public class SysData{
 		for (Object rawAnswer : jsonArray) {
 			answers.add((String) rawAnswer);
 		}
-		
+
 		String correct_ans  = (String) jsonQuestion.get("correct_ans");
 		String level = (String) jsonQuestion.get("level");
 		String team = (String) jsonQuestion.get("team");
-	Question q= new Question(0,0,question,Level.getLevel(Integer.parseInt(level)),answers,correct_ans,team);
-	questionsDB.add(q);
-	System.out.println(q.getQuestion()+ " was imported successfully.");
+		FoodFactory f = new FoodFactory();
+		Question q = f.getQuestion(Level.getLevel(Integer.parseInt(level)), 0, 0, question, answers, correct_ans, team);
+		questionsDB.add(q);
+		System.out.println(q.getQuestion()+ " was imported successfully.");
 	}
-	
-	
+
+
 	//saves the question object to json file
 	//***********currently the file name is different from the original file until this will be tested properly*********
 	@SuppressWarnings("unchecked")
@@ -139,7 +140,7 @@ public class SysData{
 			list.add(question);
 		}
 		fullObject.put("questions", list);
-		
+
 		try (FileWriter file = new FileWriter("src\\Data\\Questions.json")) {
 			file.write(fullObject.toJSONString());
 			System.out.println("all data was written to file successfully.");
@@ -148,24 +149,24 @@ public class SysData{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void  addQuestion(Question q)
 	{
 		questionsDB.add(q);
 	}
-	
+
 	public static void  removeQuestion(Question q)
 	{
 		questionsDB.remove(q);
 	}
-	
+
 	public static void editQuestion(Question ogQuestion,Question newQuestion)
 	{
 		int index=questionsDB.indexOf(ogQuestion);
 		questionsDB.remove(ogQuestion);
 		questionsDB.add(index, newQuestion);
-		
+
 	}
-	
+
 
 }

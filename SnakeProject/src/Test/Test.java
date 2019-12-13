@@ -3,6 +3,7 @@ package Test;
 import java.util.ArrayList;
 
 import Model.Level;
+import Model.FoodFactory;
 import Model.FoodType;
 import Model.Player;
 import Model.Question;
@@ -32,28 +33,29 @@ public class Test {
 	}
 	
 	public static void setObjects() {
+		FoodFactory factory = new FoodFactory();
 		System.out.println("Setting Food: ");
 		System.out.println("Creating Banana");
-		SnakeFood banana = new SnakeFood(0, 0, FoodType.Banana);
+		SnakeFood banana = factory.getFood(FoodType.Banana, 0, 0);
 		System.out.println(banana);
 		System.out.println("Creating Pear");
-		SnakeFood pear = new SnakeFood(0, 0, FoodType.Pear);
+		SnakeFood pear = factory.getFood(FoodType.Pear, 0, 0);
 		System.out.println(pear);
 		System.out.println("Creating Apple");
-		SnakeFood apple = new SnakeFood(0, 0, FoodType.Apple);
+		SnakeFood apple = factory.getFood(FoodType.Apple, 0, 0);
 		System.out.println(apple);
 		System.out.println("Creating Mouse");
-		SnakeFood mouse = new SnakeFood(0, 0, FoodType.Mouse);
+		SnakeFood mouse = factory.getFood(FoodType.Mouse, 0, 0);
 		System.out.println(mouse);
 		System.out.println("Setting Questions: ");
 		System.out.println("Creating Easy Question");
-		Question easy = new Question(0, 0, null, Level.EASY, null, null, null);
+		Question easy = factory.getQuestion(Level.EASY, 0, 0, null, null, null, null);
 		System.out.println(easy);
 		System.out.println("Creating Moderate Question");
-		Question med = new Question(0, 0, null, Level.MODERATE, null, null, null);
+		Question med = factory.getQuestion(Level.MODERATE, 0, 0, null, null, null, null);
 		System.out.println(med);
 		System.out.println("Creating Hard Question");
-		Question hard = new Question(0, 0, null, Level.HARD, null, null, null);
+		Question hard = factory.getQuestion(Level.HARD, 0, 0, null, null, null, null);
 		System.out.println(hard);
 		System.out.println("Finished");
 	}

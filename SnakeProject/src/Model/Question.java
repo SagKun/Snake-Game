@@ -19,32 +19,14 @@ public class Question extends SnakeFood{
 	
 
 	
-	public Question(int x,int y,String question, Level level, ArrayList<String> answers, String correct_ans,String team) {
-		super(x,y, level);
+	public Question(int x,int y,String question, int points, Level level, ArrayList<String> answers, String correct_ans,String team, int reducePoints) {
+		super(x,y, level, points);
 		Question = question;
 		this.level = level;
 		this.author = team;
 		this.answers = answers;
 		this.correct_ans = correct_ans;
-		this.reducePoints = calculateReductionSize(level);
-	}
-	
-	public Question(int foodX, int foodY, Level valueOf) {
-		// TODO Auto-generated constructor stub
-		super(foodX,foodY,valueOf);	
-	}
-
-	private int calculateReductionSize(Level level) {
-		if(level == Level.EASY) {
-			return -10;
-		}
-		else if(level == Level.MODERATE) {
-
-			return -20;
-		}
-		else {
-			return -30;
-		}
+		this.reducePoints = reducePoints;
 	}
 
 	public Level getLevel() {
