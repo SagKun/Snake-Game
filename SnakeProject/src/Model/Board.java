@@ -298,7 +298,7 @@ public class Board {
 		else{
 			ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
 
-			//TODO להוסיף קונסטרקטור אצל שאלה
+			//TODO Change
 		}		
 
 	}
