@@ -15,7 +15,7 @@
 }
 
 #Snake_Label{
-	-fx-font-size: 60px;
+	-fx-font-size: 40px 'david';
 	-fx-font-family: Georgia;
 	-fx-text-fill: #A99646;
 	-fx-opacity:0.98;
