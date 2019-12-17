@@ -6,6 +6,7 @@ import java.util.Random;
 
 import Model.*;
 import View.GameView;
+import View.MainView;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -109,10 +110,9 @@ public class GameController {
 					start = false;
 				}
 				if (state == GameState.Finished) {
-					//TODO game has finished but not ended
-					stop();
+					//TODO
 				}
-				// when game is over and life = 0
+				// when game is done
 				if (state == GameState.GameOver) {
 					stop();
 				}
@@ -125,7 +125,7 @@ public class GameController {
 					}
 					++i;
 					
-					if (j == mouseSpeedConstraint) { // control the speed of mouse
+					if (j == mouseSpeedConstraint) { // control the speed of snake
 						mouseMove();
 						j = 0; // counter to slow down the mouse
 					}
@@ -339,7 +339,7 @@ public class GameController {
 		dx = dy = 0;
 		up = down = left = right = false;
 		speedConstraint = 3;
-		mouseSpeedConstraint = 20;
+		mouseSpeedConstraint = 6;
 	}
 
 
