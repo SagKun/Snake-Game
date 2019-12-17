@@ -4,15 +4,23 @@ import java.util.ArrayList;
 import java.util.Random;
 import Controller.GameController;
 import View.*;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 
 public class Board {
+
+	private FoodFactory factory;
 
 	private ArrayList<SnakeFood> ObjectList;
 
 	private GameView view;
 
 	private Mouse mouse;
+
+	/**
+	 * Timers for Apple,Banana and Mouse to control their pause
+	 */
+	private long appleTimeToAppear, bananaTimeToAppear, mouseTimeToAppear, currentTime;
 
 	private int score, life;
 	/**
@@ -43,7 +51,31 @@ public class Board {
 		head = snake.getHead();
 		score = 0;
 		life = 3;
-		System.out.println("Created Snake\nInitialized score to 0\nInitialized lives to 3");
+		timer();
+	}
+
+
+	private void timer() {
+
+		new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+				// TODO Auto-generated method stub
+				currentTime = now;
+				if(now == appleTimeToAppear) {
+					updateObjects(FoodType.Apple);
+				}
+
+				if(now == bananaTimeToAppear) {
+					updateObjects(FoodType.Banana);
+				}
+
+				if(now == mouseTimeToAppear) {
+					updateObjects(FoodType.Mouse);
+				}
+			}
+		}.start();
 	}
 
 	/**
@@ -219,9 +251,23 @@ public class Board {
 				if (ObjectList.get(i) instanceof SnakeFood) { //if the snake ate a fruit/mouse
 					FoodType type = ObjectList.get(i).getType();
 					addLength(ObjectList.get(i).getExtraLength()); //adds body parts to snake
-					score += ObjectList.get(i).getPoints();		//add points to the player
+					score += ObjectList.get(i).getPoints();//add points to the player
+					long time = ObjectList.get(i).getSecondsBuffer()*1000000000;
+
 					ObjectList.remove(i);
-					updateObjects(type);
+
+					if(type == FoodType.Apple) {
+						appleTimeToAppear = currentTime + time;
+					}
+					else if(type == FoodType.Banana) {
+						bananaTimeToAppear = currentTime + time;
+					}
+					else if(type == FoodType.Mouse) {
+						mouseTimeToAppear = currentTime + time;
+					}
+					else {
+						updateObjects(type);
+					}
 				}
 
 				else{ 		//if the snake ate a question
@@ -244,13 +290,13 @@ public class Board {
 
 		if (isFruit){
 			if(FoodType.valueOf (type) == FoodType.Mouse) {
-				this.mouse = new Mouse(foodX, foodY, FoodType.valueOf(type));
+				this.mouse = (Mouse)factory.getFood(FoodType.Mouse, foodX, foodY);
 			}
 			else
-				ObjectList.add(new SnakeFood(foodX, foodY, FoodType.valueOf(type)));
+				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
 		}
 		else{
-			ObjectList.add(new Question(foodX, foodY, Level.valueOf(type)));
+			ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
 
 			//TODO להוסיף קונסטרקטור אצל שאלה
 		}		
@@ -331,7 +377,7 @@ public class Board {
 
 		else if (mouseY < 0 || mouseY > view.getHeight()) 
 			return false;
-		
+
 		return true;	
 	}
 
