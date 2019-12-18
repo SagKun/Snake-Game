@@ -18,9 +18,9 @@
                <children>
                   <TableView fx:id="table" layoutX="169.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" styleClass="jfx-button">
                     <columns>
-                      <TableColumn prefWidth="256.0" text="Nickname" />
-                      <TableColumn prefWidth="147.0" text="Score" />
-                        <TableColumn prefWidth="196.0" text="Date" />
+                      <TableColumn fx:id="nickname" prefWidth="256.0" text="Nickname" />
+                      <TableColumn fx:id="score" prefWidth="147.0" text="Score" />
+                        <TableColumn fx:id="date" prefWidth="196.0" text="Date" />
                     </columns>
                   </TableView>
                   <Button fx:id="reset" layoutX="256.0" layoutY="521.0" mnemonicParsing="false" onAction="#resetScores" prefHeight="38.0" prefWidth="195.0" styleClass="jfx-button" text="Reset Scores">

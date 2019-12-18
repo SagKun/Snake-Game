@@ -8,16 +8,20 @@ import Model.Question;
 import Model.SysData;
 
 public class HistoryController {
-	
+
 	private ArrayList<Player> scores;
 
 	//loading the scores and sort it in descending order(the best highscore is in 0)
 	public HistoryController() {
 		super();
-		this.scores = SysData.highScores;
-		Collections.sort(scores);
+		if(SysData.highScores != null) {
+			this.scores = SysData.highScores;
+			Collections.sort(scores);
+		}
+		else
+			this.scores = new ArrayList<>();
 	}
-	
+
 	/*takes a score,checks if it is larger than the minimal score,if it is then the method finds the first player with a larger score and inserts the current player one index below it 
 	 and shifts all the bigger indexes right,then it is sorted again and the 11th player is removed.
 	lastly, the highscores database is updated(in sysdata)  */
@@ -30,7 +34,7 @@ public class HistoryController {
 		}
 		else
 		{
-			
+
 			for(int i=9;i>-1;i--)
 			{
 				if(scores.get(i).getScore()<=p.getScore() )
@@ -43,22 +47,22 @@ public class HistoryController {
 			SysData.highScores=scores;
 			SysData.saveHighScores();
 		}
-		
+
 	}
-	
+
 	public void resetHighScores() {
 		SysData.highScores = null;
 		SysData.saveHighScores();
 		System.out.println("The scores has been reset");
 	}
-	
+
 	public ArrayList<Player> getHighScores(){
 		SysData.loadHighScores();
 		return SysData.highScores;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }
