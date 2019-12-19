@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.media.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.swing.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.web.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="SnakeProject/bin"/>
 </classpath>

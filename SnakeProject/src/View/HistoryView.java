@@ -50,14 +50,16 @@ public class HistoryView implements Initializable {
 	private HistoryController controller = new HistoryController();
 
 	private ObservableList<PlayersForTable> playersView = FXCollections.observableArrayList();
-
+	
+	private ArrayList<PlayersForTable> players = new ArrayList<>();
+	
+	//a method that initialize the table
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if(SysData.highScores != null) {
 			nickname.setCellValueFactory(new PropertyValueFactory<PlayersForTable, String>("nickForTable"));
 			score.setCellValueFactory(new PropertyValueFactory<PlayersForTable, Integer>("scoreForTable"));
 			date.setCellValueFactory(new PropertyValueFactory<PlayersForTable, String>("dateForTable"));
-			ArrayList<PlayersForTable> players = new ArrayList<>();
 			for(Player p : SysData.highScores) {
 				players.add(new PlayersForTable(p));
 			}
@@ -65,7 +67,7 @@ public class HistoryView implements Initializable {
 			table.setItems(playersView);
 		}
 	}
-
+	// a method that reset the scores table
 	@FXML
 	void resetScores(ActionEvent event) {
 		Alert al = new Alert(Alert.AlertType.CONFIRMATION);
@@ -74,11 +76,11 @@ public class HistoryView implements Initializable {
 		al.setResizable(false);
 		Optional<ButtonType> result = al.showAndWait();
 		if(result.get() == ButtonType.OK) {
+			playersView.removeAll(players);
 			controller.resetHighScores();
-			initialize(null, null);
 		}
 	}
-
+	
 	@FXML
 	void returnToMenu(ActionEvent event) {
 

@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import Model.Player;
 
+// a class that describe a record in the high score table
 public class PlayersForTable {
 	
 	private String nickForTable;
