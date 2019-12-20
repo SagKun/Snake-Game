@@ -18,21 +18,24 @@ public class Main extends Application{
 	
 	
 	public static void main(String args[]) {
-		SysData.InitializeGame();
+		//SysData.InitializeGame();
 		launch(args);
 
 	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		URL url = new File("src/View/GameView.fxml").toURI().toURL();
-		Parent root = FXMLLoader.load(url);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/GameView.fxml"));
+
+		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		GameView view = (GameView)loader.getController();		
+		view.setStage(stage);
+		view.resume();
 		stage.setResizable(false);
 		stage.initStyle(StageStyle.DECORATED);
 		stage.show();
-		
 	}
 
 
