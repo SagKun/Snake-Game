@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="543.0" layoutX="123.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/download%20(6).gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="163.0" fitWidth="319.0" layoutX="191.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/Play.gif" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="319.0" layoutX="191.0" layoutY="640.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/Exit.gif" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="259.0" layoutX="251.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/HIGHSCORES.gif" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
