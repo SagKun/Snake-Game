@@ -58,6 +58,12 @@ public class GameView implements Initializable {
 
 	@FXML
 	private Text lifeAmount;
+	
+	@FXML
+	private ImageView pressToPlay;
+
+	@FXML
+	private ImageView arrows;
 
 
 	private Scene scene;
@@ -128,7 +134,9 @@ public class GameView implements Initializable {
 			c = new Circle(snakeX , snakeY, GameObject.SIZE/2); 
 			c.setFill(Color.WHITESMOKE);
 			pane.getChildren().add(c);
-		}		
+		}	
+
+
 	}
 
 
@@ -243,7 +251,7 @@ public class GameView implements Initializable {
 				c.setFill(Color.WHITESMOKE);
 				pane.getChildren().add(c);
 			}
-			
+
 			for(int i = 0; i < board.getObjectList().size(); ++i) {
 				helpX = board.getObjectList().get(i).getX();
 				helpY = board.getObjectList().get(i).getY();
@@ -334,7 +342,11 @@ public class GameView implements Initializable {
 					break;
 				case ENTER: { // start or restart the game
 					if (state == GameState.Started)
+					{
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
 						start = true;
+					}
 					if (state == GameState.Finished) {
 						start = true;
 						resume();
