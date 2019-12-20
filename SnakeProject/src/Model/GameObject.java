@@ -4,7 +4,7 @@ package Model;
  every gameObject will have x and y parameters that will define is location in the board.
 */
 public abstract class GameObject {
-	public static final int SIZE = 20;
+	public static final int SIZE = 24;
 	protected int x, y;
 	
 	public GameObject(int x, int y){

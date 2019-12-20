@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import Controller.GameController;
 import View.*;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 import javafx.util.Pair;
@@ -20,15 +17,8 @@ public class Board {
 
 	private ArrayList<SnakeFood> ObjectList;
 
-	private GameView view;
-
 	private Mouse mouse;
-
-	/**
-	 * Timers for Apple,Banana and Mouse to control their pause
-	 */
-	private long appleTimeToAppear, bananaTimeToAppear, mouseTimeToAppear, currentTime;
-
+	
 	private int score, life;
 	/**
 	 * Snake object
@@ -43,10 +33,6 @@ public class Board {
 	 */
 	Random rand; 
 
-	/**
-	 * Timers for food and it's effect
-	 */
-	private Timeline timeSuper, timeSFruit;
 	/**
 	 * Default constructor of board class to initialize starting variables
 	 */
@@ -80,7 +66,6 @@ public class Board {
 			objectX = place[0];
 			objectY = place[1];
 			addObject(objectX, objectY, f.name(), isFruit);
-			System.out.println(f.name()+"  "+objectX+"  "+objectY);
 		}
 
 		for(Level c : Level.values()) {
@@ -100,6 +85,10 @@ public class Board {
 		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
 		int []place; // place on board, will hold X and Y
 		Boolean isFruit = true;
+		for(SnakeFood sf : ObjectList) {
+			if(sf.getType().equals(Type))
+				return;
+		}
 
 		if(Type instanceof FoodType){
 			if(Type == FoodType.Pear)
@@ -137,8 +126,8 @@ public class Board {
 
 			helpS = helpO = false;
 			//For later use
-			foodX = (rand.nextInt(GameView.WIDTH/GameObject.SIZE)*GameObject.SIZE)+GameObject.SIZE/2;
-			foodY = (rand.nextInt(GameView.HEIGHT/GameObject.SIZE)*GameObject.SIZE)+GameObject.SIZE/2;
+			foodX = ((rand.nextInt(GameView.WIDTH/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
+			foodY = ((rand.nextInt(GameView.HEIGHT/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
 
 			//TODO If pear place in random corner which isnt current pear place
 
@@ -188,10 +177,14 @@ public class Board {
 		int place[] = new int[2];
 
 		ArrayList<Pair<Integer,Integer>> corners = new ArrayList<Pair<Integer,Integer>>();
-		corners.add(new Pair(GameObject.SIZE/2,GameObject.SIZE/2));
-		corners.add(new Pair(GameObject.SIZE/2,GameView.HEIGHT - (GameObject.SIZE/2)));
-		corners.add(new Pair(GameObject.SIZE/2,GameView.WIDTH - (GameObject.SIZE/2)));
-		corners.add(new Pair(GameView.WIDTH - (GameObject.SIZE/2),GameView.HEIGHT - (GameObject.SIZE/2)));
+		//Top left
+		corners.add(new Pair(0,0));
+		//Top right
+		corners.add(new Pair(GameView.WIDTH - GameObject.SIZE,0));
+		//Bottom left
+		corners.add(new Pair(0,GameView.HEIGHT - GameObject.SIZE));
+		//Bottom right
+		corners.add(new Pair(GameView.WIDTH - GameObject.SIZE,GameView.HEIGHT - GameObject.SIZE));
 
 		Random rand = new Random();
 
@@ -218,8 +211,10 @@ public class Board {
 			helpY = snake.getBodyPart(i).getY();
 			if(helpX == headX && helpY == headY) {
 				life--;
-				if (life > 0)
+				if (life > 0) {
+					semiReset();
 					return GameState.Finished;
+				}
 				else {
 					return GameState.GameOver;
 				}
@@ -227,19 +222,23 @@ public class Board {
 		}
 
 		// Checks if the snake has hit the board borders
-		if (headX > GameView.WIDTH || headX < 0) {
+		if (headX >= GameView.WIDTH || headX < 0) {
 			life--;
-			if (life > 0)
+			if (life > 0) {
+				semiReset();
 				return GameState.Finished;
+			}
 			else {
 				return GameState.GameOver;
 			}
 		}
 
-		else if (headY < 0 || headY > GameView.HEIGHT) {
+		else if (headY < 0 || headY >= GameView.HEIGHT) {
 			life--;
-			if (life > 0)
+			if (life > 0) {
+				semiReset();
 				return GameState.Finished;
+			}
 			else {
 				return GameState.GameOver;
 			}
@@ -256,6 +255,14 @@ public class Board {
 		headX = head.getX();
 		headY = head.getY();
 
+		if(headX == mouse.getX() && headY == mouse.getY()) {
+			mouse.setX(-50);
+			mouse.setY(-50);
+			score += mouse.getPoints();
+			life += mouse.getExtraLife();
+			addLength(mouse.getExtraLength());
+			delay(FoodType.Mouse,mouse.getSecondsBuffer());
+		}
 		// Iterate through all the objects that are currently exist	
 		for(int i = 0; i < ObjectList.size(); ++i){			
 			objectX = ObjectList.get(i).getX();
@@ -268,7 +275,7 @@ public class Board {
 					int time = ObjectList.get(i).getSecondsBuffer();
 					ObjectList.remove(i);
 
-					if(type == FoodType.Apple || type == FoodType.Banana || type == FoodType.Mouse) {
+					if(type == FoodType.Apple || type == FoodType.Banana) {
 						delay(type,time);
 					}
 					else {
@@ -286,6 +293,7 @@ public class Board {
 				}
 			}		
 		}
+		
 	}
 	/**
 	 * Method to generate a new object in the game
@@ -300,6 +308,9 @@ public class Board {
 			}
 			else
 				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
+			
+			System.out.println(type+"  "+foodX+"  "+foodY);
+
 		}
 		else{
 			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
@@ -378,10 +389,10 @@ public class Board {
 			}		
 		}
 		// Checks if the mouse has hit the board borders
-		if (mouseX > GameView.WIDTH || mouseX < 0) 
+		if (mouseX >= GameView.WIDTH || mouseX < 0) 
 			return false;
 
-		else if (mouseY < 0 || mouseY > GameView.HEIGHT) 
+		else if (mouseY < 0 || mouseY >= GameView.HEIGHT) 
 			return false;
 
 		return true;	
@@ -401,6 +412,11 @@ public class Board {
 	}
 
 
+	private void semiReset() {
+		snake.setStart();
+		ObjectList.clear();
+	}
+	
 	//******************************** GETTERS & SETTERS ******************************************
 
 	public Snake getSnake() {

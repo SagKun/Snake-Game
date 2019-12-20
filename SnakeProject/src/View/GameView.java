@@ -96,8 +96,8 @@ public class GameView implements Initializable {
 
 	private Stage stage;
 
-	public static final int WIDTH = 700;
-	public static final int HEIGHT = 700;
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 600;
 
 	public GameView() {
 		board = new Board();
@@ -179,8 +179,6 @@ public class GameView implements Initializable {
 				// when game paused
 				if (pause && !resume) {
 					state = GameState.Paused;
-					//TODO handle this situation
-					//view.render();
 					stop();
 				}
 				// when game resumed
@@ -194,7 +192,9 @@ public class GameView implements Initializable {
 					start = false;
 				}
 				if (state == GameState.Finished) {
-					//TODO
+					//TODO Case when game ended but more lives to play - semi reset
+					restart();
+					board.initializeObjects();
 				}
 				// when game is done
 				if (state == GameState.GameOver) {
@@ -208,18 +208,15 @@ public class GameView implements Initializable {
 						i = 0; // counter to slow down the snake
 					}
 					++i;
-					/*
 					if (j == mouseSpeedConstraint) { // control the speed of snake
-						mouseMove();
+						//mouseMove();
 						j = 0; // counter to slow down the mouse
 					}
 					++j;
-					 */
+					 
 				}
 
 				update(); // updating the game parameters, positions, etc.
-				//TODO Show "press arrows to move on screen"    view.render(); 
-				//movement(view.getScene()); // handling user key input on actual scene
 				render();
 				pane.requestFocus();
 				movement(stage.getScene());
@@ -236,34 +233,47 @@ public class GameView implements Initializable {
 
 			pane.getChildren().clear();
 
-			Circle c = new Circle(snake.getHead().getX() , snake.getHead().getY(), GameObject.SIZE/2); 
-			c.setFill(Color.TRANSPARENT);
-			c.setStroke(Color.WHITE);
-			c.setStrokeWidth(1);
-			pane.getChildren().add(c);
+			
+			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
+			headImage.setX(snake.getHead().getX());
+			headImage.setY(snake.getHead().getY());
+			pane.getChildren().add(headImage);
+
 
 			int helpX, helpY, snakeY, snakeX;
 
 			for(int i = 1; i < snake.getSize(); ++i) {
 				snakeX = snake.getBodyPart(i).getX();
 				snakeY = snake.getBodyPart(i).getY();
-				c = new Circle(snakeX , snakeY, GameObject.SIZE/2); 
-				c.setFill(Color.WHITESMOKE);
-				pane.getChildren().add(c);
+				ImageView bodyImage =  new ImageView("View/icons/GameObjects/SnakeBody.png");
+				bodyImage.setX(snakeX);
+				bodyImage.setY(snakeY);
+				pane.getChildren().add(bodyImage);
 			}
-
+			
 			for(int i = 0; i < board.getObjectList().size(); ++i) {
 				helpX = board.getObjectList().get(i).getX();
 				helpY = board.getObjectList().get(i).getY();
-				c = new Circle(helpX , helpY, GameObject.SIZE/2);
-				if(board.getObjectList().get(i).getType() == FoodType.Apple )
-					c.setFill(Color.RED);
-				else if(board.getObjectList().get(i).getType() == FoodType.Banana )
-					c.setFill(Color.YELLOW);
-				else if(board.getObjectList().get(i).getType() == FoodType.Pear )
-					c.setFill(Color.GREENYELLOW);
-				pane.getChildren().add(c);
+				String imagePath = "";
+				if(board.getObjectList().get(i).getType() == FoodType.Apple ) {
+					 imagePath = "View/icons/GameObjects/apple24.png";
+				}
+				else if(board.getObjectList().get(i).getType() == FoodType.Banana ) {
+					 imagePath = "View/icons/GameObjects/banana24.png";
+				}
+				else if(board.getObjectList().get(i).getType() == FoodType.Pear ) {
+					 imagePath = "View/icons/GameObjects/pear24.png";
+				}
+				ImageView fruitIcon =  new ImageView(imagePath);
+				fruitIcon.setX(helpX);
+				fruitIcon.setY(helpY);
+				pane.getChildren().add(fruitIcon);
 			}
+			
+			ImageView mouseIcon =  new ImageView("View/icons/GameObjects/mouse.png");
+			mouseIcon.setX(board.getMouse().getX());
+			mouseIcon.setY(board.getMouse().getY());
+			pane.getChildren().add(mouseIcon);
 		}
 	}
 
@@ -277,6 +287,7 @@ public class GameView implements Initializable {
 			startup = false;
 		}// updates the state of fruits
 		board.checkEaten(); // check if a fruit has been eaten
+		this.scoreField.setText(String.valueOf(board.getScore()));
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
@@ -332,7 +343,6 @@ public class GameView implements Initializable {
 						if (pause == false) {
 							pause = true;
 							resume = false;
-							System.out.println("the user press on SPACE key");
 						} else {
 							resume = true;
 							pause = false;
@@ -351,7 +361,6 @@ public class GameView implements Initializable {
 						start = true;
 						resume();
 					}
-					System.out.println("the user press on ENTER key");
 				}
 				break;
 				case ESCAPE: // exit program
@@ -469,7 +478,6 @@ public class GameView implements Initializable {
 		speedConstraint = 5;
 		mouseSpeedConstraint = 6;
 	}
-
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
