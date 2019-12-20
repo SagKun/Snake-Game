@@ -15,13 +15,11 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application{
 
+	
+	
 	public static void main(String args[]) {
 		SysData.InitializeGame();
-		System.out.println(SysData.questionsByLevelDB.get(Model.Level.EASY));
-		System.out.println(SysData.questionsByLevelDB.get(Model.Level.MODERATE));
-		System.out.println(SysData.questionsByLevelDB.get(Model.Level.HARD));
 		launch(args);
-		GameView g=new GameView();
 
 	}
 	
@@ -36,4 +34,6 @@ public class Main extends Application{
 		stage.show();
 		
 	}
+
+
 }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="600.0" prefWidth="800.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane id="borderPane_Custom" prefHeight="600.0" prefWidth="800.0">
+         <center>
+            <Pane BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="560.0" prefWidth="400.0" spacing="70.0">
+                     <children>
+                        <JFXButton id="record-sales" buttonType="RAISED" prefHeight="37.0" prefWidth="200.0" ripplerFill="#cfd212" text="Play!">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" prefHeight="37.0" prefWidth="200.0" ripplerFill="#cfd212" text="Instructions">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" prefHeight="37.0" prefWidth="200.0" ripplerFill="#cfd212" text="Leaderboard">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" prefHeight="37.0" prefWidth="200.0" ripplerFill="#cfd212" text="About">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </center>
+         <top>
+            <Label id="Snake_Label" text="SNAKE" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <font>
+                  <Font name="Bodoni MT Condensed Italic" size="12.0" />
+               </font>
+            </Label>
+         </top>
+         <left>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView id="Snake_Image" fitHeight="250.0" fitWidth="200.0" layoutY="130.0" opacity="0.95" pickOnBounds="true">
+                     <image>
+                        <Image url="@Snake_Right.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </left>
+         <right>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView id="Snake_Image" fitHeight="250.0" fitWidth="200.0" layoutY="130.0" opacity="0.95" pickOnBounds="true">
+                     <image>
+                        <Image url="@Snake_Left.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </right>
+      </BorderPane>
+   </children>
+</Pane>

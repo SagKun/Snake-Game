@@ -64,11 +64,12 @@ public class SysData{
 	}
 	//a method to load the high scores from a file
 	public static void loadHighScores() {
-		highScores = null;
 		try {
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream obIn = new ObjectInputStream(fileIn);
 			highScores = (ArrayList<Player>)obIn.readObject();
+			if(highScores == null)
+				highScores = new ArrayList<>();
 			obIn.close();
 			fileIn.close();
 		}

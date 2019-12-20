@@ -396,4 +396,18 @@ public class Board {
 	public Mouse getMouse() {
 		return mouse;
 	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public ArrayList<SnakeFood> getObjectList() {
+		return ObjectList;
+	}
+	
+	
+	
+	
 }
