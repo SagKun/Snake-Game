@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HistoryView">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="900.0">
+         <top>
+            <AnchorPane id="borderPane_Custom" fx:id="anchor" prefHeight="600.0" prefWidth="900.0" stylesheets="@.css" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="table" layoutX="169.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" styleClass="jfx-button">
+                    <columns>
+                      <TableColumn fx:id="nickname" prefWidth="256.0" text="Nickname" />
+                      <TableColumn fx:id="score" prefWidth="147.0" text="Score" />
+                        <TableColumn fx:id="date" prefWidth="196.0" text="Date" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="reset" layoutX="256.0" layoutY="521.0" mnemonicParsing="false" onAction="#resetScores" prefHeight="38.0" prefWidth="195.0" styleClass="jfx-button" text="Reset Scores">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/closed-paper-bin.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="back" layoutX="495.0" layoutY="521.0" mnemonicParsing="false" onAction="#returnToMenu" styleClass="jfx-button" text="Back To Menu">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@icons/go-back-arrow%20(1).png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label id="Snake_Label" fx:id="top" layoutX="295.0" layoutY="14.0" prefHeight="68.0" prefWidth="581.0" text="Top 10 High Scores:" />
+                  <ImageView fitHeight="200.0" fitWidth="166.0" layoutX="-6.0" layoutY="89.0">
+                     <image>
+                        <Image url="@../../../../../Desktop/לימודים/סמסטר%20א'%202020/הנדסת%20תוכנה/מסכים/Snake_Right.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+   </children>
+</StackPane>
