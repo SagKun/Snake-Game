@@ -96,8 +96,8 @@ public class GameView implements Initializable {
 
 	private Stage stage;
 
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 720;
+	public static final int HEIGHT = 720;
 
 	public GameView() {
 		board = new Board();
@@ -208,6 +208,7 @@ public class GameView implements Initializable {
 						i = 0; // counter to slow down the snake
 					}
 					++i;
+					
 					if (j == mouseSpeedConstraint) { // control the speed of snake
 						//mouseMove();
 						j = 0; // counter to slow down the mouse
@@ -475,7 +476,7 @@ public class GameView implements Initializable {
 		state = GameState.Running;
 		dx = dy = 0;
 		up = down = left = right = false;
-		speedConstraint = 5;
+		speedConstraint = 6;
 		mouseSpeedConstraint = 6;
 	}
 
