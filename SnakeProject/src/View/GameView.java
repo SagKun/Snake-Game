@@ -32,11 +32,10 @@ public class GameView {
     @FXML
     private ImageView life3;
 
-    @FXML
-    private Label lifeLabel;
+
 
     @FXML
-    private TextField scoreField;
+    public Label scoreField;
 
     @FXML
     private ImageView menuBtn;
@@ -49,6 +48,7 @@ public class GameView {
 	public static final int height = 500;
 
 
+	
 	public GameView() {
 
 		board = new Board();
