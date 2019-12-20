@@ -49,6 +49,7 @@ public class Board {
 		snake = new Snake();
 		rand = new Random();
 		head = snake.getHead();
+		factory = new FoodFactory();
 		score = 0;
 		life = 3;
 		timer();
@@ -93,6 +94,8 @@ public class Board {
 			objectX = place[0];
 			objectY = place[1];
 			addObject(objectX, objectY, f.name(), isFruit);
+			System.out.println(objectX + "  "+ objectY);
+
 		}
 
 		for(Level c : Level.values()) {
@@ -143,8 +146,8 @@ public class Board {
 
 			helpS = helpO = false;
 			//For later use
-			foodX = (rand.nextInt(view.width)*GameObject.SIZE)+GameObject.SIZE/2;
-			foodY = (rand.nextInt(view.height)*GameObject.SIZE)+GameObject.SIZE/2;
+			foodX = (rand.nextInt((900/GameObject.SIZE))*GameObject.SIZE)+GameObject.SIZE/2;
+			foodY = (rand.nextInt((420/GameObject.SIZE))*GameObject.SIZE)+GameObject.SIZE/2;
 
 			//TODO If pear place in random corner which isnt current pear place
 
@@ -214,7 +217,7 @@ public class Board {
 		}
 
 		// Checks if the snake has hit the board borders
-		if (headX > view.getWidth() || headX < 0) {
+		if (headX > 900 || headX < 0) {
 			life--;
 			if (life > 0)
 				return GameState.Finished;
@@ -223,7 +226,7 @@ public class Board {
 			}
 		}
 
-		else if (headY < 0 || headY > view.getHeight()) {
+		else if (headY < 0 || headY > 420) {
 			life--;
 			if (life > 0)
 				return GameState.Finished;
@@ -231,7 +234,7 @@ public class Board {
 				return GameState.GameOver;
 			}
 		}
-		return GameController.getState();
+		return GameView.getState();
 	}
 
 	/**
@@ -242,13 +245,14 @@ public class Board {
 		int headX, headY, objectX, objectY;
 		headX = head.getX();
 		headY = head.getY();
-
+		
 		// Iterate through all the objects that are currently exist	
 		for(int i = 0; i < ObjectList.size(); ++i){			
 			objectX = ObjectList.get(i).getX();
 			objectY = ObjectList.get(i).getY();
 			if(objectX == headX && objectY == headY) {	//if the snake actually "eated" an object	
-				if (ObjectList.get(i) instanceof SnakeFood) { //if the snake ate a fruit/mouse
+				if (ObjectList.get(i) instanceof SnakeFood) { //if the snake ate a fruit/mouse				
+					System.out.println("Eated");
 					FoodType type = ObjectList.get(i).getType();
 					addLength(ObjectList.get(i).getExtraLength()); //adds body parts to snake
 					score += ObjectList.get(i).getPoints();//add points to the player
@@ -292,11 +296,12 @@ public class Board {
 			if(FoodType.valueOf (type) == FoodType.Mouse) {
 				this.mouse = (Mouse)factory.getFood(FoodType.Mouse, foodX, foodY);
 			}
-			else
-				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
+			else {
+					ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
+			}
 		}
 		else{
-			ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
+			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
 
 			//TODO Change
 		}		
@@ -395,5 +400,9 @@ public class Board {
 
 	public Mouse getMouse() {
 		return mouse;
+	}
+	
+	public ArrayList<SnakeFood> getObjects(){
+		return this.ObjectList;
 	}
 }

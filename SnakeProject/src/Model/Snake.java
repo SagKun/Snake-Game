@@ -14,8 +14,8 @@ public class Snake {
 	//Snake's size variable and starting position of head 
 	private ArrayList<BodyPart> body;
 	//TODO Temp defines of width and height, should be detarmained at class board
-	public static int tempWidth = 600;
-	public static int tempHeight = 600;
+	public static int tempWidth = 900;
+	public static int tempHeight = 420;
 	//The current size of the snake
 	private int size;
 	//this fields define the current location of the snake(with initilization of the starting point)

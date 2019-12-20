@@ -18,7 +18,7 @@
          <center>
             <AnchorPane prefHeight="418.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="pane" prefHeight="411.0" prefWidth="900.0" style="-fx-background-color: black;" />
+                  <Pane fx:id="pane" prefHeight="420.0" prefWidth="900.0" style="-fx-background-color: black;" />
                </children>
             </AnchorPane>
          </center>

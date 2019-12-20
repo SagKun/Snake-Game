@@ -23,7 +23,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class HistoryView implements Initializable {
-	
+
 	private String pathFxml = "SnakeProject\\src\\View\\HistoryView.fxml";
 
 	@FXML
