@@ -10,19 +10,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-
-
 
 
 public class SysData{
@@ -100,7 +95,7 @@ public class SysData{
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
-		try (Reader reader = new FileReader("src\\Data\\Questions.json")) {
+		try (Reader reader = new FileReader("../Data/Questions.json")) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 			JSONArray jsonArray = (JSONArray) jsonObject.get("questions");

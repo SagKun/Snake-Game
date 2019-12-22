@@ -3,13 +3,9 @@ package View;
 
 
 import java.io.IOException;
-
-import Controller.MainController;
-import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -38,13 +34,18 @@ public class MainView {
 	    public void play(ActionEvent event) {
 			try {
 				
-				StackPane pane=FXMLLoader.load(getClass().getResource("GameView.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+				StackPane pane  = loader.load();
 				pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
 				mainView.getChildren().removeAll(mainView.getChildren());
 				mainView.getChildren().add(pane);
+				
+				GameView view = (GameView)loader.getController();		
+				view.setStage((Stage)pane.getScene().getWindow());
+				view.resume();			
 			}
+			
 			catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

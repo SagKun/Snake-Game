@@ -5,24 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-
-import Controller.GameController;
 import Model.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -66,7 +59,6 @@ public class GameView implements Initializable {
 	private ImageView arrows;
 
 
-	private Scene scene;
 	/**
 	 * Actual state of the game
 	 */
@@ -120,22 +112,23 @@ public class GameView implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Circle c = new Circle(snake.getHead().getX() , snake.getHead().getY(), GameObject.SIZE/2); 
-		c.setFill(Color.TRANSPARENT);
-		c.setStroke(Color.WHITE);
-		c.setStrokeWidth(1);
-		pane.getChildren().add(c);
+		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
+		headImage.setX(snake.getHead().getX());
+		headImage.setY(snake.getHead().getY());
+		pane.getChildren().add(headImage);
+
 
 		int helpX, helpY, snakeY, snakeX;
 
 		for(int i = 1; i < snake.getSize(); ++i) {
 			snakeX = snake.getBodyPart(i).getX();
 			snakeY = snake.getBodyPart(i).getY();
-			c = new Circle(snakeX , snakeY, GameObject.SIZE/2); 
-			c.setFill(Color.WHITESMOKE);
-			pane.getChildren().add(c);
-		}	
-
+			ImageView bodyImage =  new ImageView("View/icons/GameObjects/SnakeBody.png");
+			bodyImage.setX(snakeX);
+			bodyImage.setY(snakeY);
+			pane.getChildren().add(bodyImage);
+		}
+		
 
 	}
 
