@@ -89,7 +89,7 @@ public class GameView implements Initializable {
 	private Stage stage;
 
 	public static final int WIDTH = 960;
-	public static final int HEIGHT = 600;
+	public static final int HEIGHT = 624;
 
 	public GameView() {
 		board = new Board();
@@ -469,7 +469,7 @@ public class GameView implements Initializable {
 		state = GameState.Running;
 		dx = dy = 0;
 		up = down = left = right = false;
-		speedConstraint = 6;
+		speedConstraint = 8;
 		mouseSpeedConstraint = 6;
 	}
 
