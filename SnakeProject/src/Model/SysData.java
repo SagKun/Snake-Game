@@ -33,6 +33,7 @@ public class SysData{
 	
 	public static boolean InitializeGame()
 	{
+		loadHighScores();
 		questionsByLevelDB.put(Level.EASY,new LinkedList<Question>());
 		questionsByLevelDB.put(Level.MODERATE,new LinkedList<Question>());
 		questionsByLevelDB.put(Level.HARD,new LinkedList<Question>());
