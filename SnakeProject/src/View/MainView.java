@@ -3,10 +3,13 @@ package View;
 
 
 import java.io.IOException;
+
+import com.jfoenix.controls.JFXButton;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -19,21 +22,20 @@ public class MainView {
 	    private AnchorPane mainView;
 
 	    @FXML
-	    private Button play;
+	    private JFXButton play;
 
 	    @FXML
-	    private Button highscores;
+	    private JFXButton highscores;
 
 	    @FXML
-	    private Button questions;
-
+	    private JFXButton questions;
+	    
 	    @FXML
-	    private Button exit;
+	    private JFXButton exit;
 		private Stage stage;
 
 	    public void play(ActionEvent event) {
 			try {
-				
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
 				StackPane pane  = loader.load();
 				pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
@@ -58,5 +60,12 @@ public class MainView {
 			this.stage = stage;
 		}
 	
-
+		public void addShadowOnHover()
+		{
+		//Adding the shadow when the mouse cursor is on
+			DropShadow shadow = new DropShadow();
+			play.setEffect(shadow);
+		}
+		
+	
 }
