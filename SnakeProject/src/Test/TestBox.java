@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 
 import Model.Board;
 import Model.FoodFactory;
@@ -40,7 +42,7 @@ public class TestBox {
 				obj.getExtraLength() == 2 && obj.getExtraLife() == 1) {
 				result = true;
 			}
-		assertTrue(result);
+		Assert.assertTrue(result);
 	}
 	
 	//checks if the database saves the highscores successfully
@@ -50,7 +52,7 @@ public class TestBox {
 		boolean result = false;
 		if(!SysData.highScores.isEmpty())
 			result = true;
-		assertTrue(result);
+		Assert.assertTrue(result);
 	}
 	
 	//checks what happens when the snake collide with the borders
@@ -64,7 +66,7 @@ public class TestBox {
 		System.out.println(state);
 		if(state.equals(GameState.Finished))
 			result = true;
-		assertTrue(result);
+		Assert.assertTrue(result);
 		
 	}
 	
@@ -74,28 +76,31 @@ public class TestBox {
 		Board board = new Board();
 		int prevScore = board.getScore();
 		int prevSnakeLength = board.getSnake().getSize();
-		FoodFactory factory = new FoodFactory();
-		SnakeFood banana = factory.getFood(FoodType.Banana, 5, 5);
-		board.getSnake().getHead().setX(5);
-		board.getSnake().getHead().setY(5);
-		board.getObjectList().add(banana);
+		board.getSnake().getHead().setX(300);
+		board.getSnake().getHead().setY(100);
+		board.initializeObjects();
+		SnakeFood prevFood = board.getObjectList().get(0);
+		board.getObjectList().get(0).setX(300);
+		board.getObjectList().get(0).setY(100);
 		board.checkEaten();
 		boolean result = false;
-		if(board.getScore() == prevScore+banana.getPoints() && board.getSnake().getSize() == prevSnakeLength+banana.getExtraLength())
+		if(board.getScore() == prevScore+prevFood.getPoints() &&
+				board.getSnake().getSize() == prevSnakeLength+prevFood.getExtraLength())
 			result = true;
-		assertTrue(result);
+		Assert.assertTrue(result);
 	}
 	
 	//checks if the system import JSON file successfully
 	@Test
 	public void checkJSON()	{
+		SysData.InitializeGame();
 		ArrayList<Question> testQuestionDB = new ArrayList<Question>();
 		SysData.readQuestions();
 		testQuestionDB = SysData.questionsDB;
 		boolean result = false;
-		if(testQuestionDB.toString() != "[]")
+		if(!testQuestionDB.toString().equals("[]"))
 			result = true;
-		assertTrue(result);
+		Assert.assertTrue(result);
 	}
 	
 	
