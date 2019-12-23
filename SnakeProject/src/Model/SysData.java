@@ -26,11 +26,11 @@ public class SysData{
 	//The data structure that saves the high scores
 	public static ArrayList<Player> highScores = new ArrayList<Player>();
 	//The name of the file we write the high scores to
-	
+
 	public static HashMap<Level,Queue<Question>> questionsByLevelDB = new HashMap<Level,Queue<Question>>();
 	public static final String fileName = "highScores.ser";
-	
-	
+
+
 	public static boolean InitializeGame()
 	{
 		loadHighScores();
@@ -40,7 +40,7 @@ public class SysData{
 		readQuestions();
 		return true;
 	}
-	
+
 	//a method to save the high scores to a file
 	public static boolean saveHighScores() {
 		try {
@@ -129,7 +129,7 @@ public class SysData{
 		FoodFactory f = new FoodFactory();
 		Question q = f.getQuestion(Level.getLevel(Integer.parseInt(level)), 0, 0, question, answers, correct_ans, team);
 		questionsDB.add(q);
-	questionsByLevelDB.get(q.getLevel()).add(q);
+		questionsByLevelDB.get(q.getLevel()).add(q);
 		System.out.println(q.getQuestion()+ " was imported successfully.");
 	}
 
