@@ -96,7 +96,7 @@ public class SysData{
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
-		try (Reader reader = new FileReader("../Data/Questions.json")) {
+		try (Reader reader = new FileReader("SnakeProject/src/Data/Questions.json")) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 			JSONArray jsonArray = (JSONArray) jsonObject.get("questions");
@@ -156,7 +156,7 @@ public class SysData{
 		}
 		fullObject.put("questions", list);
 
-		try (FileWriter file = new FileWriter("src\\Data\\Questions.json")) {
+		try (FileWriter file = new FileWriter("SnakeProject/src/Data/Questions.json")) {
 			file.write(fullObject.toJSONString());
 			System.out.println("all data was written to file successfully.");
 			file.close();
