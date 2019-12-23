@@ -88,8 +88,8 @@ public class GameView implements Initializable {
 
 	private Stage stage;
 
-	public static final int WIDTH = 720;
-	public static final int HEIGHT = 720;
+	public static final int WIDTH = 960;
+	public static final int HEIGHT = 600;
 
 	public GameView() {
 		board = new Board();
