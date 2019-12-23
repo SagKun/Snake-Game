@@ -23,34 +23,34 @@ public class TestBox {
 	public void testSetObjects() {
 		FoodFactory factory = new FoodFactory();
 		SnakeFood obj = factory.getFood(type, 0, 0);
-		int result = 0;
+		boolean result = false;
 		if(type.equals(FoodType.Apple) && obj.getPoints() == 10 && obj.getSecondsBuffer() == 5 &&
 				obj.getExtraLength() == 1 && obj.getExtraLife() == 0) {
-				result = 1;
+				result = true;
 			}
 		else if(type.equals(FoodType.Banana) && obj.getPoints() == 15 && obj.getSecondsBuffer() == 10 &&
 				obj.getExtraLength() == 1 && obj.getExtraLife() == 0) {
-				result = 1;
+				result = true;
 			}
 		else if(type.equals(FoodType.Pear) && obj.getPoints() == 20 && obj.getSecondsBuffer() == 0 &&
 				obj.getExtraLength() == 1 && obj.getExtraLife() == 0) {
-				result = 1;
+				result = true;
 			}
 		else if(type.equals(FoodType.Mouse) && obj.getPoints() == 30 && obj.getSecondsBuffer() == 60 &&
 				obj.getExtraLength() == 2 && obj.getExtraLife() == 1) {
-				result = 1;
+				result = true;
 			}
-		assertEquals(1, result);
+		assertTrue(result);
 	}
 	
 	//checks if the database saves the highscores successfully
 	@Test
 	public void testShowSavedPlayers() {
 		SysData.loadHighScores();
-		int result = 0;
+		boolean result = false;
 		if(!SysData.highScores.isEmpty())
-			result = 1;
-		assertEquals(1, result);
+			result = true;
+		assertTrue(result);
 	}
 	
 	//checks what happens when the snake collide with the borders
@@ -60,11 +60,11 @@ public class TestBox {
 		board.getSnake().getHead().setX(-1);
 		board.getSnake().getHead().setY(5);
 		GameState state = board.checkCollision();
-		int result = 0;
+		boolean result = false;
 		System.out.println(state);
 		if(state.equals(GameState.Finished))
-			result = 1;
-		assertEquals(1, result);
+			result = true;
+		assertTrue(result);
 		
 	}
 	
@@ -80,10 +80,10 @@ public class TestBox {
 		board.getSnake().getHead().setY(5);
 		board.getObjectList().add(banana);
 		board.checkEaten();
-		int result = 0;
+		boolean result = false;
 		if(board.getScore() == prevScore+banana.getPoints() && board.getSnake().getSize() == prevSnakeLength+banana.getExtraLength())
-			result = 1;
-		assertEquals(1, result);
+			result = true;
+		assertTrue(result);
 	}
 	
 	//checks if the system import JSON file successfully
@@ -92,10 +92,10 @@ public class TestBox {
 		ArrayList<Question> testQuestionDB = new ArrayList<Question>();
 		SysData.readQuestions();
 		testQuestionDB = SysData.questionsDB;
-		int result = 0;
+		boolean result = false;
 		if(testQuestionDB.toString() != "[]")
-			result = 1;
-		assertEquals(1, result);
+			result = true;
+		assertTrue(result);
 	}
 	
 	
