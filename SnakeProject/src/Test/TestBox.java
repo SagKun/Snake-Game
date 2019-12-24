@@ -24,7 +24,7 @@ public class TestBox {
 	public static int checkEatenX;
 	public static int checkEatenY;
 	
-	
+	// a method to prepare the data for tests
 	@org.junit.jupiter.api.BeforeAll
 	public static void prepare() {
 		Random rand = new Random();
@@ -91,9 +91,10 @@ public class TestBox {
 		Board board = new Board();
 		board.getSnake().getHead().setX(collisionX);
 		board.getSnake().getHead().setY(collisionY);
+		int prevLife = board.getLife();
 		GameState state = board.checkCollision();
 		boolean result = false;
-		if(state.equals(GameState.Finished))
+		if(state.equals(GameState.Finished) && prevLife-1 == board.getLife())
 			result = true;
 		Assert.assertTrue(result);
 		

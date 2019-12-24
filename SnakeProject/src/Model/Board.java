@@ -442,6 +442,11 @@ public class Board {
 	}
 
 
+	public int getLife() {
+		return life;
+	}
+
+
 
 
 }
