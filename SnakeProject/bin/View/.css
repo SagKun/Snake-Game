@@ -1,10 +1,10 @@
 #borderPane_Custom{
-	-fx-background-image: url("Photos/wall.jpg");
+	-fx-background-image: url("photos/wall.jpg");
 	-fx-opacity: 0.9;
 }
 
 #mainView{
--fx-background-image: url("Photos/wall.jpg");
+-fx-background-image: url("photos/wall.jpg");
 }
 .jfx-button{
 	-fx-background-color: linear-gradient(to bottom , #C6ECAE , #A3C28F);

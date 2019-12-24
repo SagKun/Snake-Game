@@ -20,7 +20,7 @@ public class Main extends Application{
 
 		if(NoOtherInstanceRunning(f))
 		{	
-			SysData.InitializeGame();
+			//SysData.InitializeGame();
 			launch(args);
 			f.deleteOnExit();
 		}
@@ -29,7 +29,7 @@ public class Main extends Application{
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainView.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
 
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
