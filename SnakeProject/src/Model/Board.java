@@ -285,8 +285,8 @@ public class Board {
 
 				else{ 		//if the snake ate a question
 					Level level = ((Question)ObjectList.get(i)).getLevel();
-					//TODO цшйк мбцт чшйад мферчцйд щозжйшд бдъан мъщебъ дощъощ тм дщамд
-					//аъ дрйчег + аешк + зййн
+					//TODO пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+					//пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅ
 
 					ObjectList.remove(i);
 					updateObjects(level);
@@ -444,6 +444,11 @@ public class Board {
 
 	public int getLife() {
 		return life;
+	}
+
+
+	public void setLife(int life) {
+		this.life = life;
 	}
 
 
