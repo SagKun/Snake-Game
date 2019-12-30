@@ -6,6 +6,10 @@
 #mainView{
 -fx-background-image: url("photos/wall.jpg");
 }
+
+.AnchorPane{
+-fx-background-image: url("photos/wall.jpg");
+}
 .jfx-button{
 	-fx-background-color: linear-gradient(to bottom , #C6ECAE , #A3C28F);
 	-fx-background-radius: 10;
