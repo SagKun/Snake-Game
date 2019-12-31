@@ -1,5 +1,6 @@
 package View;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -9,22 +10,33 @@ import Model.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class GameView implements Initializable {
 
 	private Board board;
 
-	private Snake snake;
 
+
+	private Snake snake;
+	@FXML
+	private StackPane stackPane;
+	
 	@FXML
 	private Pane pane;
 
@@ -51,7 +63,7 @@ public class GameView implements Initializable {
 
 	@FXML
 	private Text lifeAmount;
-	
+
 	@FXML
 	private ImageView pressToPlay;
 
@@ -112,6 +124,10 @@ public class GameView implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		//ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	  //  GaussianBlur blur = new GaussianBlur(55); 
+	    //adj.setInput(blur);
+		blur(pane);
 		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 		headImage.setX(snake.getHead().getX());
 		headImage.setY(snake.getHead().getY());
@@ -128,7 +144,7 @@ public class GameView implements Initializable {
 			bodyImage.setY(snakeY);
 			pane.getChildren().add(bodyImage);
 		}
-		
+
 
 	}
 
@@ -201,13 +217,13 @@ public class GameView implements Initializable {
 						i = 0; // counter to slow down the snake
 					}
 					++i;
-					
+
 					if (j == mouseSpeedConstraint) { // control the speed of snake
 						//mouseMove();
 						j = 0; // counter to slow down the mouse
 					}
 					++j;
-					 
+
 				}
 
 				update(); // updating the game parameters, positions, etc.
@@ -227,7 +243,7 @@ public class GameView implements Initializable {
 
 			pane.getChildren().clear();
 
-			
+
 			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 			headImage.setX(snake.getHead().getX());
 			headImage.setY(snake.getHead().getY());
@@ -244,26 +260,26 @@ public class GameView implements Initializable {
 				bodyImage.setY(snakeY);
 				pane.getChildren().add(bodyImage);
 			}
-			
+
 			for(int i = 0; i < board.getObjectList().size(); ++i) {
 				helpX = board.getObjectList().get(i).getX();
 				helpY = board.getObjectList().get(i).getY();
 				String imagePath = "";
 				if(board.getObjectList().get(i).getType() == FoodType.Apple ) {
-					 imagePath = "View/icons/GameObjects/apple24.png";
+					imagePath = "View/icons/GameObjects/apple24.png";
 				}
 				else if(board.getObjectList().get(i).getType() == FoodType.Banana ) {
-					 imagePath = "View/icons/GameObjects/banana24.png";
+					imagePath = "View/icons/GameObjects/banana24.png";
 				}
 				else if(board.getObjectList().get(i).getType() == FoodType.Pear ) {
-					 imagePath = "View/icons/GameObjects/pear24.png";
+					imagePath = "View/icons/GameObjects/pear24.png";
 				}
 				ImageView fruitIcon =  new ImageView(imagePath);
 				fruitIcon.setX(helpX);
 				fruitIcon.setY(helpY);
 				pane.getChildren().add(fruitIcon);
 			}
-			
+
 			ImageView mouseIcon =  new ImageView("View/icons/GameObjects/mouse.png");
 			mouseIcon.setX(board.getMouse().getX());
 			mouseIcon.setY(board.getMouse().getY());
@@ -336,7 +352,22 @@ public class GameView implements Initializable {
 					if (state == GameState.Running || state == GameState.Paused) {
 						if (pause == false) {
 							pause = true;
-							resume = false;
+							resume = false;	
+							blur(stackPane);
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+							Parent root;
+							try {
+								Stage pauseStage=new Stage();
+								root = loader.load();
+								Scene scene = new Scene(root);
+								pauseStage.setScene(scene);
+								pauseStage.setResizable(false);
+								pauseStage.initStyle(StageStyle.UNDECORATED);
+								pauseStage.show();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						} else {
 							resume = true;
 							pause = false;
@@ -347,6 +378,7 @@ public class GameView implements Initializable {
 				case ENTER: { // start or restart the game
 					if (state == GameState.Started)
 					{
+						pane.setEffect(null);
 						arrows.setVisible(false);
 						pressToPlay.setVisible(false);
 						start = true;
@@ -483,5 +515,10 @@ public class GameView implements Initializable {
 		return state;
 	}
 
-
+	public void blur(Region reg) {
+	    ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+	    GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
+	    adj.setInput(blur);
+	    reg.setEffect(adj);
+	}
 }
