@@ -8,10 +8,10 @@
 
 <AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="420.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane id="borderPane_Custom" prefHeight="400.0" prefWidth="420.0">
+      <AnchorPane prefHeight="400.0" prefWidth="420.0">
          <children>
             <Label id="Snake_Label" layoutX="45.0" layoutY="7.0" text="Game Instructions" />
-            <TableView fx:id="foodTable" layoutX="28.0" layoutY="53.0" prefHeight="159.0" prefWidth="364.0" styleClass="tableInstructions">
+            <TableView fx:id="foodTable" layoutX="28.0" layoutY="53.0" prefHeight="159.0" prefWidth="364.0">
               <columns>
                 <TableColumn fx:id="food" prefWidth="96.0" text="Food" />
                 <TableColumn fx:id="foodPoints" text="Points" />
@@ -19,15 +19,15 @@
                   <TableColumn fx:id="lifeAdd" prefWidth="73.0" text="Life Add" />
               </columns>
             </TableView>
-            <TableView fx:id="questionTable" layoutX="28.0" layoutY="222.0" prefHeight="121.0" prefWidth="364.0" styleClass="tableInstructions">
+            <TableView fx:id="questionTable" layoutX="28.0" layoutY="222.0" prefHeight="121.0" prefWidth="364.0">
               <columns>
-                <TableColumn fx:id="question" prefWidth="69.0" text="Question" />
-                <TableColumn fx:id="level" prefWidth="61.0" text="Level" />
-                  <TableColumn fx:id="questionPoints" prefWidth="152.0" text="Right Answer Points" />
-                  <TableColumn fx:id="penalty" prefWidth="81.0" text="Penalty For Mistake" />
+                <TableColumn fx:id="question" prefWidth="61.0" text="Question" />
+                <TableColumn fx:id="level" prefWidth="49.0" text="Level" />
+                  <TableColumn fx:id="questionPoints" prefWidth="124.0" text="Right Answer Points" />
+                  <TableColumn fx:id="penalty" prefWidth="129.0" text="Penalty For Mistake" />
               </columns>
             </TableView>
-            <Button fx:id="returnBtn" layoutX="164.0" layoutY="354.0" mnemonicParsing="false" styleClass="jfx-button" text="Return" />
+            <Button fx:id="returnBtn" layoutX="164.0" layoutY="350.0" mnemonicParsing="false" styleClass="jfx-button" text="Return" />
          </children>
       </AnchorPane>
    </children>
