@@ -12,7 +12,7 @@
             <Image url="@photos/download%20(6).gif" />
          </image>
       </ImageView>
-      <JFXButton fx:id="play" layoutX="380.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#play" prefHeight="80.0" prefWidth="170.0" text="PLAY" />
+      <JFXButton fx:id="play" buttonType="RAISED" layoutX="380.0" layoutY="192.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#play" prefHeight="80.0" prefWidth="170.0" text="PLAY" />
       <JFXButton fx:id="highscores" layoutX="380.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="170.0" text="HIGHSCORES" />
       <JFXButton fx:id="exit" layoutX="380.0" layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="170.0" text="EXIT" />
       <JFXButton fx:id="questions" layoutX="380.0" layoutY="461.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="170.0" text="QUESTIONS" />

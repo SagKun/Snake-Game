@@ -1,12 +1,17 @@
 package View;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import Main.Main;
 import Model.*;
+import Utils.Fonts;
+import animatefx.animation.Bounce;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,9 +28,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class GameView implements Initializable {
 
@@ -124,9 +131,8 @@ public class GameView implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	  //  GaussianBlur blur = new GaussianBlur(55); 
-	    //adj.setInput(blur);
+	    scoreField.setFont(Fonts.minecraft);
+	    new Bounce(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.40).play();
 		blur(pane);
 		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 		headImage.setX(snake.getHead().getX());

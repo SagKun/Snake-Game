@@ -3,19 +3,24 @@ package View;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import Utils.Fonts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
-public class MainView {
+public class MainView implements Initializable{
 	
 	
 	 @FXML
@@ -34,6 +39,17 @@ public class MainView {
 	    private JFXButton exit;
 		private Stage stage;
 
+		@Override
+		public void initialize(URL arg0, ResourceBundle arg1) {
+			
+			play.setFont(Fonts.minecraft);
+			highscores.setFont(Fonts.minecraft);
+			questions.setFont(Fonts.minecraft);
+			exit.setFont(Fonts.minecraft);
+			
+		}
+		
+		
 	    public void play(ActionEvent event) {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
