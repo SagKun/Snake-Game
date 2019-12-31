@@ -56,7 +56,7 @@ public class Main extends Application{
 				return false;
 			}
 		} else {
-			System.out.println("Snake is already running,can't run again!" );
+			System.out.println("Snake is already running, can't run again!" );
 			return false;
 		}
 

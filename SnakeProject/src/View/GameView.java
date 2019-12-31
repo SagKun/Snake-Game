@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-
 import Main.Main;
+import Controller.HistoryController;
 import Model.*;
 import Utils.Fonts;
 import animatefx.animation.Bounce;
@@ -208,11 +209,20 @@ public class GameView implements Initializable {
 				}
 				if (state == GameState.Finished) {
 					//TODO Case when game ended but more lives to play - semi reset
+					updateLife();
 					restart();
 					board.initializeObjects();
 				}
 				// when game is done
 				if (state == GameState.GameOver) {
+					/**
+					 String nickname;
+					 int score = board.getScore();
+					 Player p = new Player(nickname, score);
+					 HistoryController history = new HistoryController();
+					 history.addScoreIfTopTen(p);
+					 */
+					
 					stop();
 				}
 				// when game is running, make movement
@@ -304,6 +314,7 @@ public class GameView implements Initializable {
 		}// updates the state of fruits
 		board.checkEaten(); // check if a fruit has been eaten
 		this.scoreField.setText(String.valueOf(board.getScore()));
+		updateLife();
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
@@ -526,5 +537,47 @@ public class GameView implements Initializable {
 	    GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
 	    adj.setInput(blur);
 	    reg.setEffect(adj);
+	}
+	// update the gui of the life of a player
+	public void updateLife() {
+		String life;
+		switch(board.getLife()) {
+		case -1:
+			life1.setVisible(false);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 1:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 2:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 3:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(true);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		default:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "X" + board.getLife();
+			lifeAmount.setText(life);
+			break;
+		}
+		
 	}
 }
