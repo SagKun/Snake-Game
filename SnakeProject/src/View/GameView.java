@@ -202,6 +202,7 @@ public class GameView implements Initializable {
 				}
 				if (state == GameState.Finished) {
 					//TODO Case when game ended but more lives to play - semi reset
+					updateLife();
 					restart();
 					board.initializeObjects();
 				}
@@ -298,6 +299,7 @@ public class GameView implements Initializable {
 		}// updates the state of fruits
 		board.checkEaten(); // check if a fruit has been eaten
 		this.scoreField.setText(String.valueOf(board.getScore()));
+		updateLife();
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
@@ -520,5 +522,47 @@ public class GameView implements Initializable {
 	    GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
 	    adj.setInput(blur);
 	    reg.setEffect(adj);
+	}
+	
+	public void updateLife() {
+		String life;
+		switch(board.getLife()) {
+		case -1:
+			life1.setVisible(false);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 1:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 2:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 3:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(true);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		default:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "X" + board.getLife();
+			lifeAmount.setText(life);
+			break;
+		}
+		
 	}
 }

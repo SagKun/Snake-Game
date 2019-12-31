@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="SnakeProject/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/json-simple-1.1.jar"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx-swt.jar"/>
@@ -14,5 +13,6 @@
 	<classpathentry kind="lib" path="SnakeProject/src/libs/javafx.web.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="SnakeProject/src/libs/jfoenix-8.0.8.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_231"/>
 	<classpathentry kind="output" path="SnakeProject/bin"/>
 </classpath>
