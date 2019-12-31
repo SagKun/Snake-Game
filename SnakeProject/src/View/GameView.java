@@ -3,9 +3,12 @@ package View;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import Controller.HistoryController;
 import Model.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -208,6 +211,14 @@ public class GameView implements Initializable {
 				}
 				// when game is done
 				if (state == GameState.GameOver) {
+					/**
+					 String nickname;
+					 int score = board.getScore();
+					 Player p = new Player(nickname, score);
+					 HistoryController history = new HistoryController();
+					 history.addScoreIfTopTen(p);
+					 */
+					
 					stop();
 				}
 				// when game is running, make movement
@@ -523,7 +534,7 @@ public class GameView implements Initializable {
 	    adj.setInput(blur);
 	    reg.setEffect(adj);
 	}
-	
+	// update the gui of the life of a player
 	public void updateLife() {
 		String life;
 		switch(board.getLife()) {
