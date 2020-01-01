@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="420.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="420.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="420.0" styleClass="AnchorPane">
          <children>
@@ -21,13 +21,13 @@
             </TableView>
             <TableView fx:id="questionTable" layoutX="28.0" layoutY="222.0" prefHeight="121.0" prefWidth="364.0" styleClass="tableInstructions">
               <columns>
-                <TableColumn fx:id="question" prefWidth="61.0" text="Question" />
-                <TableColumn fx:id="level" prefWidth="49.0" text="Level" />
-                  <TableColumn fx:id="questionPoints" prefWidth="124.0" text="Right Answer Points" />
-                  <TableColumn fx:id="penalty" prefWidth="129.0" text="Penalty For Mistake" />
+                <TableColumn fx:id="question" prefWidth="76.0" text="Question" />
+                <TableColumn fx:id="level" prefWidth="53.0" text="Level" />
+                  <TableColumn fx:id="questionPoints" prefWidth="157.0" text="Right Answer Points" />
+                  <TableColumn fx:id="penalty" prefWidth="77.0" text="Penalty For Mistake" />
               </columns>
             </TableView>
-            <Button fx:id="returnBtn" layoutX="164.0" layoutY="350.0" mnemonicParsing="false" styleClass="jfx-button" text="Return" />
+            <Button fx:id="returnBtn" layoutX="164.0" layoutY="356.0" mnemonicParsing="false" onAction="#returnToMenu" prefWidth="105.0" styleClass="small-jfx-button" text="Return" />
          </children>
       </AnchorPane>
    </children>
