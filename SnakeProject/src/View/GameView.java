@@ -1,17 +1,19 @@
 package View;
 
+
+import Main.Main;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-import Main.Main;
+
 import Controller.HistoryController;
 import Model.*;
 import Utils.Fonts;
+import Utils.Sound;
 import animatefx.animation.Bounce;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -29,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -107,6 +110,11 @@ public class GameView implements Initializable {
 	private BodyPart head;
 
 	private Stage stage;
+	
+	/**
+	 * MediaPlayer object, controls the music played in game
+	 */
+	private MediaPlayer audio;
 
 	public static final int WIDTH = 960;
 	public static final int HEIGHT = 624;
@@ -118,6 +126,7 @@ public class GameView implements Initializable {
 		up = down = right = left = pause = resume = start = false;
 		head = snake.getHead();
 		keyActive = startup = true;
+		audio = new Sound().getAudio();
 	}
 
 
@@ -194,12 +203,14 @@ public class GameView implements Initializable {
 				}
 				// when game paused
 				if (pause && !resume) {
+					audio.stop();
 					state = GameState.Paused;
 					stop();
 				}
 				// when game resumed
 				if (resume && !pause) {
 					state = GameState.Running;
+					audio.play();
 					resume = false;
 				}
 				// when game started or restarted
@@ -215,18 +226,12 @@ public class GameView implements Initializable {
 				}
 				// when game is done
 				if (state == GameState.GameOver) {
-					/**
-					 String nickname;
-					 int score = board.getScore();
-					 Player p = new Player(nickname, score);
-					 HistoryController history = new HistoryController();
-					 history.addScoreIfTopTen(p);
-					 */
-					
+					audio.stop();
 					stop();
 				}
 				// when game is running, make movement
 				if (state == GameState.Running) {
+					audio.play();
 					if (i == speedConstraint) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
