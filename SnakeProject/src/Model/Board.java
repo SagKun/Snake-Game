@@ -12,6 +12,8 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Board {
+	
+	private static Board boardInstance = null;
 
 	private FoodFactory factory;
 
@@ -33,10 +35,17 @@ public class Board {
 	 */
 	Random rand; 
 
+	public static Board getInstance() {
+		if(boardInstance == null)
+			boardInstance = new Board();
+		
+		return boardInstance;
+	}
+	
 	/**
 	 * Default constructor of board class to initialize starting variables
 	 */
-	public Board() { 
+	private Board() { 
 
 		ObjectList = new ArrayList<SnakeFood>();
 		factory = new FoodFactory();

@@ -88,7 +88,7 @@ public class TestBox {
 	//checks what happens when the snake collide with the borders
 	@Test
 	public void testCheckCollisionWithBorders() {
-		Board board = new Board();
+		Board board = Board.getInstance();
 		board.getSnake().getHead().setX(collisionX);
 		board.getSnake().getHead().setY(collisionY);
 		int prevLife = board.getLife();
@@ -103,7 +103,7 @@ public class TestBox {
 	// checks if the player get the rewards of eat a food object
 	@Test
 	public void testCheckEaten() {
-		Board board = new Board();
+		Board board = Board.getInstance();
 		int prevScore = board.getScore();
 		int prevSnakeLength = board.getSnake().getSize();
 		board.getSnake().getHead().setX(checkEatenX);

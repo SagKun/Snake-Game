@@ -112,7 +112,7 @@ public class GameView implements Initializable {
 	public static final int HEIGHT = 624;
 
 	public GameView() {
-		board = new Board();
+		board = Board.getInstance();
 		snake = board.getSnake();	
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
