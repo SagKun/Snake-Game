@@ -119,7 +119,7 @@ public class GameView implements Initializable {
 	public static final int HEIGHT = 624;
 
 	public GameView() {
-		board = new Board();
+		board = Board.getInstance();
 		snake = board.getSnake();	
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
@@ -338,6 +338,14 @@ public class GameView implements Initializable {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case UP:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!down && keyActive && state == GameState.Running) {
 						up = true;
 						left = false;
@@ -346,6 +354,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case DOWN:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!up && keyActive && (left || right) && state == GameState.Running) {
 						down = true;
 						left = false;
@@ -354,6 +370,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case LEFT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!right && keyActive && state == GameState.Running) {
 						left = true;
 						up = false;
@@ -362,6 +386,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case RIGHT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!left && keyActive && state == GameState.Running) {
 						right = true;
 						up = false;
@@ -396,20 +428,6 @@ public class GameView implements Initializable {
 						}
 					}
 					break;
-				case ENTER: { // start or restart the game
-					if (state == GameState.Started)
-					{
-						pane.setEffect(null);
-						arrows.setVisible(false);
-						pressToPlay.setVisible(false);
-						start = true;
-					}
-					if (state == GameState.Finished) {
-						start = true;
-						resume();
-					}
-				}
-				break;
 				case ESCAPE: // exit program
 					System.exit(0);
 					break;
@@ -521,7 +539,7 @@ public class GameView implements Initializable {
 	private void restart() {
 		state = GameState.Running;
 		dx = dy = 0;
-		up = down = left = right = false;
+		//up = down = left = right = false;
 		speedConstraint = 8;
 		mouseSpeedConstraint = 6;
 	}
