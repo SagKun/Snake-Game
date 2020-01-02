@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import Controller.HistoryController;
+import Model.Board;
 import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,7 +52,7 @@ public class Nickname implements Initializable{
     	}
     	else
     	{
-    		Player p = new Player(nickName.getText(), Integer.parseInt(score.getText()));
+    		Player p = new Player(nickName.getText(), Board.getInstance().getScore());
     		HistoryController history = new HistoryController();
     		history.addScoreIfTopTen(p);
     	}
@@ -59,7 +60,8 @@ public class Nickname implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		String s = "" + Board.getInstance().getScore();
+		score.setText(s);
 	}
 
 }
