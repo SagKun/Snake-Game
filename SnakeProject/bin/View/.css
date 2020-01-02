@@ -44,14 +44,6 @@
 	-fx-effect: dropshadow(gaussian,#A99646,8,0,0,0);
 }
 
-#Small_Snake_Label{
-	-fx-font-size: 20px 'david';
-	-fx-font-family: Georgia;
-	-fx-text-fill: #A99646;
-	-fx-opacity:0.98;
-	-fx-effect: dropshadow(gaussian,#A99646,8,0,0,0);
-}
-
 #Snake_Image{
 	-fx-effect: dropshadow(gaussian,black,4,0,4,4);
 }

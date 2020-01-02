@@ -26,14 +26,4 @@ public class FoodFactory {
 			return new Question(x, y, question, 3, level, answers, correct_ans, team, -30);
 		return null;
 	}
-	
-	public Question getQuestion(Level level, int x, int y) {
-		if(level.equals(Level.EASY))
-			return new Question(x, y, 1, level, -10);
-		else if(level.equals(Level.MODERATE))
-			return new Question(x, y, 2, level, -20);	
-		else if(level.equals(Level.HARD))
-			return new Question(x, y, 3, level, -30);
-		return null;
-	}
 }
