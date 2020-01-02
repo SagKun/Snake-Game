@@ -33,6 +33,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class GameView implements Initializable {
@@ -44,7 +45,7 @@ public class GameView implements Initializable {
 	private Snake snake;
 	@FXML
 	private StackPane stackPane;
-	
+
 	@FXML
 	private Pane pane;
 
@@ -132,8 +133,8 @@ public class GameView implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	    scoreField.setFont(Fonts.minecraft);
-	    new Bounce(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.40).play();
+		scoreField.setFont(Fonts.minecraft);
+		new Bounce(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.40).play();
 		blur(pane);
 		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 		headImage.setX(snake.getHead().getX());
@@ -211,6 +212,7 @@ public class GameView implements Initializable {
 					//TODO Case when game ended but more lives to play - semi reset
 					updateLife();
 					restart();
+					up = down = left = right = false;
 					board.initializeObjects();
 				}
 				// when game is done
@@ -222,7 +224,7 @@ public class GameView implements Initializable {
 					 HistoryController history = new HistoryController();
 					 history.addScoreIfTopTen(p);
 					 */
-					
+
 					stop();
 				}
 				// when game is running, make movement
@@ -401,7 +403,8 @@ public class GameView implements Initializable {
 					if (state == GameState.Running || state == GameState.Paused) {
 						if (pause == false) {
 							pause = true;
-							resume = false;	
+							resume = false;
+							up = down = left = right = false;
 							blur(stackPane);
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
 							Parent root;
@@ -413,15 +416,18 @@ public class GameView implements Initializable {
 								pauseStage.setResizable(false);
 								pauseStage.initStyle(StageStyle.UNDECORATED);
 								pauseStage.show();
+
+								pauseStage.setOnHiding((WindowEvent event1) -> {
+									stackPane.setEffect(null);
+									resume = true;
+									pause = false;
+									resume();
+								});
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-						} else {
-							resume = true;
-							pause = false;
-							resume();
-						}
+						} 
 					}
 					break;
 				case ESCAPE: // exit program
@@ -551,11 +557,13 @@ public class GameView implements Initializable {
 	}
 
 	public void blur(Region reg) {
-	    ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
-	    adj.setInput(blur);
-	    reg.setEffect(adj);
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+		GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
+		adj.setInput(blur);
+		reg.setEffect(adj);
 	}
+
+
 	// update the gui of the life of a player
 	public void updateLife() {
 		String life;
@@ -596,6 +604,7 @@ public class GameView implements Initializable {
 			lifeAmount.setText(life);
 			break;
 		}
-		
+
 	}
+
 }

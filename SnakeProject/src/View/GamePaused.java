@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class GamePaused {
 
@@ -47,7 +48,9 @@ public class GamePaused {
 
     @FXML
     void resumeGameBtn(ActionEvent event) {
-
+    	Stage stage = (Stage)this.returnToGameBtn.getScene().getWindow();
+    	
+    		stage.close();
+    		
     }
-
 }
