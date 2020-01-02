@@ -12,7 +12,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class Board {
-	
+
 	private static Board boardInstance = null;
 
 	private FoodFactory factory;
@@ -20,7 +20,7 @@ public class Board {
 	private ArrayList<SnakeFood> ObjectList;
 
 	private Mouse mouse;
-	
+
 	private int score, life;
 	/**
 	 * Snake object
@@ -38,10 +38,10 @@ public class Board {
 	public static Board getInstance() {
 		if(boardInstance == null)
 			boardInstance = new Board();
-		
+
 		return boardInstance;
 	}
-	
+
 	/**
 	 * Default constructor of board class to initialize starting variables
 	 */
@@ -94,10 +94,6 @@ public class Board {
 		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
 		int []place; // place on board, will hold X and Y
 		Boolean isFruit = true;
-		for(SnakeFood sf : ObjectList) {
-			if(sf.getType().equals(Type))
-				return;
-		}
 
 		if(Type instanceof FoodType){
 			if(Type == FoodType.Pear)
@@ -263,15 +259,16 @@ public class Board {
 		int headX, headY, objectX, objectY;
 		headX = head.getX();
 		headY = head.getY();
+		if(mouse != null)
+			if(headX == mouse.getX() && headY == mouse.getY()) {
+				score += mouse.getPoints();
+				life += mouse.getExtraLife();
+				addLength(mouse.getExtraLength());
+				delay(FoodType.Mouse,mouse.getSecondsBuffer());
+				this.mouse = null;
+			}
+		
 
-		if(headX == mouse.getX() && headY == mouse.getY()) {
-			mouse.setX(-50);
-			mouse.setY(-50);
-			score += mouse.getPoints();
-			life += mouse.getExtraLife();
-			addLength(mouse.getExtraLength());
-			delay(FoodType.Mouse,mouse.getSecondsBuffer());
-		}
 		// Iterate through all the objects that are currently exist	
 		for(int i = 0; i < ObjectList.size(); ++i){			
 			objectX = ObjectList.get(i).getX();
@@ -302,7 +299,7 @@ public class Board {
 				}
 			}		
 		}
-		
+
 	}
 	/**
 	 * Method to generate a new object in the game
@@ -317,9 +314,6 @@ public class Board {
 			}
 			else
 				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
-			
-			System.out.println(type+"  "+foodX+"  "+foodY);
-
 		}
 		else{
 			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
@@ -425,7 +419,7 @@ public class Board {
 		snake.setStart();
 		ObjectList.clear();
 	}
-	
+
 	//******************************** GETTERS & SETTERS ******************************************
 
 	public Snake getSnake() {
@@ -437,7 +431,7 @@ public class Board {
 	}
 
 	public Mouse getMouse() {
-		return mouse;
+		return this.mouse;
 	}
 
 
