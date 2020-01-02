@@ -22,7 +22,7 @@ public class Main extends Application{
 		Fonts.loadMinecraftFont();
 		if(NoOtherInstanceRunning(f))
 		{	
-			//SysData.InitializeGame();
+			SysData.InitializeGame();
 			launch(args);
 			f.deleteOnExit();
 		}

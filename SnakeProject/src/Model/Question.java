@@ -83,10 +83,15 @@ public class Question extends SnakeFood{
 		this.correct_ans = correct_ans;
 	}
 
-
-
 	
-	
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
 	@Override
 	public String toString() {
