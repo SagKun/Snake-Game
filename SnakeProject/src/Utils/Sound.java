@@ -24,7 +24,7 @@ public class Sound {
 	public Sound(){
 		// getting the music file from Utils directory
 		try {
-			sound = new Media(getClass().getResource("/Utils/Motivated.mp3").toURI().toString());
+			sound = new Media(getClass().getResource("/Utils/Sound/Motivated.mp3").toURI().toString());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

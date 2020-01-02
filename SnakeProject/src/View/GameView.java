@@ -2,6 +2,14 @@ package View;
 
 
 import Main.Main;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.ResourceBundle;
+
 import Controller.HistoryController;
 import Model.*;
 import Utils.Fonts;
