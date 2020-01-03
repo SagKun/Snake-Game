@@ -16,10 +16,9 @@
 
 
 .jfx-button{
-	-fx-background-color: linear-gradient(to bottom , #C6ECAE , #A3C28F);
-	-fx-background-radius: 10;
-	-fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-	-fx-effect: dropshadow( gaussian , #A3C28F , 4,0,6,5 );
+	-fx-background-color: Transparent;
+	-fx-border-color: Transparent;
+	-fx-border-radius: 50px;
 	-fx-font-color: white;
 	-fx-font-size: 20px;
 	-fx-font-weight:bold;

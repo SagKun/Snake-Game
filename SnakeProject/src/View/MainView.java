@@ -9,15 +9,24 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import Utils.Fonts;
+import animatefx.animation.Pulse;
+import animatefx.animation.ZoomOut;
+import animatefx.animation.ZoomOutDown;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class MainView implements Initializable{
@@ -27,18 +36,18 @@ public class MainView implements Initializable{
 	    private AnchorPane mainView;
 
 	    @FXML
-	    private JFXButton play;
+	    private Label play;
 
 	    @FXML
-	    private JFXButton highscores;
+	    private Label highscores;
 
 	    @FXML
-	    private JFXButton questions;
+	    private Label questions;
 	    
 	    @FXML
-	    private JFXButton exit;
+	    private Label exit;
 		private Stage stage;
-
+		 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			
@@ -46,26 +55,40 @@ public class MainView implements Initializable{
 			highscores.setFont(Fonts.minecraft);
 			questions.setFont(Fonts.minecraft);
 			exit.setFont(Fonts.minecraft);
-			
+			new Pulse(play).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+			new Pulse(highscores).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+			new Pulse(questions).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+			new Pulse(exit).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+
+
 		}
 		
 		
-	    public void play(ActionEvent event) {
-			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
-				StackPane pane  = loader.load();
-				pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
-				mainView.getChildren().removeAll(mainView.getChildren());
-				mainView.getChildren().add(pane);
-				
-				GameView view = (GameView)loader.getController();		
-				view.setStage((Stage)pane.getScene().getWindow());
-				view.resume();			
-			}
+	    public void play(MouseEvent event) {
 			
-			catch (IOException e) {
-				e.printStackTrace();
-			}
+				new ZoomOut(play).setCycleCount(1).setSpeed(0.2).play();
+				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						try {
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+							StackPane pane  = loader.load();
+							pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
+							mainView.getChildren().removeAll(mainView.getChildren());
+							mainView.getChildren().add(pane);
+							
+							GameView view = (GameView)loader.getController();		
+							view.setStage((Stage)pane.getScene().getWindow());
+							view.resume();			
+						}
+						
+						catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}) , new KeyFrame(Duration.seconds(5)));
+				timeline.play();
+				
 		}
 
 		public Stage getStage() {
@@ -76,12 +99,6 @@ public class MainView implements Initializable{
 			this.stage = stage;
 		}
 	
-		public void addShadowOnHover()
-		{
-		//Adding the shadow when the mouse cursor is on
-			DropShadow shadow = new DropShadow();
-			play.setEffect(shadow);
-		}
 		
-	
+		
 }

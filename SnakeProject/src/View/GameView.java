@@ -1,24 +1,28 @@
 package View;
 
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Calendar;
+
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
-import Main.Main;
-import Controller.HistoryController;
+
 import Model.*;
 import Utils.Fonts;
-import animatefx.animation.Bounce;
+
+import animatefx.animation.Hinge;
+import animatefx.animation.Pulse;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -26,13 +30,14 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
+
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 import javafx.util.Duration;
 
 public class GameView implements Initializable {
@@ -42,9 +47,17 @@ public class GameView implements Initializable {
 
 
 	private Snake snake;
+    @FXML
+    private ImageView mute;
+
+    @FXML
+    private ImageView burger;
+
+    @FXML
+    private ImageView unmute;
 	@FXML
 	private StackPane stackPane;
-	
+
 	@FXML
 	private Pane pane;
 
@@ -67,18 +80,30 @@ public class GameView implements Initializable {
 	private Label scoreField;
 
 	@FXML
+	private Label gameOver;
+	@FXML
 	private ImageView menuBtn;
 
 	@FXML
 	private Text lifeAmount;
 
 	@FXML
-	private ImageView pressToPlay;
+	private Label pressToPlay;
+
+	@FXML
+	private Label scoreLabel;
+
+	@FXML
+	private Label livesLabel;
 
 	@FXML
 	private ImageView arrows;
 
+	@FXML
+	private AnchorPane popup;
 
+	@FXML
+	private BorderPane borderPane;
 	/**
 	 * Actual state of the game
 	 */
@@ -132,8 +157,16 @@ public class GameView implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	    scoreField.setFont(Fonts.minecraft);
-	    new Bounce(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.40).play();
+		scoreField.setFont(Fonts.minecraft);
+		scoreLabel.setFont(Fonts.minecraft);
+		livesLabel.setFont(Fonts.minecraft);
+		pressToPlay.setFont(Fonts.minecraft);
+
+		new Pulse(scoreField).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		new Pulse(scoreLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		new Pulse(livesLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		new Pulse(pressToPlay).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
+
 		blur(pane);
 		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 		headImage.setX(snake.getHead().getX());
@@ -222,7 +255,7 @@ public class GameView implements Initializable {
 					 HistoryController history = new HistoryController();
 					 history.addScoreIfTopTen(p);
 					 */
-					
+
 					stop();
 				}
 				// when game is running, make movement
@@ -370,21 +403,9 @@ public class GameView implements Initializable {
 						if (pause == false) {
 							pause = true;
 							resume = false;	
-							blur(stackPane);
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
-							Parent root;
-							try {
-								Stage pauseStage=new Stage();
-								root = loader.load();
-								Scene scene = new Scene(root);
-								pauseStage.setScene(scene);
-								pauseStage.setResizable(false);
-								pauseStage.initStyle(StageStyle.UNDECORATED);
-								pauseStage.show();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+							loadPause();
+
+
 						} else {
 							resume = true;
 							pause = false;
@@ -533,10 +554,10 @@ public class GameView implements Initializable {
 	}
 
 	public void blur(Region reg) {
-	    ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-	    GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
-	    adj.setInput(blur);
-	    reg.setEffect(adj);
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+		GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
+		adj.setInput(blur);
+		reg.setEffect(adj);
 	}
 	// update the gui of the life of a player
 	public void updateLife() {
@@ -548,6 +569,12 @@ public class GameView implements Initializable {
 			life3.setVisible(false);
 			life = "";
 			lifeAmount.setText(life);
+			gameOver.setVisible(true);
+			gameOver.setFont(Fonts.minecraft);
+			blur(pane);
+			new Hinge(gameOver).setCycleCount(1).setSpeed(0.5).play();                                
+			loadGameoverDelay();
+
 			break;
 		case 1:
 			life1.setVisible(true);
@@ -578,6 +605,52 @@ public class GameView implements Initializable {
 			lifeAmount.setText(life);
 			break;
 		}
-		
+
+	}
+
+	public void loadPause()
+	{
+		try {
+			blur(borderPane);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+			AnchorPane popupPane;
+			popupPane = loader.load();
+			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+			popup.getChildren().removeAll(popup.getChildren());
+			popup.getChildren().add(popupPane);
+			popup.setVisible(true);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void loadGameoverDelay()
+	{
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				loadGameOver();;
+			}
+		}) , new KeyFrame(Duration.seconds(5)));
+		timeline.play();
+	}
+
+
+
+	public void loadGameOver()
+	{
+		try {
+			blur(borderPane);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GameOver.fxml"));
+			AnchorPane popupPane;
+			popupPane = loader.load();
+			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+			popup.getChildren().removeAll(popup.getChildren());
+			popup.getChildren().add(popupPane);
+			popup.setVisible(true);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

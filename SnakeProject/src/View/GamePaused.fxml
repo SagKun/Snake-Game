@@ -3,29 +3,17 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="550.0" prefWidth="457.0" styleClass="AnchorPane">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" styleClass="AnchorPane">
          <children>
-            <Label id="Snake_Label" layoutX="100.0" layoutY="14.0" text="Game Paused" />
-            <JFXButton fx:id="returnToGameBtn" layoutX="130.0" layoutY="96.0" prefHeight="30.0" prefWidth="180.0" text="Resume To Game" />
-            <JFXButton fx:id="instructionsBtn" layoutX="130.0" layoutY="161.0" prefHeight="30.0" prefWidth="180.0" text="Instructions" />
-            <JFXButton fx:id="newGameBtn" layoutX="130.0" layoutY="226.0" prefHeight="30.0" prefWidth="180.0" text="Start New Game" />
-            <JFXButton fx:id="backToMenuBtn" layoutX="130.0" layoutY="294.0" prefHeight="30.0" prefWidth="180.0" text="Back To Menu" />
-            <ImageView fx:id="arrows" fitHeight="127.0" fitWidth="202.0" layoutX="136.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@photos/arrowKeys.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="pressToPlay" fitHeight="37.0" fitWidth="381.0" layoutX="90.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@photos/Press%20To%20Play.gif" />
-               </image>
-            </ImageView>
+            <Label id="Snake_Label" layoutX="109.0" layoutY="14.0" text="Game Paused" />
+            <JFXButton fx:id="returnToGameBtn" layoutX="129.0" layoutY="117.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Resume To Game" />
+            <JFXButton fx:id="instructionsBtn" layoutX="129.0" layoutY="225.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Instructions" />
+            <JFXButton fx:id="newGameBtn" layoutX="129.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Start New Game" />
+            <JFXButton fx:id="backToMenuBtn" layoutX="129.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Back To Menu" />
          </children>
       </AnchorPane>
    </children>
