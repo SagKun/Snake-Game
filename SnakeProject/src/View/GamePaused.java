@@ -1,36 +1,64 @@
 package View;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 
+import Model.GameState;
+import Utils.Fonts;
+import animatefx.animation.Pulse;
+import animatefx.animation.ZoomOut;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
-public class GamePaused {
+public class GamePaused implements Initializable {
 
-    @FXML
-    private AnchorPane pauseAnchor;
 
-    @FXML
-    private JFXButton returnToGameBtn;
+	@FXML
+	private AnchorPane pauseAnchor;
 
-    @FXML
-    private JFXButton instructionsBtn;
+	@FXML
+	private Label resumeLabel;
 
-    @FXML
-    private JFXButton newGameBtn;
+	@FXML
+	private Label endLabel;
 
-    @FXML
-    private JFXButton backToMenuBtn;
+	@FXML
+	private Label exitLabel;
 
-    @FXML
-    private ImageView arrows;
-
-    @FXML
-    private ImageView pressToPlay;
-
+	@FXML
+	private Label gamePausedLabel;
+    
+    @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+    	resumeLabel.setFont(Fonts.minecraft30);
+		 endLabel.setFont(Fonts.minecraft30);
+		 exitLabel.setFont(Fonts.minecraft30);
+		 gamePausedLabel.setFont(Fonts.minecraft50);
+		 new Pulse(resumeLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		 new Pulse(endLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		 new Pulse(exitLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		 new Pulse(gamePausedLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+	}
+    
     @FXML
     void backToMenuBtn(ActionEvent event) {
 
@@ -47,10 +75,60 @@ public class GamePaused {
     }
 
     @FXML
-    void resumeGameBtn(ActionEvent event) {
-    	Stage stage  = (Stage)this.returnToGameBtn.getScene().getWindow();
+    void resumeGame(MouseEvent event ) {
     	
-    	stage.close();
+    	new ZoomOut(resumeLabel).setCycleCount(1).setSpeed(0.7).play();
+    	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				pauseAnchor.setVisible(false);
+			}
+		}) , new KeyFrame(Duration.seconds(1)));
+	timeline.play();
+
     }
+
+    @FXML
+    void endGame(MouseEvent event ) {
+    	
+    	new ZoomOut(endLabel).setCycleCount(1).setSpeed(0.7).play();
+    	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+			Stage stage=(Stage) pauseAnchor.getScene().getWindow();
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
+				AnchorPane pane  = loader.load();
+				Scene scene = new Scene(pane);
+				stage.setScene(scene);
+				//stage.show();	
+			}
+			
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		}) , new KeyFrame(Duration.seconds(1)));
+	timeline.play();
+
+    }
+    
+    @FXML
+    void exit(MouseEvent event ) {
+    	
+    	new ZoomOut(exitLabel).setCycleCount(1).setSpeed(0.7).play();
+    	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				Platform.exit();
+				System.exit(0);;
+			}
+		}) , new KeyFrame(Duration.seconds(1)));
+	timeline.play();
+
+    }
+    
+	
 
 }

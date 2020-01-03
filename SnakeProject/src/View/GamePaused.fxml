@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GamePaused">
+<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GamePaused">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" styleClass="AnchorPane">
          <children>
-            <Label id="Snake_Label" layoutX="109.0" layoutY="14.0" text="Game Paused" />
-            <JFXButton fx:id="returnToGameBtn" layoutX="129.0" layoutY="117.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Resume To Game" />
-            <JFXButton fx:id="instructionsBtn" layoutX="129.0" layoutY="225.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Instructions" />
-            <JFXButton fx:id="newGameBtn" layoutX="129.0" layoutY="335.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Start New Game" />
-            <JFXButton fx:id="backToMenuBtn" layoutX="129.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="200.0" text="Back To Menu" />
-            <Label id="Snake_Label" layoutX="100.0" layoutY="14.0" text="Game Paused" />
-            <JFXButton fx:id="returnToGameBtn" layoutX="130.0" layoutY="96.0" onAction="#resumeGameBtn" prefHeight="30.0" prefWidth="180.0" text="Resume Game" />
-            <JFXButton fx:id="instructionsBtn" layoutX="130.0" layoutY="161.0" onAction="#instructionBtn" prefHeight="30.0" prefWidth="180.0" text="Instructions" />
-            <JFXButton fx:id="newGameBtn" layoutX="130.0" layoutY="226.0" onAction="#newGameBtn" prefHeight="30.0" prefWidth="180.0" text="New Game" />
-            <JFXButton fx:id="backToMenuBtn" layoutX="130.0" layoutY="294.0" onAction="#backToMenuBtn" prefHeight="30.0" prefWidth="180.0" text="Back To Menu" />
-            <ImageView fx:id="arrows" fitHeight="127.0" fitWidth="202.0" layoutX="136.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@photos/arrowKeys.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="pressToPlay" fitHeight="37.0" fitWidth="381.0" layoutX="90.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@photos/Press%20To%20Play.gif" />
-               </image>
-            </ImageView>
+            <Label fx:id="resumeLabel" layoutX="117.0" layoutY="161.0" onMouseClicked="#resumeGame" text="RESUME GAME" textFill="#fffdfd">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="endLabel" layoutX="144.0" layoutY="275.0" onMouseClicked="#endGame" text="END GAME" textFill="#fffdfd">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="exitLabel" layoutX="190.0" layoutY="397.0" onMouseClicked="#exit" text="EXIT" textFill="#fffdfd">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="gamePausedLabel" layoutX="38.0" layoutY="14.0" text="GAME PAUSED" textFill="#fffdfd">
+               <font>
+                  <Font name="System Bold" size="55.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

@@ -51,10 +51,10 @@ public class MainView implements Initializable{
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			
-			play.setFont(Fonts.minecraft);
-			highscores.setFont(Fonts.minecraft);
-			questions.setFont(Fonts.minecraft);
-			exit.setFont(Fonts.minecraft);
+			play.setFont(Fonts.minecraft50);
+			highscores.setFont(Fonts.minecraft50);
+			questions.setFont(Fonts.minecraft50);
+			exit.setFont(Fonts.minecraft50);
 			new Pulse(play).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 			new Pulse(highscores).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 			new Pulse(questions).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
@@ -67,7 +67,7 @@ public class MainView implements Initializable{
 	    public void play(MouseEvent event) {
 			
 				new ZoomOut(play).setCycleCount(1).setSpeed(0.2).play();
-				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						try {
@@ -86,7 +86,7 @@ public class MainView implements Initializable{
 							e.printStackTrace();
 						}
 					}
-				}) , new KeyFrame(Duration.seconds(5)));
+				}) , new KeyFrame(Duration.seconds(1.5)));
 				timeline.play();
 				
 		}

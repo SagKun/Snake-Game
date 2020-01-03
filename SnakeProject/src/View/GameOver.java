@@ -28,7 +28,7 @@ public class GameOver implements Initializable{
 	    private JFXButton scores;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		gameOver.setFont(Fonts.minecraft);
+		gameOver.setFont(Fonts.minecraft50);
 		
 	}
 
