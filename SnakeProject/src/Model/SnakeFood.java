@@ -35,7 +35,7 @@ public class SnakeFood extends GameObject {
 	
 	
 
-	public SnakeFood(int x,int y, Level level, int points)
+	public SnakeFood(int x,int y, int points)
 	{
 		super(x, y);
 		secondsBuffer = 0;

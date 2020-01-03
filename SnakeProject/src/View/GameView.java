@@ -1,10 +1,17 @@
 package View;
 
+
+import Main.Main;
+
 import java.io.IOException;
+
 
 import java.net.URL;
 import java.util.Arrays;
 
+
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -14,6 +21,8 @@ import Utils.Fonts;
 
 import animatefx.animation.Hinge;
 import animatefx.animation.Pulse;
+import Utils.Sound;
+import animatefx.animation.Bounce;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,10 +44,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
+import javafx.stage.StageStyle;
 
 public class GameView implements Initializable {
 
@@ -133,16 +145,26 @@ public class GameView implements Initializable {
 
 	private Stage stage;
 
+	/**
+	 * MediaPlayer object, controls the music played in game
+	 */
+	private MediaPlayer audio;
+
 	public static final int WIDTH = 960;
 	public static final int HEIGHT = 624;
 
+
+	private int k = 0;
+	private int lastIndex;
+
 	public GameView() {
-		board = new Board();
+		board = Board.getInstance();
 		snake = board.getSnake();	
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
 		head = snake.getHead();
 		keyActive = startup = true;
+		audio = new Sound().getAudio();
 	}
 
 
@@ -167,6 +189,7 @@ public class GameView implements Initializable {
 		new Pulse(livesLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 		new Pulse(pressToPlay).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 
+		new Bounce(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.40).play();
 		blur(pane);
 		ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 		headImage.setX(snake.getHead().getX());
@@ -174,7 +197,7 @@ public class GameView implements Initializable {
 		pane.getChildren().add(headImage);
 
 
-		int helpX, helpY, snakeY, snakeX;
+		int snakeY, snakeX;
 
 		for(int i = 1; i < snake.getSize(); ++i) {
 			snakeX = snake.getBodyPart(i).getX();
@@ -227,22 +250,25 @@ public class GameView implements Initializable {
 				}
 				// when game paused
 				if (pause && !resume) {
+					audio.stop();
 					state = GameState.Paused;
 					stop();
 				}
 				// when game resumed
 				if (resume && !pause) {
 					state = GameState.Running;
+					audio.play();
 					resume = false;
 				}
 				// when game started or restarted
 				if (start && (state == GameState.Finished || state == GameState.Started)) {
+					up = down = left = right = false;
 					restart();
 					start = false;
 				}
 				if (state == GameState.Finished) {
-					//TODO Case when game ended but more lives to play - semi reset
 					updateLife();
+					up = down = left = right = false;
 					restart();
 					board.initializeObjects();
 				}
@@ -256,10 +282,12 @@ public class GameView implements Initializable {
 					 history.addScoreIfTopTen(p);
 					 */
 
+					audio.stop();
 					stop();
 				}
 				// when game is running, make movement
 				if (state == GameState.Running) {
+					audio.play();
 					if (i == speedConstraint) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
@@ -267,12 +295,16 @@ public class GameView implements Initializable {
 					}
 					++i;
 
-					if (j == mouseSpeedConstraint) { // control the speed of snake
-						//mouseMove();
+					if (j >= mouseSpeedConstraint && board.getMouse() != null) {// control the speed of snake
+						if(k % 5 == 0) {
+							lastIndex = mouseMove(5);
+						}
+						else
+							lastIndex = mouseMove(lastIndex);
+						k++;
 						j = 0; // counter to slow down the mouse
 					}
 					++j;
-
 				}
 
 				update(); // updating the game parameters, positions, etc.
@@ -328,11 +360,12 @@ public class GameView implements Initializable {
 				fruitIcon.setY(helpY);
 				pane.getChildren().add(fruitIcon);
 			}
-
-			ImageView mouseIcon =  new ImageView("View/icons/GameObjects/mouse.png");
-			mouseIcon.setX(board.getMouse().getX());
-			mouseIcon.setY(board.getMouse().getY());
-			pane.getChildren().add(mouseIcon);
+			if(board.getMouse() != null) {
+				ImageView mouseIcon =  new ImageView("View/icons/GameObjects/mouse.png");
+				mouseIcon.setX(board.getMouse().getX());
+				mouseIcon.setY(board.getMouse().getY());
+				pane.getChildren().add(mouseIcon);
+			}
 		}
 	}
 
@@ -367,6 +400,14 @@ public class GameView implements Initializable {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case UP:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!down && keyActive && state == GameState.Running) {
 						up = true;
 						left = false;
@@ -375,6 +416,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case DOWN:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!up && keyActive && (left || right) && state == GameState.Running) {
 						down = true;
 						left = false;
@@ -383,6 +432,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case LEFT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!right && keyActive && state == GameState.Running) {
 						left = true;
 						up = false;
@@ -391,6 +448,14 @@ public class GameView implements Initializable {
 					}
 					break;
 				case RIGHT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
 					if (!left && keyActive && state == GameState.Running) {
 						right = true;
 						up = false;
@@ -404,8 +469,28 @@ public class GameView implements Initializable {
 							pause = true;
 							resume = false;	
 							loadPause();
-
-
+							blur(stackPane);
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+							Parent root;
+							try {
+								Stage pauseStage=new Stage();
+								root = loader.load();
+								Scene scene = new Scene(root);
+								pauseStage.setScene(scene);
+								pauseStage.setResizable(false);
+								pauseStage.initStyle(StageStyle.UNDECORATED);
+								pauseStage.initModality(Modality.APPLICATION_MODAL);
+								pauseStage.setOnHidden(Event -> {
+									stackPane.setEffect(null);
+									resume = true;
+									pause = false;
+									resume();
+								});
+								pauseStage.show();				
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						} else {
 							resume = true;
 							pause = false;
@@ -413,20 +498,6 @@ public class GameView implements Initializable {
 						}
 					}
 					break;
-				case ENTER: { // start or restart the game
-					if (state == GameState.Started)
-					{
-						pane.setEffect(null);
-						arrows.setVisible(false);
-						pressToPlay.setVisible(false);
-						start = true;
-					}
-					if (state == GameState.Finished) {
-						start = true;
-						resume();
-					}
-				}
-				break;
 				case ESCAPE: // exit program
 					System.exit(0);
 					break;
@@ -479,17 +550,21 @@ public class GameView implements Initializable {
 	 * Method to handle mouse's position and movement on board
 	 * 
 	 */
-	private void mouseMove() {
+	private int mouseMove(int direction) {
 		Random rand = new Random();
 		List<String> movingOptions = Arrays.asList("UP","DOWN","LEFT","RIGHT");
 		Boolean canMove = false;
 
 		int mouseX = board.getMouse().getX();
 		int mouseY = board.getMouse().getY();
-		int nextX,nextY;
+		int nextX,nextY,index;
 
 		while(!canMove) {
-			int index = rand.nextInt(movingOptions.size());
+
+			if(direction == 5)
+				index = rand.nextInt(movingOptions.size());
+			else
+				index = direction;
 			switch(movingOptions.get(index)){
 
 			case "UP":
@@ -498,16 +573,22 @@ public class GameView implements Initializable {
 				if(board.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
+					return 0;
 				}
+				else 
+					direction = 5;
 				break;
 
 			case "DOWN":
-				nextX = 0;
+				nextX = mouseX;
 				nextY = mouseY + GameObject.SIZE;
 				if(board.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
+					return 1;
 				}
+				else 
+					direction = 5;
 				break;
 
 			case "LEFT":
@@ -516,7 +597,10 @@ public class GameView implements Initializable {
 				if(board.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
+					return 2;
 				}
+				else 
+					direction = 5;
 				break;
 
 			case "RIGHT":
@@ -525,10 +609,14 @@ public class GameView implements Initializable {
 				if(board.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
+					return 3;
 				}
+				else 
+					direction = 5;
 				break;
 			}
 		}
+		return direction;
 	}
 
 
@@ -537,10 +625,10 @@ public class GameView implements Initializable {
 	 */
 	private void restart() {
 		state = GameState.Running;
-		dx = dy = 0;
-		up = down = left = right = false;
+		dx = dy = k = 0;
+		//up = down = left = right = false;
 		speedConstraint = 8;
-		mouseSpeedConstraint = 6;
+		mouseSpeedConstraint = 12;
 	}
 
 	public void setStage(Stage stage) {
@@ -652,5 +740,6 @@ public class GameView implements Initializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 	}
 }

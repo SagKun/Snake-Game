@@ -6,28 +6,28 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="420.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="477.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="420.0" styleClass="AnchorPane">
+      <AnchorPane prefHeight="550.0" prefWidth="477.0" styleClass="AnchorPane">
          <children>
-            <Label id="Snake_Label" layoutX="45.0" layoutY="7.0" text="Game Instructions" />
-            <TableView fx:id="foodTable" layoutX="28.0" layoutY="53.0" prefHeight="159.0" prefWidth="364.0" styleClass="tableInstructions">
+            <Button fx:id="returnBtn" layoutX="180.0" layoutY="506.0" mnemonicParsing="false" onAction="#returnToMenu" prefWidth="105.0" styleClass="small-jfx-button" text="Return" />
+            <TableView fx:id="foodTable" layoutX="28.0" layoutY="53.0" prefHeight="214.0" prefWidth="405.0" styleClass="tableInstructions">
               <columns>
-                <TableColumn fx:id="food" prefWidth="96.0" text="Food" />
-                <TableColumn fx:id="foodPoints" text="Points" />
-                  <TableColumn fx:id="lengthAdd" prefWidth="114.0" text="Length Add" />
-                  <TableColumn fx:id="lifeAdd" prefWidth="73.0" text="Life Add" />
+                <TableColumn fx:id="food" prefWidth="107.0" text="Food" />
+                <TableColumn fx:id="foodPoints" prefWidth="115.0" text="Points" />
+                  <TableColumn fx:id="lengthAdd" prefWidth="99.0" text="Length Add" />
+                  <TableColumn fx:id="lifeAdd" prefWidth="83.0" text="Life Add" />
               </columns>
             </TableView>
-            <TableView fx:id="questionTable" layoutX="28.0" layoutY="222.0" prefHeight="121.0" prefWidth="364.0" styleClass="tableInstructions">
+            <TableView fx:id="questionTable" layoutX="28.0" layoutY="282.0" prefHeight="203.0" prefWidth="405.0" styleClass="tableInstructions">
               <columns>
-                <TableColumn fx:id="question" prefWidth="61.0" text="Question" />
-                <TableColumn fx:id="level" prefWidth="49.0" text="Level" />
-                  <TableColumn fx:id="questionPoints" prefWidth="124.0" text="Right Answer Points" />
-                  <TableColumn fx:id="penalty" prefWidth="129.0" text="Penalty For Mistake" />
+                <TableColumn fx:id="question" prefWidth="76.0" text="Question" />
+                <TableColumn fx:id="level" prefWidth="79.0" text="Level" />
+                  <TableColumn fx:id="questionPoints" prefWidth="131.0" text="Right Answer Points" />
+                  <TableColumn fx:id="penalty" prefWidth="118.0" text="Penalty For Mistake" />
               </columns>
             </TableView>
-            <Button fx:id="returnBtn" layoutX="164.0" layoutY="350.0" mnemonicParsing="false" styleClass="jfx-button" text="Return" />
+            <Label id="Snake_Label" layoutX="74.0" layoutY="6.0" text="Game Instructions" />
          </children>
       </AnchorPane>
    </children>

@@ -20,12 +20,18 @@ public class Question extends SnakeFood{
 
 	
 	public Question(int x,int y,String question, int points, Level level, ArrayList<String> answers, String correct_ans,String team, int reducePoints) {
-		super(x,y, level, points);
+		super(x,y, points);
 		Question = question;
 		this.level = level;
 		this.author = team;
 		this.answers = answers;
 		this.correct_ans = correct_ans;
+		this.reducePoints = reducePoints;
+	}
+	
+	public Question(int x,int y, int points, Level level, int reducePoints) {
+		super(x,y, points);
+		this.level = level;
 		this.reducePoints = reducePoints;
 	}
 
@@ -77,10 +83,15 @@ public class Question extends SnakeFood{
 		this.correct_ans = correct_ans;
 	}
 
-
-
 	
-	
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
 	@Override
 	public String toString() {

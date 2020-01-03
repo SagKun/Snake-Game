@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HistoryView">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HistoryView">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="900.0">
          <top>
-            <AnchorPane id="borderPane_Custom" fx:id="anchor" prefHeight="600.0" prefWidth="900.0" stylesheets="@.css" BorderPane.alignment="CENTER">
+            <AnchorPane id="borderPane_Custom" fx:id="anchor" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" BorderPane.alignment="CENTER">
                <children>
                   <TableView fx:id="table" layoutX="169.0" layoutY="89.0" prefHeight="400.0" prefWidth="600.0" styleClass="jfx-button">
                     <columns>

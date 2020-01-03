@@ -3,7 +3,6 @@ package Main;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import Model.SysData;
 import Utils.Fonts;
 import javafx.application.Application;
@@ -16,15 +15,14 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application{
 
-
+	
 
 	public static void main(String args[]) {
-		
 		File f = new File("checkFile");
 		Fonts.loadMinecraftFont();
 		if(NoOtherInstanceRunning(f))
 		{	
-			//SysData.InitializeGame();
+			SysData.InitializeGame();
 			launch(args);
 			f.deleteOnExit();
 		}

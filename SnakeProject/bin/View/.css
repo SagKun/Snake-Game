@@ -24,10 +24,27 @@
 	-fx-font-weight:bold;
 }
 
+.small-jfx-button{
+	-fx-background-color: linear-gradient(to bottom , #C6ECAE , #A3C28F);
+	-fx-background-radius: 10;
+	-fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+	-fx-effect: dropshadow( gaussian , #A3C28F , 4,0,6,5 );
+	-fx-font-color: white;
+	-fx-font-size: 14px;
+	-fx-font-weight:bold;
+}
 
 
 #Snake_Label{
 	-fx-font-size: 40px 'david';
+	-fx-font-family: Georgia;
+	-fx-text-fill: #A99646;
+	-fx-opacity:0.98;
+	-fx-effect: dropshadow(gaussian,#A99646,8,0,0,0);
+}
+
+#Small_Snake_Label{
+	-fx-font-size: 20px 'david';
 	-fx-font-family: Georgia;
 	-fx-text-fill: #A99646;
 	-fx-opacity:0.98;
@@ -45,7 +62,7 @@
 	-fx-effect: dropshadow( gaussian , #A3C28F , 4,0,6,5 );
 	-fx-font-color: white;
 	-fx-font-family: David;
-	-fx-font-size: 16px;
+	-fx-font-size: 14px;
 	-fx-font-weight:bold;
 
 }
