@@ -27,6 +27,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -68,6 +69,10 @@ public class WizardView implements Initializable{
 
 	@FXML
 	private TableColumn<QuestionsForWizardTable, String> correctColumn;
+	
+    @FXML
+    private TableColumn<QuestionsForWizardTable, Button> updateColumn;
+	
 	@FXML
     private AnchorPane anchorPane;
 
@@ -155,7 +160,16 @@ public class WizardView implements Initializable{
 
 	@FXML
 	void confirmEdit(ActionEvent event) {
-
+		QuestionsForWizardTable oldQuestion;
+		QuestionsForWizardTable newQuestion;
+		for(Object obj : questionsList.toArray()) {
+			QuestionsForWizardTable question = (QuestionsForWizardTable)obj;
+			if(question.getEdit().isPressed())
+			{
+				oldQuestion = question;
+			}
+			
+		}
 	}
 
 	@FXML
@@ -206,14 +220,36 @@ public class WizardView implements Initializable{
 		option2Column.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("option2"));
 		option3Column.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("option3"));
 		correctColumn.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("correctAnswer"));
+		updateColumn.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, Button>("edit"));
 		// setting editable
 		questionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		questionColumn.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setQuestion(e.getNewValue());
+		});
 		levelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		levelColumn.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setLevel(e.getNewValue());
+		});
 		authorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		authorColumn.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setAuthor(e.getNewValue());
+		});
 		option1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option1Column.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption1(e.getNewValue());
+		});
 		option2Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option2Column.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption2(e.getNewValue());
+		});
 		option3Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option3Column.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption3(e.getNewValue());
+		});
 		correctColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		correctColumn.setOnEditCommit(e -> {
+			e.getTableView().getItems().get(e.getTablePosition().getRow()).setCorrectAnswer(e.getNewValue());
+		});
 		new Pulse(resume).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		resume.setFont(Fonts.minecraft50);
 		ArrayList<Level> levels = new ArrayList<>();
@@ -242,5 +278,8 @@ public class WizardView implements Initializable{
 		option2Field.clear();
 		option3Field.clear();
 	}
+
+	
+	
 
 }

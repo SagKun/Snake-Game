@@ -8,23 +8,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="borderPane_Custom" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
+<AnchorPane id="borderPane_Custom" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
    <children>
       <Label id="Snake_Label" layoutX="364.0" layoutY="71.0" text="Questions Wizard" />
       <TableView fx:id="questionsTable" layoutX="91.0" layoutY="147.0" prefHeight="343.0" prefWidth="788.0">
         <columns>
-          <TableColumn fx:id="questionColumn" prefWidth="118.0" text="Question" />
-          <TableColumn fx:id="levelColumn" prefWidth="75.0" text="Level" />
-            <TableColumn fx:id="authorColumn" prefWidth="78.0" text="Author" />
-            <TableColumn fx:id="option1Column" prefWidth="149.0" text="Option 1" />
-            <TableColumn fx:id="option2Column" prefWidth="120.0" text="Option 2" />
-            <TableColumn fx:id="option3Column" minWidth="6.0" prefWidth="121.0" text="Option 3" />
-            <TableColumn fx:id="correctColumn" prefWidth="126.0" text="Correct Answer" />
+          <TableColumn fx:id="questionColumn" onEditCommit="#confirmEdit" prefWidth="118.0" text="Question" />
+          <TableColumn fx:id="levelColumn" onEditCommit="#confirmEdit" prefWidth="75.0" text="Level" />
+            <TableColumn fx:id="authorColumn" onEditCommit="#confirmEdit" prefWidth="78.0" text="Author" />
+            <TableColumn fx:id="option1Column" onEditCommit="#confirmEdit" prefWidth="94.0" text="Option 1" />
+            <TableColumn fx:id="option2Column" onEditCommit="#confirmEdit" prefWidth="100.0" text="Option 2" />
+            <TableColumn fx:id="option3Column" minWidth="6.0" onEditCommit="#confirmEdit" prefWidth="120.0" text="Option 3" />
+            <TableColumn fx:id="correctColumn" onEditCommit="#confirmEdit" prefWidth="118.0" text="Correct Answer" />
+            <TableColumn fx:id="updateColumn" prefWidth="83.0" text="Update" />
         </columns>
       </TableView>
       <Label fx:id="resume" layoutX="447.0" layoutY="638.0" onMouseClicked="#resumeToMenu" text="BACK" textFill="WHITE" />
       <JFXButton fx:id="removeBtn" layoutX="616.0" layoutY="558.0" onAction="#removeQuestion" styleClass="small-jfx-button" text="Remove Question" />
-      <JFXButton fx:id="editBtn" layoutX="469.0" layoutY="558.0" onAction="#confirmEdit" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Confirm Edit" />
       <JFXButton fx:id="addBtn" layoutX="323.0" layoutY="558.0" onAction="#addQuestion" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Add Question" />
       <TextField fx:id="questionField" layoutX="91.0" layoutY="498.0" prefHeight="25.0" prefWidth="115.0" promptText="Question" />
       <TextField fx:id="authorField" layoutX="290.0" layoutY="498.0" prefHeight="25.0" prefWidth="84.0" promptText="Author" />

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import Model.FoodFactory;
 import Model.Level;
 import Model.Question;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 
 public class QuestionsForWizardTable {
 	private String question;
@@ -14,9 +16,11 @@ public class QuestionsForWizardTable {
 	private String option2;
 	private String option3;
 	private String correctAnswer;
+	private Button edit;
 	
 	public QuestionsForWizardTable(Question q) {
 		super();
+		edit = new Button("Update");
 		this.question = q.getQuestion();
 		this.level = q.getLevel().toString();
 		this.author = q.getAuthor();
@@ -105,6 +109,14 @@ public class QuestionsForWizardTable {
 
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+
+	public Button getEdit() {
+		return edit;
+	}
+
+	public void setEdit(Button edit) {
+		this.edit = edit;
 	}
 	
 	

@@ -17,7 +17,7 @@ public class PlayersForTable {
 		this.nickForTable = p.getNickname();
 		this.scoreForTable = p.getScore();
 		Calendar cal = Calendar.getInstance();
-		this.dateForTable = cal.get(Calendar.DAY_OF_MONTH)+"-"+cal.get(Calendar.MONTH)+"-"+cal.get(Calendar.YEAR);
+		this.dateForTable = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR);
 	}
 	
 	public String getNickForTable() {
