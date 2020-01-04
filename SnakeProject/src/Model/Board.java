@@ -312,8 +312,13 @@ public class Board {
 			if(FoodType.valueOf (type) == FoodType.Mouse) {
 				this.mouse = (Mouse)factory.getFood(FoodType.Mouse, foodX, foodY);
 			}
-			else
+			else {
+				for(SnakeFood sf : ObjectList) {
+					if(sf.getType() == FoodType.valueOf(type))
+						return;
+				}
 				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
+			}
 		}
 		else{
 			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));

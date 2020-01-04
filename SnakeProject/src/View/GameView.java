@@ -60,14 +60,14 @@ public class GameView implements Initializable {
 
 
 	private Snake snake;
-	
+
 	@FXML
 	private ImageView mute;
 
 	@FXML
 	private ImageView burger;
 
-	
+
 	@FXML
 	private StackPane stackPane;
 
@@ -78,7 +78,7 @@ public class GameView implements Initializable {
 	private AnchorPane background;
 	@FXML
 	private AnchorPane anchorPane;
-	
+
 	@FXML
 	private ImageView life1;
 
@@ -152,7 +152,7 @@ public class GameView implements Initializable {
 	private BodyPart head;
 
 	private Stage stage;
-	
+
 	private Image muteImage;
 	private Image unmuteImage;
 
@@ -236,7 +236,7 @@ public class GameView implements Initializable {
 		}
 	}
 
-	
+
 
 	/**
 	 * The gameloop, handles user input, updates and renders the game
@@ -315,7 +315,7 @@ public class GameView implements Initializable {
 				// when game is running, make movement
 				if (state == GameState.Running) {
 					if(wasMuted)
-					audio.play();
+						audio.play();
 					if (i == speedConstraint) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
@@ -412,7 +412,7 @@ public class GameView implements Initializable {
 		int newScore=Integer.parseInt(scoreField.getText());
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
-			
+
 			Label floatingScore=new Label();
 			floatingScore.setStyle("-fx-text-fill: white;");
 			floatingScore.setFont(Fonts.minecraft30);
@@ -424,406 +424,402 @@ public class GameView implements Initializable {
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent actionEvent) {
-					
-						floatingScore.setVisible(false);		
+
+					floatingScore.setVisible(false);		
 				}
 			}) , new KeyFrame(Duration.seconds(4)));
 			timeline.play();
 		}
-				updateLife();
-				if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
-					state = GameState.Finished; //
-				}
-				else if(board.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
-					state = GameState.GameOver;
-			}
+		updateLife();
+		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
+			state = GameState.Finished; //
+		}
+		else if(board.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
+			state = GameState.GameOver;
+	}
 
-			/**
-			 * Method to handle pressed keys on scene given as argument
-			 * 
-			 * @param scene on which events are performed
-			 */
-			private void movement(Scene scene) {
+	/**
+	 * Method to handle pressed keys on scene given as argument
+	 * 
+	 * @param scene on which events are performed
+	 */
+	private void movement(Scene scene) {
 
-				pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
-					public void handle(KeyEvent e) {
-						switch (e.getCode()) {
-						case UP:
-							if (state == GameState.Started)
-							{
-								arrows.setVisible(true);
-								pressToPlay.setVisible(true);
-								pane.setEffect(null);
-								arrows.setVisible(false);
-								pressToPlay.setVisible(false);
-								start = false;
-								restart();
-							}
-							if (!down && keyActive && state == GameState.Running) {
-								up = true;
-								left = false;
-								right = false;
-								keyActive = false;
-							}
-							break;
-						case DOWN:
-							if (state == GameState.Started)
-							{
-								pane.setEffect(null);
-								arrows.setVisible(false);
-								pressToPlay.setVisible(false);
-								start = false;
-								restart();
-							}
-							if (!up && keyActive && (left || right) && state == GameState.Running) {
-								down = true;
-								left = false;
-								right = false;
-								keyActive = false;
-							}
-							break;
-						case LEFT:
-							if (state == GameState.Started)
-							{
-								pane.setEffect(null);
-								arrows.setVisible(false);
-								pressToPlay.setVisible(false);
-								start = false;
-								restart();
-							}
-							if (!right && keyActive && state == GameState.Running) {
-								left = true;
-								up = false;
-								down = false;
-								keyActive = false;
-							}
-							break;
-						case RIGHT:
-							if (state == GameState.Started)
-							{
-								pane.setEffect(null);
-								arrows.setVisible(false);
-								pressToPlay.setVisible(false);
-								start = false;
-								restart();
-							}
-							if (!left && keyActive && state == GameState.Running) {
-								right = true;
-								up = false;
-								down = false;
-								keyActive = false;
-							}
-							break;
-						case SPACE: // pause or resume game
-							if (state == GameState.Running || state == GameState.Paused) {
-								if (pause == false) {
-									pause = true;
-									resume = false;	
-									loadPause();
-
-								} else {
-									resume = true;
-									pause = false;
-									resume();
-								}
-							}
-							break;
-						case ESCAPE: // exit program
-							System.exit(0);
-							break;
-						default:
-							break;
-						}
+			public void handle(KeyEvent e) {
+				switch (e.getCode()) {
+				case UP:
+					if (state == GameState.Started)
+					{
+						arrows.setVisible(true);
+						pressToPlay.setVisible(true);
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
 					}
-				});
-
-				scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-					@Override
-					public void handle(KeyEvent event) {
+					if (!down && keyActive && state == GameState.Running) {
+						up = true;
+						left = false;
+						right = false;
+						keyActive = false;
 					}
-				});
-			}
-
-			/**
-			 * Method to handle snake's position and movement on board
-			 * 
-			 * @param dx - movement in X-axis, 1 for right, -1 for left
-			 * @param dy - movement in Y-axis, 1 for down, -1 for up
-			 */
-			private void snakeMove(int dx, int dy) {
-
-				if (dx != 0 || dy != 0) { // if snake is meant to move
-
-					// temporary variables to hold BodyParts
-					BodyPart prev = new BodyPart(head.getX(), head.getY()), next = new BodyPart(head.getX(), head.getY());
-
-					// move head in X-axis
-					head.setX(head.getX() + (dx * GameObject.SIZE));
-					// move head in Y-axis
-					head.setY(head.getY() + (dy * GameObject.SIZE));
-
-					// moving the snake's body, each point gets the position of the one in front
-					for (int i = 1; i < snake.getSize(); ++i) {
-
-						next.setX(snake.getBodyPart(i).getX());
-						next.setY(snake.getBodyPart(i).getY());
-
-						snake.getBodyPart(i).setX(prev.getX());
-						snake.getBodyPart(i).setY(prev.getY());
-						prev.setX(next.getX());
-						prev.setY(next.getY());
+					break;
+				case DOWN:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
 					}
-				}
-			}
-
-			/**
-			 * Method to handle mouse's position and movement on board
-			 * 
-			 */
-			private int mouseMove(int direction) {
-				Random rand = new Random();
-				List<String> movingOptions = Arrays.asList("UP","DOWN","LEFT","RIGHT");
-				Boolean canMove = false;
-
-				int mouseX = board.getMouse().getX();
-				int mouseY = board.getMouse().getY();
-				int nextX,nextY,index;
-
-				while(!canMove) {
-
-					if(direction == 5)
-						index = rand.nextInt(movingOptions.size());
-					else
-						index = direction;
-					switch(movingOptions.get(index)){
-
-					case "UP":
-						nextX = mouseX;
-						nextY = mouseY - GameObject.SIZE;
-						if(board.mouseCollision(nextX, nextY)) {
-							board.getMouse().setX(nextX);
-							board.getMouse().setY(nextY);
-							return 0;
-						}
-						else 
-							direction = 5;
-						break;
-
-					case "DOWN":
-						nextX = mouseX;
-						nextY = mouseY + GameObject.SIZE;
-						if(board.mouseCollision(nextX, nextY)) {
-							board.getMouse().setX(nextX);
-							board.getMouse().setY(nextY);
-							return 1;
-						}
-						else 
-							direction = 5;
-						break;
-
-					case "LEFT":
-						nextX = mouseX - GameObject.SIZE;
-						nextY = mouseY;
-						if(board.mouseCollision(nextX, nextY)) {
-							board.getMouse().setX(nextX);
-							board.getMouse().setY(nextY);
-							return 2;
-						}
-						else 
-							direction = 5;
-						break;
-
-					case "RIGHT":
-						nextX = mouseX + GameObject.SIZE;
-						nextY = mouseY;
-						if(board.mouseCollision(nextX, nextY)) {
-							board.getMouse().setX(nextX);
-							board.getMouse().setY(nextY);
-							return 3;
-						}
-						else 
-							direction = 5;
-						break;
+					if (!up && keyActive && (left || right) && state == GameState.Running) {
+						down = true;
+						left = false;
+						right = false;
+						keyActive = false;
 					}
-				}
-				return direction;
-			}
-
-
-			/**
-			 * Restarting the game by setting basic parameters to their primary values
-			 */
-			protected void restart() {
-				state = GameState.Running;
-				dx = dy = k = 0;
-				//up = down = left = right = false;
-				speedConstraint = 8;
-				mouseSpeedConstraint = 12;
-			}
-
-			public void setStage(Stage stage) {
-				this.stage = stage;
-			}
-
-
-			public static GameState getState() {
-				// TODO Auto-generated method stub
-				return state;
-			}
-
-			public void blur(Region reg) {
-				ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
-				GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
-				adj.setInput(blur);
-				reg.setEffect(adj);
-			}
-			// update the gui of the life of a player
-			public void updateLife() {
-				String life;
-				switch(board.getLife()) {
-				case -1:
-					life1.setVisible(false);
-					life2.setVisible(false);
-					life3.setVisible(false);
-					life = "";
-					lifeAmount.setText(life);
-					gameOver.setVisible(true);
-					gameOver.setFont(Fonts.minecraft50);
-
-					new Hinge(gameOver).setCycleCount(1).setSpeed(0.5).play();                                
-					loadGameoverDelay();
-
 					break;
-				case 1:
-					life1.setVisible(true);
-					life2.setVisible(false);
-					life3.setVisible(false);
-					life = "";
-					lifeAmount.setText(life);
-					break;
-				case 2:
-					life1.setVisible(true);
-					life2.setVisible(true);
-					life3.setVisible(false);
-					life = "";
-					lifeAmount.setText(life);
-					break;
-				case 3:
-					life1.setVisible(true);
-					life2.setVisible(true);
-					life3.setVisible(true);
-					life = "";
-					lifeAmount.setText(life);
-					break;
-				default:
-					life1.setVisible(true);
-					life2.setVisible(false);
-					life3.setVisible(false);
-					life = "X" + board.getLife();
-					lifeAmount.setText(life);
-					break;
-				}
-
-			}
-
-			public void loadPause()
-			{
-				try {
-					pressToResume.setVisible(true);
-
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
-					AnchorPane popupPane;
-					popupPane = loader.load();
-					popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-					popup.getChildren().removeAll(popup.getChildren());
-					popup.getChildren().add(popupPane);
-					popup.setVisible(true);
-
-
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			public void loadGameoverDelay()
-			{
-				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent actionEvent) {
-						loadGameOver();;
+				case LEFT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
 					}
-				}) , new KeyFrame(Duration.seconds(5)));
-				timeline.play();
-			}
-
-
-
-
-			public void loadGameOver()
-			{
-				try {
-					initialize=true;
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
-					AnchorPane popupPane;
-					popupPane = loader.load();
-					popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-					popup.getChildren().removeAll(popup.getChildren());
-					popup.getChildren().add(popupPane);
-					popup.setVisible(true);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-			
-			   public void openPauseMenu(MouseEvent event) {
-				   if (state == GameState.Running || state == GameState.Paused) {
+					if (!right && keyActive && state == GameState.Running) {
+						left = true;
+						up = false;
+						down = false;
+						keyActive = false;
+					}
+					break;
+				case RIGHT:
+					if (state == GameState.Started)
+					{
+						pane.setEffect(null);
+						arrows.setVisible(false);
+						pressToPlay.setVisible(false);
+						start = false;
+						restart();
+					}
+					if (!left && keyActive && state == GameState.Running) {
+						right = true;
+						up = false;
+						down = false;
+						keyActive = false;
+					}
+					break;
+				case SPACE: // pause or resume game
+					if (state == GameState.Running || state == GameState.Paused) {
 						if (pause == false) {
 							pause = true;
 							resume = false;	
 							loadPause();
-
-						} else {
-							popup.setVisible(false);
-							resume = true;
-							pause = false;
-							resume();
 						}
+						 else {
+								popup.setVisible(false);
+								resume = true;
+								pause = false;
+								resume();
+							}
 					}
-					
-					
-			}
-			   
-			   public void mute(MouseEvent event) {
-					
-					if(wasMuted)
-					{
-						audio.stop();
-						mute.setImage(muteImage);
-						
-						mute.setVisible(true);
-						System.out.println("muted");
-						wasMuted=false;
-					
-						
-					}
-					else
-					{
-						audio.play();
-						mute.setImage(unmuteImage);
-						mute.setVisible(true);
-						System.out.println("unmuted");
-						wasMuted=true;
-
-						
-					}
+					break;
+				case ESCAPE: // exit program
+					System.exit(0);
+					break;
+				default:
+					break;
 				}
-			   
-			   
-			   
+			}
+		});
 
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+			}
+		});
+	}
+
+	/**
+	 * Method to handle snake's position and movement on board
+	 * 
+	 * @param dx - movement in X-axis, 1 for right, -1 for left
+	 * @param dy - movement in Y-axis, 1 for down, -1 for up
+	 */
+	private void snakeMove(int dx, int dy) {
+
+		if (dx != 0 || dy != 0) { // if snake is meant to move
+
+			// temporary variables to hold BodyParts
+			BodyPart prev = new BodyPart(head.getX(), head.getY()), next = new BodyPart(head.getX(), head.getY());
+
+			// move head in X-axis
+			head.setX(head.getX() + (dx * GameObject.SIZE));
+			// move head in Y-axis
+			head.setY(head.getY() + (dy * GameObject.SIZE));
+
+			// moving the snake's body, each point gets the position of the one in front
+			for (int i = 1; i < snake.getSize(); ++i) {
+
+				next.setX(snake.getBodyPart(i).getX());
+				next.setY(snake.getBodyPart(i).getY());
+
+				snake.getBodyPart(i).setX(prev.getX());
+				snake.getBodyPart(i).setY(prev.getY());
+				prev.setX(next.getX());
+				prev.setY(next.getY());
+			}
+		}
+	}
+
+	/**
+	 * Method to handle mouse's position and movement on board
+	 * 
+	 */
+	private int mouseMove(int direction) {
+		Random rand = new Random();
+		List<String> movingOptions = Arrays.asList("UP","DOWN","LEFT","RIGHT");
+		Boolean canMove = false;
+
+		int mouseX = board.getMouse().getX();
+		int mouseY = board.getMouse().getY();
+		int nextX,nextY,index;
+
+		while(!canMove) {
+
+			if(direction == 5)
+				index = rand.nextInt(movingOptions.size());
+			else
+				index = direction;
+			switch(movingOptions.get(index)){
+
+			case "UP":
+				nextX = mouseX;
+				nextY = mouseY - GameObject.SIZE;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+					return 0;
+				}
+				else 
+					direction = 5;
+				break;
+
+			case "DOWN":
+				nextX = mouseX;
+				nextY = mouseY + GameObject.SIZE;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+					return 1;
+				}
+				else 
+					direction = 5;
+				break;
+
+			case "LEFT":
+				nextX = mouseX - GameObject.SIZE;
+				nextY = mouseY;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+					return 2;
+				}
+				else 
+					direction = 5;
+				break;
+
+			case "RIGHT":
+				nextX = mouseX + GameObject.SIZE;
+				nextY = mouseY;
+				if(board.mouseCollision(nextX, nextY)) {
+					board.getMouse().setX(nextX);
+					board.getMouse().setY(nextY);
+					return 3;
+				}
+				else 
+					direction = 5;
+				break;
+			}
+		}
+		return direction;
+	}
+
+
+	/**
+	 * Restarting the game by setting basic parameters to their primary values
+	 */
+	protected void restart() {
+		state = GameState.Running;
+		dx = dy = k = 0;
+		//up = down = left = right = false;
+		speedConstraint = 8;
+		mouseSpeedConstraint = 12;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+
+	public static GameState getState() {
+		// TODO Auto-generated method stub
+		return state;
+	}
+
+	public void blur(Region reg) {
+		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
+		GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
+		adj.setInput(blur);
+		reg.setEffect(adj);
+	}
+	// update the gui of the life of a player
+	public void updateLife() {
+		String life;
+		switch(board.getLife()) {
+		case -1:
+			life1.setVisible(false);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			gameOver.setVisible(true);
+			gameOver.setFont(Fonts.minecraft50);
+
+			new Hinge(gameOver).setCycleCount(1).setSpeed(0.5).play();                                
+			loadGameoverDelay();
+
+			break;
+		case 1:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 2:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(false);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		case 3:
+			life1.setVisible(true);
+			life2.setVisible(true);
+			life3.setVisible(true);
+			life = "";
+			lifeAmount.setText(life);
+			break;
+		default:
+			life1.setVisible(true);
+			life2.setVisible(false);
+			life3.setVisible(false);
+			life = "X" + board.getLife();
+			lifeAmount.setText(life);
+			break;
+		}
+
+	}
+
+	public void loadPause()
+	{
+		try {
+			pressToResume.setVisible(true);
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+			AnchorPane popupPane;
+			popupPane = loader.load();
+			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+			popup.getChildren().removeAll(popup.getChildren());
+			popup.getChildren().add(popupPane);
+			popup.setVisible(true);
+			 
+			
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public void loadGameoverDelay()
+	{
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				loadGameOver();;
+			}
+		}) , new KeyFrame(Duration.seconds(5)));
+		timeline.play();
+	}
+
+
+
+
+	public void loadGameOver()
+	{
+		try {
+			initialize=true;
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
+			AnchorPane popupPane;
+			popupPane = loader.load();
+			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+			popup.getChildren().removeAll(popup.getChildren());
+			popup.getChildren().add(popupPane);
+			popup.setVisible(true);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	public void openPauseMenu(MouseEvent event) {
+		if (state == GameState.Running || state == GameState.Paused) {
+			if (pause == false) {
+				pause = true;
+				resume = false;	
+				loadPause();
+
+			} else {
+				popup.setVisible(false);
+				resume = true;
+				pause = false;
+				resume();
+			}
+		}
+
+
+	}
+
+	public void mute(MouseEvent event) {
+
+		if(wasMuted)
+		{
+			audio.stop();
+			mute.setImage(muteImage);
+
+			mute.setVisible(true);
+			System.out.println("muted");
+			wasMuted=false;
 
 
 		}
+		else
+		{
+			audio.play();
+			mute.setImage(unmuteImage);
+			mute.setVisible(true);
+			System.out.println("unmuted");
+			wasMuted=true;
+
+
+		}
+	}
+}

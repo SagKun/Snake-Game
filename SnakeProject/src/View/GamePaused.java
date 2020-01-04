@@ -1,12 +1,11 @@
 package View;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import com.jfoenix.controls.JFXButton;
-
-import Model.GameState;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomOut;
@@ -18,13 +17,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -81,6 +78,14 @@ public class GamePaused implements Initializable {
     	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
+				Robot robot = null;
+				try {
+					robot = new Robot();
+				} catch (AWTException e) {
+					e.printStackTrace();
+				}
+				
+				robot.keyPress(KeyEvent.VK_SPACE);
 				pauseAnchor.setVisible(false);
 			}
 		}) , new KeyFrame(Duration.seconds(1)));
