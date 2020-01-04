@@ -1,5 +1,6 @@
 package View;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -12,20 +13,34 @@ import Model.FoodFactory;
 import Model.Level;
 import Model.Question;
 import Model.SysData;
+import Utils.Fonts;
+import animatefx.animation.Pulse;
+import animatefx.animation.ZoomOut;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import jdk.nashorn.internal.runtime.regexp.JoniRegExp.Factory;
 
 public class WizardView implements Initializable{
@@ -53,9 +68,11 @@ public class WizardView implements Initializable{
 
 	@FXML
 	private TableColumn<QuestionsForWizardTable, String> correctColumn;
+	@FXML
+    private AnchorPane anchorPane;
 
 	@FXML
-	private JFXButton resumeBtn;
+	private Label resume;
 
 	@FXML
 	private JFXButton removeBtn;
@@ -157,8 +174,26 @@ public class WizardView implements Initializable{
 	}
 
 	@FXML
-	void resumeToMenu(ActionEvent event) {
-
+	void resumeToMenu(MouseEvent event) {
+			
+		Stage stage=(Stage) anchorPane.getScene().getWindow();
+		new ZoomOut(resume).setCycleCount(1).setSpeed(0.2).play();
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				try {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
+					AnchorPane pane  = loader.load();
+					Scene scene = new Scene(pane);
+					stage.setScene(scene);
+				}
+				
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}) , new KeyFrame(Duration.seconds(1.5)));
+		timeline.play();
 	}
 
 	@Override
@@ -179,7 +214,8 @@ public class WizardView implements Initializable{
 		option2Column.setCellFactory(TextFieldTableCell.forTableColumn());
 		option3Column.setCellFactory(TextFieldTableCell.forTableColumn());
 		correctColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
+		new Pulse(resume).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		resume.setFont(Fonts.minecraft50);
 		ArrayList<Level> levels = new ArrayList<>();
 		for(Level l : Level.values()) {
 			levels.add(l);

@@ -90,6 +90,56 @@ public class MainView implements Initializable{
 				timeline.play();
 				
 		}
+	    
+	    
+	    public void loadHighscores(MouseEvent event) {
+	    	new ZoomOut(highscores).setCycleCount(1).setSpeed(0.2).play();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent actionEvent) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("HistoryView.fxml"));
+						StackPane pane  = loader.load();
+						pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
+						mainView.getChildren().removeAll(mainView.getChildren());
+						mainView.getChildren().add(pane);	
+					}
+					
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}) , new KeyFrame(Duration.seconds(1.5)));
+			timeline.play();
+	    }
+	    
+	    
+	    public void loadQuestionWiz(MouseEvent event) {
+	    	new ZoomOut(questions).setCycleCount(1).setSpeed(0.2).play();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent actionEvent) {
+					try {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("WizardView.fxml"));
+						AnchorPane pane  = loader.load();
+						pane.setPrefSize(mainView.getWidth(), mainView.getHeight());
+						mainView.getChildren().removeAll(mainView.getChildren());
+						mainView.getChildren().add(pane);
+							
+					}
+					
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}) , new KeyFrame(Duration.seconds(1.5)));
+			timeline.play();
+	    }
+	    
+	    
+	    
+	    
+	    
 
 		public Stage getStage() {
 			return stage;

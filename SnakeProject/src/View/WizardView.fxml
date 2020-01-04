@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="borderPane_Custom" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
+<AnchorPane id="borderPane_Custom" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
    <children>
       <Label id="Snake_Label" layoutX="364.0" layoutY="71.0" text="Questions Wizard" />
       <TableView fx:id="questionsTable" layoutX="91.0" layoutY="147.0" prefHeight="343.0" prefWidth="788.0">
@@ -22,7 +22,7 @@
             <TableColumn fx:id="correctColumn" prefWidth="126.0" text="Correct Answer" />
         </columns>
       </TableView>
-      <JFXButton fx:id="resumeBtn" layoutX="447.0" layoutY="638.0" onAction="#resumeToMenu" text="Resume" />
+      <Label fx:id="resume" layoutX="447.0" layoutY="638.0" onMouseClicked="#resumeToMenu" text="BACK" textFill="WHITE" />
       <JFXButton fx:id="removeBtn" layoutX="616.0" layoutY="558.0" onAction="#removeQuestion" styleClass="small-jfx-button" text="Remove Question" />
       <JFXButton fx:id="editBtn" layoutX="469.0" layoutY="558.0" onAction="#confirmEdit" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Confirm Edit" />
       <JFXButton fx:id="addBtn" layoutX="323.0" layoutY="558.0" onAction="#addQuestion" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Add Question" />

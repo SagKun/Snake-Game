@@ -17,12 +17,12 @@
          <font>
             <Font size="55.0" />
          </font></Label>
-      <Label fx:id="highscores" layoutX="319.0" layoutY="332.0" onMouseClicked="#play" prefHeight="81.0" prefWidth="370.0" text="HIGHSCORES" textFill="#ffe7e7">
+      <Label fx:id="highscores" layoutX="319.0" layoutY="332.0" onMouseClicked="#loadHighscores" prefHeight="81.0" prefWidth="370.0" text="HIGHSCORES" textFill="#ffe7e7">
          <font>
             <Font size="55.0" />
          </font>
       </Label>
-      <Label fx:id="questions" layoutX="328.0" layoutY="469.0" onMouseClicked="#play" prefHeight="81.0" prefWidth="370.0" text="QUESTIONS" textFill="#ffe7e7">
+      <Label fx:id="questions" layoutX="328.0" layoutY="469.0" onMouseClicked="#loadQuestionWiz" prefHeight="81.0" prefWidth="370.0" text="QUESTIONS" textFill="#ffe7e7">
          <font>
             <Font size="55.0" />
          </font>

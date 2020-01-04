@@ -139,7 +139,7 @@ public class GameView implements Initializable {
 	 * without changing the position in Y-axis, causing the head to hit the second
 	 * part of it's body
 	 */
-	//private boolean keyActive;
+
 	/**
 	 * The movement in X and Y-axis
 	 */
@@ -176,6 +176,7 @@ public class GameView implements Initializable {
 		head = snake.getHead();
 		keyActive = startup = true;
 		audio = new Sound().getAudio();
+		System.out.println("GameView:constructed");
 	}
 
 
@@ -231,11 +232,11 @@ public class GameView implements Initializable {
 				bodyImage.setY(snakeY);
 				pane.getChildren().add(bodyImage);
 			}
-
+			System.out.println("GameView:init");
 		}
 	}
 
-
+	
 
 	/**
 	 * The gameloop, handles user input, updates and renders the game
@@ -287,6 +288,7 @@ public class GameView implements Initializable {
 				}
 				// when game started or restarted
 				if (start && (state == GameState.Finished || state == GameState.Started)) {
+					System.out.println("game started");
 					up = down = left = right = false;
 					restart();
 					start = false;
@@ -408,7 +410,7 @@ public class GameView implements Initializable {
 		board.checkEaten(); // check if a fruit has been eaten
 		this.scoreField.setText(String.valueOf(board.getScore()));
 		int newScore=Integer.parseInt(scoreField.getText());
-		if(currentScore < newScore) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
+		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
 			
 			Label floatingScore=new Label();
@@ -652,7 +654,7 @@ public class GameView implements Initializable {
 			/**
 			 * Restarting the game by setting basic parameters to their primary values
 			 */
-			private void restart() {
+			protected void restart() {
 				state = GameState.Running;
 				dx = dy = k = 0;
 				//up = down = left = right = false;
@@ -761,8 +763,8 @@ public class GameView implements Initializable {
 			public void loadGameOver()
 			{
 				try {
-
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GameOver.fxml"));
+					initialize=true;
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
 					AnchorPane popupPane;
 					popupPane = loader.load();
 					popupPane.setPrefSize(popup.getWidth(), popup.getHeight());

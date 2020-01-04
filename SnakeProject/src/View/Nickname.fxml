@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Nickname">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Nickname">
    <children>
-      <AnchorPane prefHeight="350.0" prefWidth="457.0" styleClass="AnchorPane" stylesheets="@.css">
+      <AnchorPane prefHeight="426.0" prefWidth="465.0" styleClass="AnchorPane" stylesheets="@.css">
          <children>
-            <Label id="Small_Snake_Label" layoutX="89.0" layoutY="77.0" text="Set Nickname:" />
-            <TextField fx:id="nickName" layoutX="89.0" layoutY="110.0" prefHeight="33.0" prefWidth="215.0" />
-            <Label id="Small_Snake_Label" layoutX="89.0" layoutY="154.0" text="Your Score:" />
-            <Text fx:id="score" fill="WHITE" layoutX="89.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="102.999999769032" />
-            <JFXButton fx:id="returnMenu" layoutX="99.0" layoutY="272.0" onAction="#returnToMenuBtn" styleClass="small-jfx-button" text="Return To Menu" />
-            <JFXButton fx:id="newGame" layoutX="247.0" layoutY="272.0" onAction="#newGameBtn" styleClass="small-jfx-button" text="New Game" />
-            <JFXButton fx:id="submit" layoutX="184.0" layoutY="224.0" onAction="#submitBtn" prefHeight="33.0" prefWidth="76.0" styleClass="small-jfx-button" text="Sumbit" />
-            <Label id="Snake_Label" layoutX="91.0" layoutY="21.0" text="Game Over!" />
+            <Label fx:id="setNick" layoutX="27.0" layoutY="176.0" text="NICKNAME:" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font></Label>
+            <TextField fx:id="nickName" layoutX="188.0" layoutY="181.0" prefHeight="33.0" prefWidth="215.0" />
+            <Label fx:id="yourScoreIS" layoutX="28.0" layoutY="94.0" text="YOUR SCORE IS:" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font></Label>
+            <Text fx:id="score" fill="WHITE" layoutX="296.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.999999769032">
+               <font>
+                  <Font size="30.0" />
+               </font></Text>
+            <Label fx:id="gameOver" layoutX="76.0" text="GAME OVER!" textFill="WHITE">
+               <font>
+                  <Font size="50.0" />
+               </font></Label>
+            <Label fx:id="submit" layoutX="170.0" layoutY="242.0" onMouseClicked="#submitBtn" text="SUBMIT" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label fx:id="returnMenu" layoutX="14.0" layoutY="358.0" onMouseClicked="#returnToMenuBtn" text="BACK TO MENU" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Label fx:id="newGame" layoutX="296.0" layoutY="358.0" onMouseClicked="#newGameBtn" text="NEW GAME" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
