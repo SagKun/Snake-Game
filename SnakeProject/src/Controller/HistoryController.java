@@ -28,11 +28,11 @@ public class HistoryController {
 	public void addScoreIfTopTen(Player p)
 	{
 		int index=10;
-		if(p.getScore() < scores.get(scores.size()-1).getScore())
+		if(scores.size() >= 10 && p.getScore() <= scores.get(scores.size()-1).getScore())
 		{
 			System.out.println("The score is not high enough to be save in Top Ten scores.");
 		}
-		else
+		else if(scores.size() >= 10 && p.getScore() > scores.get(scores.size()-1).getScore())
 		{
 
 			for(int i=9;i>-1;i--)
@@ -44,6 +44,21 @@ public class HistoryController {
 			System.out.println("the new highscore position is: "+ index+1);
 			Collections.sort(scores);
 			scores.remove(10);
+			SysData.highScores=scores;
+			SysData.saveHighScores();
+		}
+		else if(scores.size() < 10)
+		{
+			int size = scores.size();
+			scores.add(p);
+			Collections.sort(scores);
+			int i;
+			for(i = 0 ; i < size ; i++) {
+				if(scores.get(i).equals(p))
+					break;
+			}
+			i += 1;
+			System.out.println("the new highscore position is: "+ i);
 			SysData.highScores=scores;
 			SysData.saveHighScores();
 		}

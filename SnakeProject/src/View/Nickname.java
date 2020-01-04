@@ -123,28 +123,38 @@ public class Nickname implements Initializable{
     
 
     @FXML
-    void submitBtn(ActionEvent event) {
-    	new RubberBand(returnMenu).setCycleCount(1).setSpeed(0.2).play();
+    void submitBtn(MouseEvent event) {
+    	new RubberBand(submit).setCycleCount(1).setSpeed(0.2).play();
     	if(nickName.getText().equals("")) {
     		Alert al = new Alert(Alert.AlertType.ERROR);
     		al.setHeaderText("Nickname Is Not Set");
     		al.setTitle("System Messege");
     		al.setResizable(false);
+    		al.show();
     	}
     	else
     	{
     		
     		
     		
-    		new ZoomOut(returnMenu).setCycleCount(1).setSpeed(0.2).play();
+    		new ZoomOut(submit).setCycleCount(1).setSpeed(0.2).play();
     		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
     			@Override
     			public void handle(ActionEvent actionEvent) {
-
     	    		Player p = new Player(nickName.getText(), Board.getInstance().getScore());
     	    		HistoryController history = new HistoryController();
     	    		history.addScoreIfTopTen(p);
-    	    		nickName.setText("Congrats!added to the scoreboard!");
+    	    		Stage stage=(Stage) anchor.getScene().getWindow();
+    				try {
+    					FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/HistoryView.fxml"));
+    					StackPane pane  = loader.load();
+    					Scene scene = new Scene(pane);
+    					stage.setScene(scene);
+    				}
+
+    				catch (IOException e) {
+    					e.printStackTrace();
+    				}
     			}
     		}) , new KeyFrame(Duration.seconds(1.5)));
     		timeline.play();

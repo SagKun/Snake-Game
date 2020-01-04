@@ -27,7 +27,7 @@
             <Font size="55.0" />
          </font>
       </Label>
-      <Label fx:id="exit" layoutX="424.0" layoutY="591.0" onMouseClicked="#play" prefHeight="81.0" prefWidth="158.0" text="EXIT" textFill="#ffe7e7">
+      <Label fx:id="exit" layoutX="424.0" layoutY="591.0" prefHeight="81.0" prefWidth="158.0" text="EXIT" textFill="#ffe7e7">
          <font>
             <Font size="55.0" />
          </font>
