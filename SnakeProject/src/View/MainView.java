@@ -31,7 +31,9 @@ import javafx.util.Duration;
 
 public class MainView implements Initializable{
 	
-	
+	boolean playPressed=false;
+	boolean highscoresPressed=false;
+	boolean wizardPressed=false;
 	 @FXML
 	    private AnchorPane mainView;
 
@@ -50,7 +52,9 @@ public class MainView implements Initializable{
 		 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
-			
+			playPressed=false;
+			highscoresPressed=false;
+			wizardPressed=false;
 			play.setFont(Fonts.minecraft50);
 			highscores.setFont(Fonts.minecraft50);
 			questions.setFont(Fonts.minecraft50);
@@ -65,8 +69,11 @@ public class MainView implements Initializable{
 		
 		
 	    public void play(MouseEvent event) {
-			
-				new ZoomOut(play).setCycleCount(1).setSpeed(0.2).play();
+	    	
+			if(!playPressed)	
+			{
+			playPressed=true;
+	    	new ZoomOut(play).setCycleCount(1).setSpeed(0.2).play();
 				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent actionEvent) {
@@ -88,11 +95,14 @@ public class MainView implements Initializable{
 					}
 				}) , new KeyFrame(Duration.seconds(1.5)));
 				timeline.play();
-				
+			}
 		}
 	    
 	    
 	    public void loadHighscores(MouseEvent event) {
+	    	if(!highscoresPressed)
+	    	{
+	    		highscoresPressed=true;
 	    	new ZoomOut(highscores).setCycleCount(1).setSpeed(0.2).play();
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
 				@Override
@@ -111,10 +121,14 @@ public class MainView implements Initializable{
 				}
 			}) , new KeyFrame(Duration.seconds(1.5)));
 			timeline.play();
+	    	}
 	    }
 	    
 	    
 	    public void loadQuestionWiz(MouseEvent event) {
+	    	if(!wizardPressed)
+	    	{
+	    		wizardPressed=true;
 	    	new ZoomOut(questions).setCycleCount(1).setSpeed(0.2).play();
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
 				@Override
@@ -134,6 +148,8 @@ public class MainView implements Initializable{
 				}
 			}) , new KeyFrame(Duration.seconds(1.5)));
 			timeline.play();
+			
+	    	}
 	    }
 	    
 	    

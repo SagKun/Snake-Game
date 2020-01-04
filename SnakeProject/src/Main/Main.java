@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 public class Main extends Application{
 
 	
+	
 
 	public static void main(String args[]) {
 		File f = new File("checkFile");
