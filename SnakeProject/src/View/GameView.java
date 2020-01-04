@@ -801,7 +801,8 @@ public class GameView implements Initializable {
 					if(wasMuted)
 					{
 						audio.stop();
-						mute.setImage(unmuteImage);
+						mute.setImage(muteImage);
+						
 						mute.setVisible(true);
 						System.out.println("muted");
 						wasMuted=false;
@@ -811,7 +812,7 @@ public class GameView implements Initializable {
 					else
 					{
 						audio.play();
-						mute.setImage(muteImage);
+						mute.setImage(unmuteImage);
 						mute.setVisible(true);
 						System.out.println("unmuted");
 						wasMuted=true;

@@ -61,7 +61,7 @@
                   </Label>
                   <ImageView fx:id="mute" fitHeight="47.0" fitWidth="54.0" layoutX="85.0" layoutY="24.0" onMouseClicked="#mute" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/mute-32.png" />
+                        <Image url="@icons/volume.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="burger" fitHeight="47.0" fitWidth="54.0" layoutX="24.0" layoutY="24.0" onMouseClicked="#openPauseMenu" pickOnBounds="true" preserveRatio="true">
