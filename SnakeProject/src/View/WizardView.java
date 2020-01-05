@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.swing.table.TableCellEditor;
+
 import com.jfoenix.controls.JFXButton;
 
 import Controller.WizardController;
@@ -34,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -69,21 +72,15 @@ public class WizardView implements Initializable{
 
 	@FXML
 	private TableColumn<QuestionsForWizardTable, String> correctColumn;
-	
-    @FXML
-    private TableColumn<QuestionsForWizardTable, Button> updateColumn;
-	
+
 	@FXML
-    private AnchorPane anchorPane;
+	private AnchorPane anchorPane;
 
 	@FXML
 	private Label resume;
 
 	@FXML
 	private JFXButton removeBtn;
-
-	@FXML
-	private JFXButton editBtn;
 
 	@FXML
 	private JFXButton addBtn;
@@ -112,6 +109,10 @@ public class WizardView implements Initializable{
 	private ObservableList<QuestionsForWizardTable> questionsList = FXCollections.observableArrayList();
 
 	private WizardController controller = new WizardController();
+
+	private QuestionsForWizardTable oldQuestion;
+
+	private QuestionsForWizardTable newQuestion;
 
 	@FXML
 	void addQuestion(ActionEvent event) {
@@ -168,7 +169,7 @@ public class WizardView implements Initializable{
 			{
 				oldQuestion = question;
 			}
-			
+
 		}
 	}
 
@@ -189,7 +190,7 @@ public class WizardView implements Initializable{
 
 	@FXML
 	void resumeToMenu(MouseEvent event) {
-			
+
 		Stage stage=(Stage) anchorPane.getScene().getWindow();
 		new ZoomOut(resume).setCycleCount(1).setSpeed(0.2).play();
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
@@ -201,7 +202,7 @@ public class WizardView implements Initializable{
 					Scene scene = new Scene(pane);
 					stage.setScene(scene);
 				}
-				
+
 				catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -220,36 +221,94 @@ public class WizardView implements Initializable{
 		option2Column.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("option2"));
 		option3Column.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("option3"));
 		correctColumn.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, String>("correctAnswer"));
-		updateColumn.setCellValueFactory(new PropertyValueFactory<QuestionsForWizardTable, Button>("edit"));
-		// setting editable
+		// setting editable and setting the set on edit actions
 		questionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		questionColumn.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		questionColumn.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setQuestion(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setQuestion(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		levelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		levelColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		levelColumn.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		levelColumn.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setLevel(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setLevel(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		authorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		authorColumn.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		authorColumn.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setAuthor(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setAuthor(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		option1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option1Column.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		option1Column.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption1(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setOption1(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		option2Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option2Column.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		option2Column.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption2(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setOption2(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		option3Column.setCellFactory(TextFieldTableCell.forTableColumn());
+		option3Column.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		option3Column.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setOption3(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setOption3(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
 		correctColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		correctColumn.setOnEditStart(e -> {
+			int old = questionsTable.getSelectionModel().getFocusedIndex();
+			oldQuestion = new QuestionsForWizardTable(SysData.questionsDB.get(old));
+		}
+				);
 		correctColumn.setOnEditCommit(e -> {
-			e.getTableView().getItems().get(e.getTablePosition().getRow()).setCorrectAnswer(e.getNewValue());
-		});
+			newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+			newQuestion.setCorrectAnswer(e.getNewValue());
+			controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		}
+				);
+		
+		
 		new Pulse(resume).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		resume.setFont(Fonts.minecraft50);
 		ArrayList<Level> levels = new ArrayList<>();
@@ -279,7 +338,16 @@ public class WizardView implements Initializable{
 		option3Field.clear();
 	}
 
-	
-	
+	public void editQuestionEvent(CellEditEvent<QuestionsForWizardTable, String> cell) {
+		System.out.println("Edit");
+		oldQuestion = questionsTable.getSelectionModel().getSelectedItem();
+		newQuestion = questionsTable.getSelectionModel().getSelectedItem();
+		newQuestion.setQuestion(cell.getNewValue().toString());
+		controller.editQuestion(oldQuestion.createQuestion(), newQuestion.createQuestion());
+		System.out.println(oldQuestion.createQuestion());
+		System.out.println(newQuestion.createQuestion());
+	}
+
+
 
 }

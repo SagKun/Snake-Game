@@ -7,7 +7,6 @@ public class WizardController {
 
 	public void editQuestion(Question originalQuestion,Question newQuestion)
 	{
-		
 		SysData.editQuestion(originalQuestion, newQuestion);
 		System.out.println(originalQuestion.getQuestion()+ " was edited successfully.");
 		

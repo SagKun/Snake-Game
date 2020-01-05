@@ -20,11 +20,11 @@ public class QuestionsTableInstructions {
 			points = q.getPoints();
 			penalty = q.getSetBack();
 			if(level.equals(Level.EASY))
-				image = new ImageView("View/icons/GameObjects/");
+				image = new ImageView("View/icons/GameObjects/question_white.png");
 			else if(level.equals(Level.MODERATE))
-				image = new ImageView("View/icons/GameObjects/");
+				image = new ImageView("View/icons/GameObjects/question.png");
 			else if(level.equals(Level.HARD))
-				image = new ImageView("View/icons/GameObjects/");
+				image = new ImageView("View/icons/GameObjects/faq.png");
 		}
 
 		public ImageView getImage() {

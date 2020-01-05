@@ -13,14 +13,13 @@
       <Label id="Snake_Label" layoutX="364.0" layoutY="71.0" text="Questions Wizard" />
       <TableView fx:id="questionsTable" layoutX="91.0" layoutY="147.0" prefHeight="343.0" prefWidth="788.0">
         <columns>
-          <TableColumn fx:id="questionColumn" onEditCommit="#confirmEdit" prefWidth="118.0" text="Question" />
-          <TableColumn fx:id="levelColumn" onEditCommit="#confirmEdit" prefWidth="75.0" text="Level" />
-            <TableColumn fx:id="authorColumn" onEditCommit="#confirmEdit" prefWidth="78.0" text="Author" />
-            <TableColumn fx:id="option1Column" onEditCommit="#confirmEdit" prefWidth="94.0" text="Option 1" />
-            <TableColumn fx:id="option2Column" onEditCommit="#confirmEdit" prefWidth="100.0" text="Option 2" />
-            <TableColumn fx:id="option3Column" minWidth="6.0" onEditCommit="#confirmEdit" prefWidth="120.0" text="Option 3" />
-            <TableColumn fx:id="correctColumn" onEditCommit="#confirmEdit" prefWidth="118.0" text="Correct Answer" />
-            <TableColumn fx:id="updateColumn" prefWidth="83.0" text="Update" />
+          <TableColumn fx:id="questionColumn" prefWidth="118.0" text="Question" />
+          <TableColumn fx:id="levelColumn" prefWidth="75.0" text="Level" />
+            <TableColumn fx:id="authorColumn" prefWidth="78.0" text="Author" />
+            <TableColumn fx:id="option1Column" prefWidth="138.0" text="Option 1" />
+            <TableColumn fx:id="option2Column" prefWidth="105.0" text="Option 2" />
+            <TableColumn fx:id="option3Column" minWidth="6.0" prefWidth="136.0" text="Option 3" />
+            <TableColumn fx:id="correctColumn" prefWidth="137.0" text="Correct Answer" />
         </columns>
       </TableView>
       <Label fx:id="resume" layoutX="447.0" layoutY="638.0" onMouseClicked="#resumeToMenu" text="BACK" textFill="WHITE" />
