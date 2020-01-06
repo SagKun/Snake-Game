@@ -1,28 +1,12 @@
 package View;
+
 import Utils.Sound;
-
-import Main.Main;
-
 import java.io.IOException;
-
-
 import java.net.URL;
-import java.util.Arrays;
-
-
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
-
+import java.util.*;
 import Model.*;
 import Utils.Fonts;
-import animatefx.animation.Flip;
-import animatefx.animation.Hinge;
-import animatefx.animation.Pulse;
-import animatefx.animation.ZoomInUp;
-import animatefx.animation.ZoomOut;
-import animatefx.animation.ZoomOutUp;
-import Utils.Sound;
+import animatefx.animation.*;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
@@ -44,22 +27,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import javafx.util.Duration;
+
+
 
 public class GameView implements Initializable {
 
+
 	private Board board;
 
-
-
-
-
-	private Snake snake;
+	/**
+	 * Keep track of the snake and its head
+	 */
+	private Snake snake;	
+	private BodyPart head;
 
 	@FXML
 	private ImageView mute;
@@ -93,34 +77,24 @@ public class GameView implements Initializable {
 
 	@FXML
 	private Label scoreField;
-	//@FXML
-	//private Label floatingScore;
 	@FXML
 	private Label gameOver;
 	@FXML
 	private ImageView menuBtn;
-
 	@FXML
 	private Text lifeAmount;
-
 	@FXML
 	private Label pressToPlay;
 	@FXML
 	private Label pressToResume;
-
-
 	@FXML
 	private Label scoreLabel;
-
 	@FXML
 	private Label livesLabel;
-
 	@FXML
 	private ImageView arrows;
-
 	@FXML
 	private AnchorPane popup;
-
 	@FXML
 	private BorderPane borderPane;
 	/**
@@ -132,13 +106,6 @@ public class GameView implements Initializable {
 	 * Boolean variables describing user input
 	 */
 	protected boolean up, down, right,pause, left, resume, start,startup,keyActive,wasMuted;
-	/**
-	 * Boolean block to prevent pressing keys too fast, so that the snake's head
-	 * could turn around. For example, when snake was moving left, pressing the up
-	 * and right key very fast could just change the head's direction to right,
-	 * without changing the position in Y-axis, causing the head to hit the second
-	 * part of it's body
-	 */
 
 	/**
 	 * The movement in X and Y-axis
@@ -149,10 +116,10 @@ public class GameView implements Initializable {
 	 */
 	private int speedConstraint,mouseSpeedConstraint;
 
-	private BodyPart head;
 
 	private Stage stage;
-
+	
+	
 	private Image muteImage;
 	private Image unmuteImage;
 
@@ -161,12 +128,22 @@ public class GameView implements Initializable {
 	 */
 	private MediaPlayer audio;
 	public static boolean initialize=true;
+
+	/**
+	 * The size of the game board size.
+	 */
 	public static final int WIDTH = 960;
 	public static final int HEIGHT = 624;
 
+	/**
+	 * Variables to help with the movement of the mouse
+	 */
 	private int k = 0;
 	private int lastIndex;
 
+	/**
+	 * Constructor of the game view.
+	 */
 	public GameView() {
 
 		board = Board.getInstance();
@@ -176,20 +153,11 @@ public class GameView implements Initializable {
 		head = snake.getHead();
 		keyActive = startup = true;
 		audio = new Sound().getAudio();
-		System.out.println("GameView:constructed");
 	}
 
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public Snake getSnake() {
-		return snake;
-	}
-
-
-	@Override
+	/**
+	 * Initializing the elements on the screen.
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if(initialize)
 		{
@@ -203,7 +171,6 @@ public class GameView implements Initializable {
 			livesLabel.setFont(Fonts.minecraft50);
 			pressToPlay.setFont(Fonts.minecraft50);
 			pressToResume.setFont(Fonts.minecraft50);
-			//floatingScore.setFont(Fonts.minecraft50);
 			new Pulse(scoreField).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 			new Pulse(mute).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 			new Pulse(burger).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
@@ -212,15 +179,13 @@ public class GameView implements Initializable {
 			new Pulse(pressToPlay).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(arrows).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
-
 			new Pulse(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.5).play();
 
-
+			// Setting the snake at the center of the board
 			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 			headImage.setX(snake.getHead().getX());
 			headImage.setY(snake.getHead().getY());
 			pane.getChildren().add(headImage);
-
 
 			int snakeY, snakeX;
 
@@ -232,14 +197,13 @@ public class GameView implements Initializable {
 				bodyImage.setY(snakeY);
 				pane.getChildren().add(bodyImage);
 			}
-			System.out.println("GameView:init");
 		}
 	}
 
 
 
 	/**
-	 * The gameloop, handles user input, updates and renders the game
+	 * The gameloop, handles snake movement, updates and renders the game
 	 */
 	public void resume() {
 
@@ -247,7 +211,6 @@ public class GameView implements Initializable {
 
 			int i = 0, j = 0;
 
-			@Override
 			public void handle(long now) {
 
 				// when moving up
@@ -293,13 +256,14 @@ public class GameView implements Initializable {
 					restart();
 					start = false;
 				}
+				//when the user has lost a life but game isn't over.
 				if (state == GameState.Finished) {
 					updateLife();
 					up = down = left = right = false;
 					restart();
 					board.initializeObjects();
 				}
-				// when game is done
+				// when game is over
 				if (state == GameState.GameOver) {
 					/**
 					 String nickname;
@@ -316,13 +280,15 @@ public class GameView implements Initializable {
 				if (state == GameState.Running) {
 					if(wasMuted)
 						audio.play();
+					//Control the snake movement
 					if (i == speedConstraint) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
 						i = 0; // counter to slow down the snake
 					}
 					++i;
-
+					//Control the mouse movement
+					//Make the mouse move each direction 5 times unless its being blocked.
 					if (j >= mouseSpeedConstraint && board.getMouse() != null) {// control the speed of snake
 						if(k % 5 == 0) {
 							lastIndex = mouseMove(5);
@@ -336,28 +302,27 @@ public class GameView implements Initializable {
 				}
 
 				update(); // updating the game parameters, positions, etc.
-				render();
+				render(); // Rendering the game graphics
 				pane.requestFocus();
-				movement(stage.getScene());
+				movement(); //Check what direction to move the snake to
 			}
 		}.start(); // starting the timer
-
-
 	}
 
-
+	/**
+	 * This function sets and refresh the game graphics: snake graphics, fruit graphics, question and mouse.
+	 */
 	protected void render() {
 
 		if(state == GameState.Running) {
 
-			pane.getChildren().clear();
+			pane.getChildren().clear(); //Clear the screen and then place the objects at their updated place
 
-
+			//Render the snake graphics
 			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
 			headImage.setX(snake.getHead().getX());
 			headImage.setY(snake.getHead().getY());
 			pane.getChildren().add(headImage);
-
 
 			int helpX, helpY, snakeY, snakeX;
 
@@ -370,6 +335,7 @@ public class GameView implements Initializable {
 				pane.getChildren().add(bodyImage);
 			}
 
+			// Render the fruits graphics
 			for(int i = 0; i < board.getObjectList().size(); ++i) {
 				helpX = board.getObjectList().get(i).getX();
 				helpY = board.getObjectList().get(i).getY();
@@ -388,6 +354,10 @@ public class GameView implements Initializable {
 				fruitIcon.setY(helpY);
 				pane.getChildren().add(fruitIcon);
 			}
+
+			//TODO render the question graphics
+
+			//Render the mouse graphics
 			if(board.getMouse() != null) {
 				ImageView mouseIcon =  new ImageView("View/icons/GameObjects/mouse.png");
 				mouseIcon.setX(board.getMouse().getX());
@@ -399,20 +369,25 @@ public class GameView implements Initializable {
 
 
 	/**
-	 * The update method
+	 * The update method: if the game has just started it will initialize the objects,score,life.
+	 * this function calls to check if objects have been eaten or snake has crashed into a wall or
+	 * itself.
 	 */
 	private void update() {
+
 		int currentScore=Integer.parseInt(scoreField.getText());
 		if(startup) {
 			board.initializeObjects();
 			startup = false;
-		}// updates the state of fruits
+		}
+
 		board.checkEaten(); // check if a fruit has been eaten
+
+		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
-		int newScore=Integer.parseInt(scoreField.getText());
+		int newScore=Integer.parseInt(scoreField.getText());		
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
-
 			Label floatingScore=new Label();
 			floatingScore.setStyle("-fx-text-fill: white;");
 			floatingScore.setFont(Fonts.minecraft30);
@@ -430,7 +405,9 @@ public class GameView implements Initializable {
 			}) , new KeyFrame(Duration.seconds(4)));
 			timeline.play();
 		}
-		updateLife();
+
+		updateLife(); //Update life
+
 		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
@@ -443,7 +420,7 @@ public class GameView implements Initializable {
 	 * 
 	 * @param scene on which events are performed
 	 */
-	private void movement(Scene scene) {
+	private void movement() {
 
 		pane.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -522,12 +499,12 @@ public class GameView implements Initializable {
 							resume = false;	
 							loadPause();
 						}
-						 else {
-								popup.setVisible(false);
-								resume = true;
-								pause = false;
-								resume();
-							}
+						else {
+							popup.setVisible(false);
+							resume = true;
+							pause = false;
+							resume();
+						}
 					}
 					break;
 				case ESCAPE: // exit program
@@ -539,8 +516,7 @@ public class GameView implements Initializable {
 			}
 		});
 
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
+		pane.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
 			}
 		});
@@ -548,7 +524,6 @@ public class GameView implements Initializable {
 
 	/**
 	 * Method to handle snake's position and movement on board
-	 * 
 	 * @param dx - movement in X-axis, 1 for right, -1 for left
 	 * @param dy - movement in Y-axis, 1 for down, -1 for up
 	 */
@@ -569,7 +544,6 @@ public class GameView implements Initializable {
 
 				next.setX(snake.getBodyPart(i).getX());
 				next.setY(snake.getBodyPart(i).getY());
-
 				snake.getBodyPart(i).setX(prev.getX());
 				snake.getBodyPart(i).setY(prev.getY());
 				prev.setX(next.getX());
@@ -580,7 +554,7 @@ public class GameView implements Initializable {
 
 	/**
 	 * Method to handle mouse's position and movement on board
-	 * 
+	 * the number 5 is to go to that last direction that the mouse has been going.
 	 */
 	private int mouseMove(int direction) {
 		Random rand = new Random();
@@ -591,14 +565,14 @@ public class GameView implements Initializable {
 		int mouseY = board.getMouse().getY();
 		int nextX,nextY,index;
 
+		//A loop to find a new direction as long as the mouse is stuck
 		while(!canMove) {
-
 			if(direction == 5)
 				index = rand.nextInt(movingOptions.size());
 			else
 				index = direction;
-			switch(movingOptions.get(index)){
 
+			switch(movingOptions.get(index)){
 			case "UP":
 				nextX = mouseX;
 				nextY = mouseY - GameObject.SIZE;
@@ -658,20 +632,10 @@ public class GameView implements Initializable {
 	protected void restart() {
 		state = GameState.Running;
 		dx = dy = k = 0;
-		//up = down = left = right = false;
 		speedConstraint = 8;
 		mouseSpeedConstraint = 12;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
-
-	public static GameState getState() {
-		// TODO Auto-generated method stub
-		return state;
-	}
 
 	public void blur(Region reg) {
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
@@ -725,14 +689,12 @@ public class GameView implements Initializable {
 			lifeAmount.setText(life);
 			break;
 		}
-
 	}
 
 	public void loadPause()
 	{
 		try {
 			pressToResume.setVisible(true);
-
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
 			AnchorPane popupPane;
 			popupPane = loader.load();
@@ -740,14 +702,13 @@ public class GameView implements Initializable {
 			popup.getChildren().removeAll(popup.getChildren());
 			popup.getChildren().add(popupPane);
 			popup.setVisible(true);
-			 
-			
 
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
+
+
 	public void loadGameoverDelay()
 	{
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
@@ -758,8 +719,6 @@ public class GameView implements Initializable {
 		}) , new KeyFrame(Duration.seconds(5)));
 		timeline.play();
 	}
-
-
 
 
 	public void loadGameOver()
@@ -774,11 +733,11 @@ public class GameView implements Initializable {
 			popup.getChildren().add(popupPane);
 			popup.setVisible(true);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 	}
+
 
 	public void openPauseMenu(MouseEvent event) {
 		if (state == GameState.Running || state == GameState.Paused) {
@@ -794,9 +753,8 @@ public class GameView implements Initializable {
 				resume();
 			}
 		}
-
-
 	}
+
 
 	public void mute(MouseEvent event) {
 
@@ -804,12 +762,9 @@ public class GameView implements Initializable {
 		{
 			audio.stop();
 			mute.setImage(muteImage);
-
 			mute.setVisible(true);
 			System.out.println("muted");
 			wasMuted=false;
-
-
 		}
 		else
 		{
@@ -818,8 +773,27 @@ public class GameView implements Initializable {
 			mute.setVisible(true);
 			System.out.println("unmuted");
 			wasMuted=true;
-
-
 		}
 	}
+
+
+	
+	/**************************** GETTERS & SETTERS *************************************/
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public Snake getSnake() {
+		return snake;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public static GameState getState() {
+		return state;
+	}
+
 }

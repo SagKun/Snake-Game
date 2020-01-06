@@ -38,7 +38,6 @@ public class Board {
 	public static Board getInstance() {
 		if(boardInstance == null)
 			boardInstance = new Board();
-
 		return boardInstance;
 	}
 
@@ -66,7 +65,6 @@ public class Board {
 		int []place; // place on board, will hold X and Y
 		Boolean isFruit = true;
 
-
 		for(FoodType f : FoodType.values()) {
 			if(f == FoodType.Pear)
 				place = placePear();
@@ -84,6 +82,7 @@ public class Board {
 			addObject(objectX, objectY, c.name(), !isFruit);
 		}
 	}
+
 
 	/**
 	 * Update the objects when new one needs to be added
@@ -103,9 +102,6 @@ public class Board {
 			objectX = place[0];
 			objectY = place[1];
 			addObject(objectX, objectY,((FoodType)Type).name(),isFruit);
-
-			System.out.println(((FoodType)Type).name()+"  "+objectX+"  "+objectY);
-
 		}
 		else{
 			place = placeFruit();
@@ -134,16 +130,12 @@ public class Board {
 			foodX = ((rand.nextInt(GameView.WIDTH/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
 			foodY = ((rand.nextInt(GameView.HEIGHT/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
 
-			//TODO If pear place in random corner which isnt current pear place
-
 			for(int i = 0; i < snake.getSize(); ++i){
-
 				helpX = snake.getBodyPart(i).getX();
 				helpY = snake.getBodyPart(i).getY();
 
 				if(helpX == foodX && helpY == foodY)
 					break;
-
 				if(i == snake.getSize() - 1)
 					helpS = true;
 			}
@@ -151,17 +143,14 @@ public class Board {
 			if(helpS){
 				if(ObjectList.size() == 0)
 					helpO = true;
-
 				else {
 					for(int i = 0; i < ObjectList.size(); ++i) {
 
 						helpX = ObjectList.get(i).getX();
 						helpY = ObjectList.get(i).getY();
-
 						if(foodX == helpX && foodY == helpY) {
 							break;
 						}
-
 						if(i == ObjectList.size() - 1) {
 							helpO = true;
 						}
@@ -183,17 +172,16 @@ public class Board {
 
 		ArrayList<Pair<Integer,Integer>> corners = new ArrayList<Pair<Integer,Integer>>();
 		//Top left
-		corners.add(new Pair(0,0));
+		corners.add(new Pair<Integer, Integer>(0,0));
 		//Top right
-		corners.add(new Pair(GameView.WIDTH - GameObject.SIZE,0));
+		corners.add(new Pair<Integer, Integer>(GameView.WIDTH - GameObject.SIZE,0));
 		//Bottom left
-		corners.add(new Pair(0,GameView.HEIGHT - GameObject.SIZE));
+		corners.add(new Pair<Integer, Integer>(0,GameView.HEIGHT - GameObject.SIZE));
 		//Bottom right
-		corners.add(new Pair(GameView.WIDTH - GameObject.SIZE,GameView.HEIGHT - GameObject.SIZE));
+		corners.add(new Pair<Integer, Integer>(GameView.WIDTH - GameObject.SIZE,GameView.HEIGHT - GameObject.SIZE));
 
 		Random rand = new Random();
-
-		Pair corner = corners.get(rand.nextInt(corners.size()));
+		Pair<Integer, Integer> corner = corners.get(rand.nextInt(corners.size()));
 
 		place[0] = (int) corner.getKey();
 		place[1] = (int) corner.getValue();
@@ -267,7 +255,7 @@ public class Board {
 				delay(FoodType.Mouse,mouse.getSecondsBuffer());
 				this.mouse = null;
 			}
-		
+
 
 		// Iterate through all the objects that are currently exist	
 		for(int i = 0; i < ObjectList.size(); ++i){			
@@ -291,8 +279,7 @@ public class Board {
 
 				else{ 		//if the snake ate a question
 					Level level = ((Question)ObjectList.get(i)).getLevel();
-					//TODO ���� ���� ����� �������� ������� ����� ������ ������ �� �����
-					//�� ������ + ���� + ����
+					//TODO Handle the questions
 
 					ObjectList.remove(i);
 					updateObjects(level);
@@ -320,7 +307,7 @@ public class Board {
 				ObjectList.add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
 			}
 		}
-		else{
+		else {
 			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
 
 			//TODO Change
@@ -381,7 +368,6 @@ public class Board {
 		if(helpS){
 			if(ObjectList.size() == 0)
 				return true;
-
 			else {
 				for(int i = 0; i < ObjectList.size(); ++i) {
 					if(ObjectList.get(i).getType() == FoodType.Mouse)
@@ -391,7 +377,6 @@ public class Board {
 
 					if(mouseX == helpX && mouseY == helpY) {
 						return false;
-
 					}
 				}
 			}		
@@ -439,27 +424,19 @@ public class Board {
 		return this.mouse;
 	}
 
-
 	public int getScore() {
 		return score;
 	}
-
 
 	public ArrayList<SnakeFood> getObjectList() {
 		return ObjectList;
 	}
 
-
 	public int getLife() {
 		return life;
 	}
 
-
 	public void setLife(int life) {
 		this.life = life;
 	}
-
-
-
-
 }
