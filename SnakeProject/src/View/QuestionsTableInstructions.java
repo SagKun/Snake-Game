@@ -22,9 +22,9 @@ public class QuestionsTableInstructions {
 			if(level.equals(Level.EASY))
 				image = new ImageView("View/icons/GameObjects/question_white.png");
 			else if(level.equals(Level.MODERATE))
-				image = new ImageView("View/icons/GameObjects/question.png");
+				image = new ImageView("View/icons/GameObjects/question_yellow.png");
 			else if(level.equals(Level.HARD))
-				image = new ImageView("View/icons/GameObjects/faq.png");
+				image = new ImageView("View/icons/GameObjects/question_red.png");
 		}
 
 		public ImageView getImage() {
