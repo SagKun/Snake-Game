@@ -8,6 +8,7 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import Controller.GameController;
 import Model.Board;
 import Model.FoodFactory;
 import Model.FoodType;
@@ -89,10 +90,11 @@ public class TestBox {
 	@Test
 	public void testCheckCollisionWithBorders() {
 		Board board = Board.getInstance();
+		GameController gameController = GameController.getInstance();
 		board.getSnake().getHead().setX(collisionX);
 		board.getSnake().getHead().setY(collisionY);
 		int prevLife = board.getLife();
-		GameState state = board.checkCollision();
+		GameState state = gameController.checkCollision();
 		boolean result = false;
 		if(state.equals(GameState.Finished) && prevLife-1 == board.getLife())
 			result = true;
@@ -104,15 +106,17 @@ public class TestBox {
 	@Test
 	public void testCheckEaten() {
 		Board board = Board.getInstance();
+		GameController gameController = GameController.getInstance();
+
 		int prevScore = board.getScore();
 		int prevSnakeLength = board.getSnake().getSize();
 		board.getSnake().getHead().setX(checkEatenX);
 		board.getSnake().getHead().setY(checkEatenY);
-		board.initializeObjects();
+		gameController.initializeObjects();
 		SnakeFood prevFood = board.getObjectList().get(0);
 		board.getObjectList().get(0).setX(checkEatenX);
 		board.getObjectList().get(0).setY(checkEatenY);
-		board.checkEaten();
+		gameController.checkEaten();
 		boolean result = false;
 		if(board.getScore() == prevScore+prevFood.getPoints() &&
 				board.getSnake().getSize() == prevSnakeLength+prevFood.getExtraLength())
