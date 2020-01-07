@@ -7,6 +7,8 @@ public class WizardController {
 
 	public void editQuestion(Question originalQuestion,Question newQuestion)
 	{
+		System.out.println(originalQuestion);
+		System.out.println(newQuestion);
 		SysData.editQuestion(originalQuestion, newQuestion);
 		System.out.println(originalQuestion.getQuestion()+ " was edited successfully.");
 		
@@ -15,6 +17,7 @@ public class WizardController {
 	
 	public void addQuestion(Question q)
 	{
+		System.out.println(q);
 		SysData.addQuestion(q);
 		System.out.println(q.getQuestion()+ " was added to the database.");
 		
@@ -22,6 +25,7 @@ public class WizardController {
 	
 	public void deleteQuestion(Question q)
 	{
+		System.out.println(q);
 		SysData.removeQuestion(q);
 		System.out.println(q.getQuestion()+ " was removed from the database.");		
 	}
