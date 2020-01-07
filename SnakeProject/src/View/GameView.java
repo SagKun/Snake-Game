@@ -397,6 +397,16 @@ public class GameView implements Initializable {
 				else if(board.getObjectList().get(i).getType() == FoodType.Pear ) {
 					imagePath = "View/icons/GameObjects/pear24.png";
 				}
+				else if(board.getObjectList().get(i) instanceof Question) {
+					Question question = (Question) board.getObjectList().get(i);
+					
+					if(question.getLevel() == Level.EASY)
+						imagePath = "View/icons/GameObjects/question_white.png";
+					else if(question.getLevel() == Level.MODERATE)
+						imagePath = "View/icons/GameObjects/question_yellow.png";
+					else if(question.getLevel() == Level.HARD)
+						imagePath = "View/icons/GameObjects/question_red.png";
+				}
 				if(!imagePath.contentEquals(""))
 				{
 				ImageView fruitIcon =  new ImageView(imagePath);
@@ -433,7 +443,12 @@ public class GameView implements Initializable {
 		}
 
 		gameController.checkEaten(); // check if a fruit has been eaten
-
+		Question question = gameController.checkQuestionEaten();
+		if(question != null) {
+			//TODO Change this code depends on player answer
+			
+			gameController.checkUserAnswer(question, question.getCorrect_ans());
+		}
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
 		int newScore=Integer.parseInt(scoreField.getText());		

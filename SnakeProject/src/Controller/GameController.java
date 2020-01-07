@@ -172,8 +172,11 @@ public class GameController {
 					return;
 			}
 			Question question = factory.getQuestion(Level.valueOf (type));
-			if(question != null)
+			if(question != null) {
+				question.setX(foodX);
+				question.setY(foodY);
 				this.board.getObjectList().add(question);
+			}
 		}		
 
 	}
@@ -288,7 +291,7 @@ public class GameController {
 			objectX = ObjectList.get(i).getX();
 			objectY = ObjectList.get(i).getY();
 			if(objectX == headX && objectY == headY) {	//if the snake actually "eated" an object	
-				if (ObjectList.get(i) instanceof SnakeFood) { //if the snake ate a fruit/mouse
+				if (ObjectList.get(i) instanceof SnakeFood && !(ObjectList.get(i) instanceof Question)) { //if the snake ate a fruit/mouse
 					FoodType type = ObjectList.get(i).getType();
 					addLength(ObjectList.get(i).getExtraLength()); //adds body parts to snake
 					this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints());//add points to the player
@@ -320,7 +323,7 @@ public class GameController {
 			objectX = ObjectList.get(i).getX();
 			objectY = ObjectList.get(i).getY();
 			if(objectX == headX && objectY == headY) {	//if the snake actually "eated" an object	
-				if (ObjectList.get(i) instanceof Question) { //if the snake ate a question
+				if (ObjectList.get(i) instanceof Question) {//if the snake ate a question
 					return (Question) ObjectList.get(i);
 				}
 			}
