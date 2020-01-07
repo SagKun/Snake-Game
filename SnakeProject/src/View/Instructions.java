@@ -1,5 +1,6 @@
 package View;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -8,11 +9,15 @@ import Model.FoodType;
 import Model.Level;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
+import animatefx.animation.ZoomOut;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class Instructions implements Initializable  {
 
@@ -100,7 +106,25 @@ public class Instructions implements Initializable  {
 
 	@FXML
 	void returnToMenu(MouseEvent event) {
-
+		new ZoomOut(returnBtn).setCycleCount(1).setSpeed(0.7).play();
+    	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+			
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+				AnchorPane pane  = loader.load();
+				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
+				pauseAnchor.getChildren().add(pane);
+			}
+			
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		}) , new KeyFrame(Duration.seconds(1)));
+	timeline.play();
 	}
 
 }

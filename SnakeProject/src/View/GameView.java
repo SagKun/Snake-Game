@@ -95,6 +95,7 @@ public class GameView implements Initializable {
 	private Label livesLabel;
 	@FXML
 	private ImageView arrows;
+	
 	@FXML
 	private AnchorPane popup;
 	@FXML
@@ -123,7 +124,7 @@ public class GameView implements Initializable {
 
 
 	private Stage stage;
-	
+	private ImageView headImage;
 	
 	private Image muteImage;
 	private Image unmuteImage;
@@ -167,12 +168,12 @@ public class GameView implements Initializable {
 	 * Initializing the elements on the screen.
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		//the first section of this method sets the custom font and animations to the relevant nodes in the screen.
 		if(initialize)
 		{
 			wasMuted=true;
 			muteImage=new Image("/View/icons/mute-32.png");
 			unmuteImage=new Image("/View/icons/volume.png");
-			//the first section of this method sets the custom font and animations to the relevant nodes in the screen.
 			initialize=false;
 			scoreField.setFont(Fonts.minecraft50);
 			scoreLabel.setFont(Fonts.minecraft50);
@@ -191,9 +192,9 @@ public class GameView implements Initializable {
 			new Pulse(space).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.5).play();
-
+		}
 			// Setting the snake at the center of the board
-			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
+			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
 			headImage.setX(snake.getHead().getX());
 			headImage.setY(snake.getHead().getY());
 			pane.getChildren().add(headImage);
@@ -203,12 +204,12 @@ public class GameView implements Initializable {
 			for(int i = 1; i < snake.getSize(); ++i) {
 				snakeX = snake.getBodyPart(i).getX();
 				snakeY = snake.getBodyPart(i).getY();
-				ImageView bodyImage =  new ImageView("View/icons/GameObjects/SnakeBody.png");
+				ImageView bodyImage =  new ImageView("View/icons/GameObjects/bodyLarge.png");
 				bodyImage.setX(snakeX);
 				bodyImage.setY(snakeY);
 				pane.getChildren().add(bodyImage);
 			}
-		}
+		
 	}
 
 
@@ -229,6 +230,7 @@ public class GameView implements Initializable {
 
 					dy = -1;
 					dx = 0;
+					
 				}
 				// when moving down
 				if (!up && down) {
@@ -269,14 +271,16 @@ public class GameView implements Initializable {
 				}
 				//when the user has lost a life but game isn't over.
 				if (state == GameState.Finished) {
+					
 					updateLife();
 					up = down = left = right = false;
 					restart();
 					gameController.initializeObjects();
+					
 				}
 				// when game is over
 				if (state == GameState.GameOver) {
-				
+					initialize=true;
 					audio.stop();
 					stop();
 				}
@@ -320,20 +324,60 @@ public class GameView implements Initializable {
 
 		if(state == GameState.Running) {
 
+			
 			pane.getChildren().clear(); //Clear the screen and then place the objects at their updated place
 
+			
 			//Render the snake graphics
-			ImageView headImage =  new ImageView("View/icons/GameObjects/SnakeHead.png");
+			pane.getChildren().remove(headImage);
+			
+			//this section positions the snake head to fit the vector of the snake.
+			if(up) {
+			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
 			headImage.setX(snake.getHead().getX());
 			headImage.setY(snake.getHead().getY());
 			pane.getChildren().add(headImage);
+			}
+			else if(down)
+			{
+				
+					headImage =  new ImageView("View/icons/GameObjects/snakeDown.png");
+					headImage.setX(snake.getHead().getX());
+					headImage.setY(snake.getHead().getY());
+					pane.getChildren().add(headImage);
+					
+			}
+			else if(right)
+			{
+				
+					headImage =  new ImageView("View/icons/GameObjects/snakeRight.png");
+					headImage.setX(snake.getHead().getX());
+					headImage.setY(snake.getHead().getY());
+					pane.getChildren().add(headImage);
+					
+			}
+			else if(left)
+			{
+				headImage =  new ImageView("View/icons/GameObjects/snakeLeft.png");
+				headImage.setX(snake.getHead().getX());
+				headImage.setY(snake.getHead().getY());
+				pane.getChildren().add(headImage);
+			}
+			else
+			{	
+			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
+			headImage.setX(snake.getHead().getX());
+			headImage.setY(snake.getHead().getY());
+			pane.getChildren().add(headImage);
+				
+			}
 
 			int helpX, helpY, snakeY, snakeX;
 
 			for(int i = 1; i < snake.getSize(); ++i) {
 				snakeX = snake.getBodyPart(i).getX();
 				snakeY = snake.getBodyPart(i).getY();
-				ImageView bodyImage =  new ImageView("View/icons/GameObjects/SnakeBody.png");
+				ImageView bodyImage =  new ImageView("View/icons/GameObjects/bodyLarge.png");
 				bodyImage.setX(snakeX);
 				bodyImage.setY(snakeY);
 				pane.getChildren().add(bodyImage);
@@ -353,10 +397,13 @@ public class GameView implements Initializable {
 				else if(board.getObjectList().get(i).getType() == FoodType.Pear ) {
 					imagePath = "View/icons/GameObjects/pear24.png";
 				}
+				if(!imagePath.contentEquals(""))
+				{
 				ImageView fruitIcon =  new ImageView(imagePath);
 				fruitIcon.setX(helpX);
 				fruitIcon.setY(helpY);
 				pane.getChildren().add(fruitIcon);
+				}
 			}
 
 			//TODO render the question graphics
@@ -433,6 +480,7 @@ public class GameView implements Initializable {
 				case UP:
 					if (state == GameState.Started)
 					{
+					//	pane.getChildren().remove();
 						arrows.setVisible(true);
 						pressToPlay.setVisible(true);
 						pressToResume.setVisible(true);
@@ -642,9 +690,10 @@ public class GameView implements Initializable {
 		dx = dy = k = 0;
 		speedConstraint = 8;
 		mouseSpeedConstraint = 12;
+		initialize=true;
 	}
 
-
+//this methods recieves a node and blur it
 	public void blur(Region reg) {
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
 		GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
@@ -699,6 +748,7 @@ public class GameView implements Initializable {
 		}
 	}
 
+	//help method to load the pause screen
 	public void loadPause()
 	{
 		try {
@@ -716,7 +766,7 @@ public class GameView implements Initializable {
 		}
 	}
 
-
+//delay method for gameOver screen display
 	public void loadGameoverDelay()
 	{
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
@@ -728,7 +778,7 @@ public class GameView implements Initializable {
 		timeline.play();
 	}
 
-
+//help method for loading game over screen.
 	public void loadGameOver()
 	{
 		try {

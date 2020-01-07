@@ -70,14 +70,14 @@ public class GamePaused implements Initializable {
    
 
     @FXML
-    void instructionBtn(ActionEvent event) {
+    void instructionBtn(MouseEvent event) {
     	new ZoomOut(instructions).setCycleCount(1).setSpeed(0.7).play();
     	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 			
 			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Instructions.fxml"));
 				AnchorPane pane  = loader.load();
 				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
 				pauseAnchor.getChildren().add(pane);

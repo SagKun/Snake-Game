@@ -39,7 +39,6 @@
                               <Font name="Arial Black" size="32.0" />
                            </font>
                         </Label>
-                        <AnchorPane fx:id="popup" layoutX="221.0" layoutY="101.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="518.0" />
                      </children></Pane>
                </children>
             </AnchorPane>
@@ -104,6 +103,7 @@
             <Insets bottom="300.0" left="100.0" />
          </StackPane.margin>
       </Label>
+      <AnchorPane fx:id="popup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="518.0" />
       <Label fx:id="floatingScore" text="Label" textFill="WHITE" visible="false">
          <font>
             <Font size="20.0" />
