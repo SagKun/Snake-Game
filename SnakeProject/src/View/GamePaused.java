@@ -34,6 +34,13 @@ public class GamePaused implements Initializable {
 
 	@FXML
 	private Label resumeLabel;
+	
+
+    @FXML
+    private Label restartLabel;
+
+    @FXML
+    private Label instructions;
 
 	@FXML
 	private Label endLabel;
@@ -47,6 +54,8 @@ public class GamePaused implements Initializable {
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
     	resumeLabel.setFont(Fonts.minecraft30);
+    	restartLabel.setFont(Fonts.minecraft30);
+    	instructions.setFont(Fonts.minecraft30);
 		 endLabel.setFont(Fonts.minecraft30);
 		 exitLabel.setFont(Fonts.minecraft30);
 		 gamePausedLabel.setFont(Fonts.minecraft50);
@@ -54,16 +63,33 @@ public class GamePaused implements Initializable {
 		 new Pulse(endLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		 new Pulse(exitLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		 new Pulse(gamePausedLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		 new Pulse(instructions).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		 new Pulse(restartLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 	}
     
-    @FXML
-    void backToMenuBtn(ActionEvent event) {
-
-    }
+   
 
     @FXML
     void instructionBtn(ActionEvent event) {
-
+    	new ZoomOut(instructions).setCycleCount(1).setSpeed(0.7).play();
+    	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+			
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
+				AnchorPane pane  = loader.load();
+				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
+				pauseAnchor.getChildren().add(pane);
+			}
+			
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		}) , new KeyFrame(Duration.seconds(1)));
+	timeline.play();
     }
 
     @FXML

@@ -9,17 +9,17 @@
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="457.0" styleClass="AnchorPane">
          <children>
-            <Label fx:id="resumeLabel" layoutX="117.0" layoutY="161.0" onMouseClicked="#resumeGame" text="RESUME GAME" textFill="#fffdfd">
+            <Label fx:id="resumeLabel" layoutX="118.0" layoutY="134.0" onMouseClicked="#resumeGame" text="RESUME GAME" textFill="#fffdfd">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="endLabel" layoutX="144.0" layoutY="275.0" onMouseClicked="#endGame" text="END GAME" textFill="#fffdfd">
+            <Label fx:id="restartLabel" layoutX="114.0" layoutY="215.0" text="RESTART GAME" textFill="#fffdfd">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="exitLabel" layoutX="190.0" layoutY="397.0" onMouseClicked="#exit" text="EXIT" textFill="#fffdfd">
+            <Label fx:id="exitLabel" layoutX="191.0" layoutY="461.0" onMouseClicked="#exit" text="EXIT" textFill="#fffdfd">
                <font>
                   <Font size="30.0" />
                </font>
@@ -27,6 +27,16 @@
             <Label fx:id="gamePausedLabel" layoutX="38.0" layoutY="14.0" text="GAME PAUSED" textFill="#fffdfd">
                <font>
                   <Font name="System Bold" size="55.0" />
+               </font>
+            </Label>
+            <Label fx:id="instructions" layoutX="117.0" layoutY="296.0" onMouseClicked="#instructionBtn" text="INSTRUCTIONS" textFill="#fffdfd">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="endLabel" layoutX="145.0" layoutY="383.0" onMouseClicked="#endGame" text="END GAME" textFill="#fffdfd">
+               <font>
+                  <Font size="30.0" />
                </font>
             </Label>
          </children>
