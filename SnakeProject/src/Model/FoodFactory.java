@@ -2,7 +2,19 @@ package Model;
 
 import java.util.ArrayList;
 
+import sun.misc.Queue;
+
 public class FoodFactory {
+	private java.util.Queue<Question> easyQuestions;
+	private java.util.Queue<Question> moderateQuestions;
+	private java.util.Queue<Question> hardQuestions;
+	
+	
+	public FoodFactory() {
+		easyQuestions = SysData.questionsByLevelDB.get(Level.EASY);
+		moderateQuestions = SysData.questionsByLevelDB.get(Level.MODERATE);
+		hardQuestions = SysData.questionsByLevelDB.get(Level.HARD);
+	}
 
 	//returns a food based on the type you requested with his correct values to fields
 	public SnakeFood getFood(FoodType type, int x, int y) {
@@ -26,14 +38,14 @@ public class FoodFactory {
 			return new Question(x, y, question, 3, level, answers, correct_ans, team, -30);
 		return null;
 	}
-	
+	//returns a question based on the level you requested with his correct values to fields
 	public Question getQuestion(Level level, int x, int y) {
-		if(level.equals(Level.EASY))
-			return new Question(x, y, 1, level, -10);
-		else if(level.equals(Level.MODERATE))
-			return new Question(x, y, 2, level, -20);	
-		else if(level.equals(Level.HARD))
-			return new Question(x, y, 3, level, -30);
+		if(level.equals(Level.EASY) && !easyQuestions.isEmpty())
+			return easyQuestions.poll();
+		else if(level.equals(Level.MODERATE) && !moderateQuestions.isEmpty())
+			return moderateQuestions.poll();
+		else if(level.equals(Level.HARD) && !hardQuestions.isEmpty())
+			return hardQuestions.poll();
 		return null;
 	}
 }

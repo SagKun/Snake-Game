@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" styleClass="AnchorPane" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardForm">
+   <children>
+      <TextArea fx:id="questionField" layoutX="302.0" layoutY="184.0" prefHeight="68.0" prefWidth="384.0" promptText="Question" />
+      <TextField fx:id="authorField" layoutX="302.0" layoutY="269.0" prefHeight="25.0" prefWidth="384.0" promptText="Author" />
+      <ComboBox fx:id="levelCombo" layoutX="302.0" layoutY="308.0" prefHeight="25.0" prefWidth="384.0" promptText="Level" />
+      <CheckBox fx:id="firstChoose" layoutX="302.0" layoutY="358.0" mnemonicParsing="false" onAction="#firstAnswerPressed" prefHeight="17.0" prefWidth="104.0" text="First Answer" textAlignment="RIGHT" textFill="WHITE" />
+      <CheckBox fx:id="secondChoose" layoutX="302.0" layoutY="421.0" mnemonicParsing="false" onAction="#secondAnswerPressed" prefHeight="17.0" prefWidth="104.0" text="Second Answer" textFill="WHITE" />
+      <CheckBox fx:id="thirdChoose" layoutX="302.0" layoutY="485.0" mnemonicParsing="false" onAction="#thirdAnswerPressed" prefHeight="17.0" prefWidth="104.0" text="Third Answer" textFill="WHITE" />
+      <CheckBox fx:id="fourthChoose" layoutX="302.0" layoutY="546.0" mnemonicParsing="false" onAction="#fourAnswerPressed" prefHeight="17.0" prefWidth="104.0" text="Fourth Answer" textFill="WHITE" />
+      <TextArea fx:id="firstField" layoutX="414.0" layoutY="358.0" prefHeight="52.0" prefWidth="271.0" />
+      <TextArea fx:id="secondField" layoutX="414.0" layoutY="421.0" prefHeight="52.0" prefWidth="271.0" />
+      <TextArea fx:id="thirdField" layoutX="414.0" layoutY="485.0" prefHeight="52.0" prefWidth="271.0" />
+      <TextArea fx:id="fourthField" layoutX="414.0" layoutY="547.0" prefHeight="52.0" prefWidth="271.0" />
+      <Button fx:id="returnBtn" layoutX="302.0" layoutY="614.0" mnemonicParsing="false" onAction="#returnToWizard" styleClass="small-jfx-button" text="Return" />
+      <Button fx:id="submitBtn" layoutX="460.0" layoutY="614.0" mnemonicParsing="false" onAction="#submitForm" styleClass="small-jfx-button" text="Sumbit" />
+      <Label id="Snake_Label" layoutX="315.0" layoutY="96.0" text="Question Form" />
+   </children>
+</AnchorPane>
