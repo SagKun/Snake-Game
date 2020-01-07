@@ -2,14 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import Controller.GameController;
-import View.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.util.Duration;
-import javafx.util.Pair;
+
 
 public class Board {
 

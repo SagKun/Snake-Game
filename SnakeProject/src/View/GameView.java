@@ -4,6 +4,8 @@ import Utils.Sound;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+
+import Controller.GameController;
 import Model.*;
 import Utils.Fonts;
 import animatefx.animation.*;
@@ -144,12 +146,15 @@ public class GameView implements Initializable {
 	private int k = 0;
 	private int lastIndex;
 
+	private GameController gameController;
+
 	/**
 	 * Constructor of the game view.
 	 */
 	public GameView() {
 
 		board = Board.getInstance();
+		gameController = GameController.getInstance();
 		snake = board.getSnake();	
 		state = GameState.Started;
 		up = down = right = left = pause = resume = start = false;
@@ -267,7 +272,7 @@ public class GameView implements Initializable {
 					updateLife();
 					up = down = left = right = false;
 					restart();
-					board.initializeObjects();
+					gameController.initializeObjects();
 				}
 				// when game is over
 				if (state == GameState.GameOver) {
@@ -376,11 +381,11 @@ public class GameView implements Initializable {
 
 		int currentScore=Integer.parseInt(scoreField.getText());
 		if(startup) {
-			board.initializeObjects();
+			gameController.initializeObjects();
 			startup = false;
 		}
 
-		board.checkEaten(); // check if a fruit has been eaten
+		gameController.checkEaten(); // check if a fruit has been eaten
 
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
@@ -407,10 +412,10 @@ public class GameView implements Initializable {
 
 		updateLife(); //Update life
 
-		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
+		if (gameController.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
 			state = GameState.Finished; //
 		}
-		else if(board.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
+		else if(gameController.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
 			state = GameState.GameOver;
 	}
 
@@ -579,7 +584,7 @@ public class GameView implements Initializable {
 			case "UP":
 				nextX = mouseX;
 				nextY = mouseY - GameObject.SIZE;
-				if(board.mouseCollision(nextX, nextY)) {
+				if(gameController.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
 					return 0;
@@ -591,7 +596,7 @@ public class GameView implements Initializable {
 			case "DOWN":
 				nextX = mouseX;
 				nextY = mouseY + GameObject.SIZE;
-				if(board.mouseCollision(nextX, nextY)) {
+				if(gameController.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
 					return 1;
@@ -603,7 +608,7 @@ public class GameView implements Initializable {
 			case "LEFT":
 				nextX = mouseX - GameObject.SIZE;
 				nextY = mouseY;
-				if(board.mouseCollision(nextX, nextY)) {
+				if(gameController.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
 					return 2;
@@ -615,7 +620,7 @@ public class GameView implements Initializable {
 			case "RIGHT":
 				nextX = mouseX + GameObject.SIZE;
 				nextY = mouseY;
-				if(board.mouseCollision(nextX, nextY)) {
+				if(gameController.mouseCollision(nextX, nextY)) {
 					board.getMouse().setX(nextX);
 					board.getMouse().setY(nextY);
 					return 3;

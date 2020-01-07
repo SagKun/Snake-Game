@@ -15,6 +15,8 @@ import javafx.util.Pair;
 
 public class GameController {
 
+	private static GameController controllerInstance = null;
+	
 	/**
 	 * Random number for generating points to place objects on them
 	 */
@@ -23,10 +25,15 @@ public class GameController {
 	private Board board;
 
 
+	public static GameController getInstance() {
+		if(controllerInstance == null)
+			controllerInstance = new GameController();
+		return controllerInstance;
+	}
 
-	public GameController(Board board) {
+	public GameController() {
 		rand = new Random();
-		this.board = board;
+		this.board = Board.getInstance();
 	}
 
 	/**
