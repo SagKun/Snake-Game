@@ -39,8 +39,6 @@ import javafx.util.Duration;
 
 public class HistoryView implements Initializable {
 
-	private String pathFxml = "SnakeProject\\src\\View\\HistoryView.fxml";
-
 
 	@FXML
 	private StackPane stackPane;
