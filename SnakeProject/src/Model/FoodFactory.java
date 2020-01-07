@@ -39,7 +39,7 @@ public class FoodFactory {
 		return null;
 	}
 	//returns a question based on the level you requested with his correct values to fields
-	public Question getQuestion(Level level, int x, int y) {
+	public Question getQuestion(Level level) {
 		if(level.equals(Level.EASY) && !easyQuestions.isEmpty())
 			return easyQuestions.poll();
 		else if(level.equals(Level.MODERATE) && !moderateQuestions.isEmpty())
