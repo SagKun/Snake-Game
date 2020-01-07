@@ -1,356 +1,406 @@
 package Controller;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 import Model.*;
 import View.GameView;
-import View.MainView;
-import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
+import javafx.util.Pair;
+
 
 public class GameController {
 
 	/**
-	 * Actual state of the game
+	 * Random number for generating points to place objects on them
 	 */
-	protected static GameState state;
-	/**
-	 * Boolean variables describing user input
-	 */
-	private boolean up, down, right, left, pause, resume, start,startup;
-	/**
-	 * Boolean block to prevent pressing keys too fast, so that the snake's head
-	 * could turn around. For example, when snake was moving left, pressing the up
-	 * and right key very fast could just change the head's direction to right,
-	 * without changing the position in Y-axis, causing the head to hit the second
-	 * part of it's body
-	 */
-	private boolean keyActive;
-	/**
-	 * The movement in X and Y-axis
-	 */
-	private int dx, dy;
-	/**
-	 * Variable to control snake's speed and mouse speed
-	 */
-	private int speedConstraint,mouseSpeedConstraint;
+	Random rand; 
 
-
-	private Snake snake;
-	private BodyPart head;
-	private GameView view;
 	private Board board;
 
 
-	public GameController() {
-		state = GameState.Started;
-		up = down = right = left = pause = resume = start = false;
-		view = new GameView();
-		snake = view.getSnake();
-		head = snake.getHead();
-		board = view.getBoard();
-		keyActive = startup = true;
-		resume();
+
+	public GameController(Board board) {
+		rand = new Random();
+		this.board = board;
 	}
 
 	/**
-	 * The gameloop, handles user input, updates and renders the game
+	 * Set the objects on the board at game start
 	 */
-	private void resume() {
+	public void initializeObjects() {
 
-		new AnimationTimer() {
+		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
+		int []place; // place on board, will hold X and Y
+		Boolean isFruit = true;
 
-			int i = 0, j = 0;
-
-			@Override
-			public void handle(long now) {
-
-				// when moving up
-				if (up && !down) {
-
-					dy = -1;
-					dx = 0;
-				}
-				// when moving down
-				if (!up && down) {
-
-					dy = 1;
-					dx = 0;
-				}
-				// when moving left
-				if (left && !right) {
-
-					dy = 0;
-					dx = -1;
-				}
-				// when moving right
-				if (right && !left) {
-					dy = 0;
-					dx = 1;
-				}
-				// when game paused
-				if (pause && !resume) {
-					state = GameState.Paused;
-					//TODO handle this situation
-					//view.render();
-					stop();
-				}
-				// when game resumed
-				if (resume && !pause) {
-					state = GameState.Running;
-					resume = false;
-				}
-				// when game started or restarted
-				if (start && (state == GameState.Finished || state == GameState.Started)) {
-					restart();
-					start = false;
-				}
-				if (state == GameState.Finished) {
-					//TODO
-				}
-				// when game is done
-				if (state == GameState.GameOver) {
-					stop();
-				}
-				// when game is running, make movement
-				if (state == GameState.Running) {
-					if (i == speedConstraint) { // control the speed of snake
-						snakeMove(dx, dy);
-						keyActive = true; // unlock possibility to press another key after snake made it's move
-						i = 0; // counter to slow down the snake
-					}
-					++i;
-					
-					if (j == mouseSpeedConstraint) { // control the speed of snake
-						mouseMove();
-						j = 0; // counter to slow down the mouse
-					}
-					++j;
-				}
-				update(); // updating the game parameters, positions, etc.
-				//TODO Show "press arrows to move on screen"    view.render(); 
-				//movement(view.getScene()); // handling user key input on actual scene
-			}
-		}.start(); // starting the timer
-	}
-
-
-	/**
-	 * The update method
-	 */
-	private void update() {
-		if(startup) {
-			board.initializeObjects();
-			startup = false;
-		}// updates the state of fruits
-		board.checkEaten(); // check if a fruit has been eaten
-		if (board.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
-			state = GameState.Finished; //
+		for(FoodType f : FoodType.values()) {
+			if(f == FoodType.Pear)
+				place = placePear();
+			else
+				place = placeFruit();
+			objectX = place[0];
+			objectY = place[1];
+			addObject(objectX, objectY, f.name(), isFruit);
 		}
-		else if(board.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
-			state = GameState.GameOver;
+
+		for(Level c : Level.values()) {
+			place = placeFruit();
+			objectX = place[0];
+			objectY = place[1];
+			addObject(objectX, objectY, c.name(), !isFruit);
+		}
 	}
 
+
 	/**
-	 * Method to handle pressed keys on scene given as argument
-	 * 
-	 * @param scene on which events are performed
+	 * Finds a place to put a new object on the board in such a way it wont collide with anything
+	 * that is already placed
+	 * @return Returns point(X,Y) on board
 	 */
-	private void movement(Scene scene) {
+	private int[] placeFruit() {
 
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		int []point = new int[2];
+		int helpX, helpY, foodX = 0, foodY = 0;
+		boolean helpS, helpO;	// for Snake and Objects
+		boolean collision = true;
+		Snake snake = this.board.getSnake();
+		ArrayList<SnakeFood> ObjectList = this.board.getObjectList();
 
-			public void handle(KeyEvent e) {
+		while(collision) {
 
-				switch (e.getCode()) {
-				case UP:
-					if (!down && keyActive && state == GameState.Running) {
-						up = true;
-						left = false;
-						right = false;
-						keyActive = false;
-						System.out.println("the user press on UP key");
-					}
+			helpS = helpO = false;
+			//For later use
+			foodX = ((rand.nextInt(GameView.WIDTH/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
+			foodY = ((rand.nextInt(GameView.HEIGHT/GameObject.SIZE - 1)+1)*GameObject.SIZE) - GameObject.SIZE;
+
+			for(int i = 0; i < snake.getSize(); ++i){
+				helpX = snake.getBodyPart(i).getX();
+				helpY = snake.getBodyPart(i).getY();
+
+				if(helpX == foodX && helpY == foodY)
 					break;
-				case DOWN:
-					if (!up && keyActive && (left || right) && state == GameState.Running) {
-						down = true;
-						left = false;
-						right = false;
-						keyActive = false;
-						System.out.println("the user press on DOWN key");
-					}
-					break;
-				case LEFT:
-					if (!right && keyActive && state == GameState.Running) {
-						left = true;
-						up = false;
-						down = false;
-						keyActive = false;
-						System.out.println("the user press on LEFT key");
-					}
-					break;
-				case RIGHT:
-					if (!left && keyActive && state == GameState.Running) {
-						right = true;
-						up = false;
-						down = false;
-						keyActive = false;
-						System.out.println("the user press on RIGHT key");
-					}
-					break;
-				case SPACE: // pause or resume game
-					if (state == GameState.Running || state == GameState.Paused) {
-						if (pause == false) {
-							pause = true;
-							resume = false;
-							System.out.println("the user press on SPACE key");
-						} else {
-							resume = true;
-							pause = false;
-							resume();
+				if(i == snake.getSize() - 1)
+					helpS = true;
+			}
+
+			if(helpS){
+				if(ObjectList.size() == 0)
+					helpO = true;
+				else {
+					for(int i = 0; i < ObjectList.size(); ++i) {
+
+						helpX = ObjectList.get(i).getX();
+						helpY = ObjectList.get(i).getY();
+						if(foodX == helpX && foodY == helpY) {
+							break;
+						}
+						if(i == ObjectList.size() - 1) {
+							helpO = true;
 						}
 					}
-					break;
-				case ENTER: { // start or restart the game
-					if (state == GameState.Started)
-						start = true;
-					if (state == GameState.Finished) {
-						start = true;
-						resume();
-					}
-					System.out.println("the user press on ENTER key");
 				}
-				break;
-				case ESCAPE: // exit program
-					System.exit(0);
-					break;
-				default:
-					break;
-				}
-			}
-		});
-
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-			}
-		});
-	}
-
-	/**
-	 * Method to handle snake's position and movement on board
-	 * 
-	 * @param dx - movement in X-axis, 1 for right, -1 for left
-	 * @param dy - movement in Y-axis, 1 for down, -1 for up
-	 */
-	private void snakeMove(int dx, int dy) {
-
-		if (dx != 0 || dy != 0) { // if snake is meant to move
-
-			// temporary variables to hold BodyParts
-			BodyPart prev = new BodyPart(head.getX(), head.getY()), next = new BodyPart(head.getX(), head.getY());
-
-			// move head in X-axis
-			head.setX(head.getX() + (dx * GameObject.SIZE));
-			// move head in Y-axis
-			head.setY(head.getY() + (dy * GameObject.SIZE));
-
-			// moving the snake's body, each point gets the position of the one in front
-			for (int i = 1; i < snake.getSize(); ++i) {
-
-				next.setX(snake.getBodyPart(i).getX());
-				next.setY(snake.getBodyPart(i).getY());
-
-				snake.getBodyPart(i).setX(prev.getX());
-				snake.getBodyPart(i).setY(prev.getY());
-				prev.setX(next.getX());
-				prev.setY(next.getY());
-			}
+				if(helpO) {	
+					collision = false;
+				}	
+			}		
 		}
+		point[0] = foodX;
+		point[1] = foodY;
+		return point;	
 	}
 
-	/**
-	 * Method to handle mouse's position and movement on board
-	 * 
-	 */
-	private void mouseMove() {
+
+
+	private int[] placePear() {
+		int place[] = new int[2];
+
+		ArrayList<Pair<Integer,Integer>> corners = new ArrayList<Pair<Integer,Integer>>();
+		//Top left
+		corners.add(new Pair<Integer, Integer>(0,0));
+		//Top right
+		corners.add(new Pair<Integer, Integer>(GameView.WIDTH - GameObject.SIZE,0));
+		//Bottom left
+		corners.add(new Pair<Integer, Integer>(0,GameView.HEIGHT - GameObject.SIZE));
+		//Bottom right
+		corners.add(new Pair<Integer, Integer>(GameView.WIDTH - GameObject.SIZE,GameView.HEIGHT - GameObject.SIZE));
+
 		Random rand = new Random();
-		List<String> movingOptions = Arrays.asList("UP","DOWN","LEFT","RIGHT");
-		Boolean canMove = false;
+		Pair<Integer, Integer> corner = corners.get(rand.nextInt(corners.size()));
 
-		int mouseX = board.getMouse().getX();
-		int mouseY = board.getMouse().getY();
-		int nextX,nextY;
+		place[0] = (int) corner.getKey();
+		place[1] = (int) corner.getValue();
+		return place;
+	}
 
-		while(!canMove) {
-			int index = rand.nextInt(movingOptions.size());
-			switch(movingOptions.get(index)){
 
-			case "UP":
-				nextX = mouseX;
-				nextY = mouseY - GameObject.SIZE;
-				if(board.mouseCollision(nextX, nextY)) {
-					board.getMouse().setX(nextX);
-					board.getMouse().setY(nextY);
-				}
-				break;
+	/**
+	 * Method to generate a new object in the game
+	 * @param foodX X coordinate of normal fruit
+	 * @param foodY	Y coordinate of normal fruit
+	 */
+	public void addObject(int foodX, int foodY, String type, boolean isFruit) {
 
-			case "DOWN":
-				nextX = 0;
-				nextY = mouseY + GameObject.SIZE;
-				if(board.mouseCollision(nextX, nextY)) {
-					board.getMouse().setX(nextX);
-					board.getMouse().setY(nextY);
-				}
-				break;
+		FoodFactory factory = this.board.getFactory();
 
-			case "LEFT":
-				nextX = mouseX - GameObject.SIZE;
-				nextY = mouseY;
-				if(board.mouseCollision(nextX, nextY)) {
-					board.getMouse().setX(nextX);
-					board.getMouse().setY(nextY);
-				}
-				break;
-
-			case "RIGHT":
-				nextX = mouseX + GameObject.SIZE;
-				nextY = mouseY;
-				if(board.mouseCollision(nextX, nextY)) {
-					board.getMouse().setX(nextX);
-					board.getMouse().setY(nextY);
-				}
-				break;
+		if (isFruit){
+			if(FoodType.valueOf (type) == FoodType.Mouse) {
+				this.board.setMouse((Mouse)factory.getFood(FoodType.Mouse, foodX, foodY));
 			}
+			else {
+				for(SnakeFood sf : this.board.getObjectList()) {
+					if(sf.getType() == FoodType.valueOf(type))
+						return;
+				}
+				this.board.getObjectList().add(factory.getFood(FoodType.valueOf (type), foodX, foodY));
+			}
+		}
+		else {
+			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
+
+			//TODO Change
+		}		
+
+	}
+
+
+	/**
+	 * Update the objects when new one needs to be added
+	 * @param Type = fruit/mouse as SnakeFood or question as ColorLevel
+	 */
+	public void updateObjects(Object Type){
+
+		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
+		int []place; // place on board, will hold X and Y
+		Boolean isFruit = true;
+
+		if(Type instanceof FoodType){
+			if(Type == FoodType.Pear)
+				place = placePear();
+			else
+				place = placeFruit();
+			objectX = place[0];
+			objectY = place[1];
+			addObject(objectX, objectY,((FoodType)Type).name(),isFruit);
+		}
+		else{
+			place = placeFruit();
+			objectX = place[0];
+			objectY = place[1];
+			addObject(objectX, objectY,((Level)Type).name(),!isFruit);
+		}		
+	}
+
+
+	/**
+	 * Method to check if an collision occurred, either of the snake head with it's body or with an obstacle on the board
+	 * @return Returns the finished state of game
+	 */
+	public GameState checkCollision() {
+
+		int headX, headY, helpX, helpY;
+		BodyPart head = this.board.getHead();
+		Snake snake = this.board.getSnake();
+
+		headX = head.getX();
+		headY = head.getY();
+
+		// checks if snake hit itself
+		for(int i = 1; i < snake.getSize(); ++i) {
+			helpX = snake.getBodyPart(i).getX();
+			helpY = snake.getBodyPart(i).getY();
+			if(helpX == headX && helpY == headY) {
+				this.board.setLife(this.board.getLife() - 1);
+				if (this.board.getLife() > 0) {
+					semiReset();
+					return GameState.Finished;
+				}
+				else {
+					return GameState.GameOver;
+				}
+			}
+		}
+
+		// Checks if the snake has hit the board borders
+		if (headX >= GameView.WIDTH || headX < 0) {
+			this.board.setLife(this.board.getLife() - 1);
+			if (this.board.getLife() > 0) {
+				semiReset();
+				return GameState.Finished;
+			}
+			else {
+				return GameState.GameOver;
+			}
+		}
+
+		else if (headY < 0 || headY >= GameView.HEIGHT) {
+			this.board.setLife(this.board.getLife() - 1);
+			if (this.board.getLife() > 0) {
+				semiReset();
+				return GameState.Finished;
+			}
+			else {
+				return GameState.GameOver;
+			}
+		}
+		return GameView.getState();
+	}
+
+
+	/**
+	 * Method to check if snake ate an object on the board
+	 */
+	public void checkEaten() {
+
+		int headX, headY, objectX, objectY;
+		BodyPart head = this.board.getHead();		
+
+		headX = head.getX();
+		headY = head.getY();
+		if(this.board.getMouse() != null)
+			if(headX == this.board.getMouse().getX() && headY == this.board.getMouse().getY()) {
+				this.board.setScore(this.board.getScore() + this.board.getMouse().getPoints());
+				this.board.setLife(this.board.getLife() + this.board.getMouse().getExtraLife());
+				addLength(this.board.getMouse().getExtraLength());
+				delay(FoodType.Mouse,this.board.getMouse().getSecondsBuffer());
+				this.board.setMouse(null);
+			}
+
+		ArrayList<SnakeFood> ObjectList = this.board.getObjectList();
+
+		// Iterate through all the objects that are currently exist	
+		for(int i = 0; i < ObjectList.size(); ++i){			
+			objectX = ObjectList.get(i).getX();
+			objectY = ObjectList.get(i).getY();
+			if(objectX == headX && objectY == headY) {	//if the snake actually "eated" an object	
+				if (ObjectList.get(i) instanceof SnakeFood) { //if the snake ate a fruit/mouse
+					FoodType type = ObjectList.get(i).getType();
+					addLength(ObjectList.get(i).getExtraLength()); //adds body parts to snake
+					this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints());//add points to the player
+					int time = ObjectList.get(i).getSecondsBuffer();
+					ObjectList.remove(i);
+
+					if(type == FoodType.Apple || type == FoodType.Banana) {
+						delay(type,time);
+					}
+					else {
+						updateObjects(type);
+					}
+				}
+
+				else{ 		//if the snake ate a question
+					Level level = ((Question)ObjectList.get(i)).getLevel();
+					//TODO Handle the questions
+
+					ObjectList.remove(i);
+					updateObjects(level);
+				}
+			}		
 		}
 	}
 
 
 	/**
-	 * Restarting the game by setting basic parameters to their primary values
+	 * Add new part to snake's body after eating a food
 	 */
-	private void restart() {
-		state = GameState.Running;
-		dx = dy = 0;
-		up = down = left = right = false;
-		speedConstraint = 3;
-		mouseSpeedConstraint = 6;
+	public void addLength(int num) {
+		Snake snake = this.board.getSnake();
+
+		BodyPart b1 = snake.getBodyPart(snake.getSize()-1), b2 = snake.getBodyPart(snake.getSize()-2);
+		if(b1.getX() > b2.getX()){
+			for(int i=1; i <= num;i++)
+				snake.addBodyPart(b1.getX()+i*GameObject.SIZE, b1.getY());
+		}
+		else if(b1.getX() < b2.getX())
+		{
+			for(int i=1; i <= num;i++)
+				snake.addBodyPart(b1.getX()-i*GameObject.SIZE, b1.getY());
+		}
+		else if(b1.getY() > b2.getY())
+		{
+			for(int i=1; i <= num;i++)
+				snake.addBodyPart(b1.getX(), b1.getY()+i*GameObject.SIZE);
+		}
+		else if(b1.getY() < b2.getY())
+		{
+			for(int i=1; i <= num;i++)
+				snake.addBodyPart(b1.getX(), b1.getY()-i*GameObject.SIZE);
+		}
 	}
+
+
+	private void delay(FoodType type,int time) {
+
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(time), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				updateObjects(type);
+			}
+		}));
+		timeline.setCycleCount(1);
+		timeline.play();
+	}
+
 
 
 	/**
-	 * Static method for returning the actual state of game for the Model and View
-	 * classes
-	 * 
-	 * @return Actual state of the game
+	 * Check if mouse has hit an object / snake / borders
+	 * @param mouseX - mouse X Coordinate 
+	 * @param mouseY - mouse Y Coordinate
+	 * @return
 	 */
-	public static GameState getState() {
-		return state;
+	public Boolean mouseCollision(int mouseX,int mouseY) {
+		int helpX, helpY;
+		boolean helpS = false;	// for Snake and Objects
+
+		Snake snake = this.board.getSnake();
+		ArrayList<SnakeFood> ObjectList = this.board.getObjectList();
+
+		for(int i = 0; i < snake.getSize(); ++i){
+
+			helpX = snake.getBodyPart(i).getX();
+			helpY = snake.getBodyPart(i).getY();
+
+			if(helpX == mouseX && helpY == mouseY)
+				return false;
+
+			if(i == snake.getSize() - 1)
+				helpS = true;
+		}
+
+		if(helpS){
+			if(ObjectList.size() == 0)
+				return true;
+			else {
+				for(int i = 0; i < ObjectList.size(); ++i) {
+					if(ObjectList.get(i).getType() == FoodType.Mouse)
+						continue;
+					helpX = ObjectList.get(i).getX();
+					helpY = ObjectList.get(i).getY();
+
+					if(mouseX == helpX && mouseY == helpY) {
+						return false;
+					}
+				}
+			}		
+		}
+		// Checks if the mouse has hit the board borders
+		if (mouseX >= GameView.WIDTH || mouseX < 0) 
+			return false;
+
+		else if (mouseY < 0 || mouseY >= GameView.HEIGHT) 
+			return false;
+
+		return true;	
 	}
 
+
+	private void semiReset() {
+		this.board.getSnake().setStart();
+		this.board.getObjectList().clear();
+	}
 }
