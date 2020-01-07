@@ -97,6 +97,9 @@ public class GameView implements Initializable {
 	private AnchorPane popup;
 	@FXML
 	private BorderPane borderPane;
+	
+	 @FXML
+	    private ImageView space;
 	/**
 	 * Actual state of the game
 	 */
@@ -169,8 +172,9 @@ public class GameView implements Initializable {
 			scoreField.setFont(Fonts.minecraft50);
 			scoreLabel.setFont(Fonts.minecraft50);
 			livesLabel.setFont(Fonts.minecraft50);
-			pressToPlay.setFont(Fonts.minecraft50);
-			pressToResume.setFont(Fonts.minecraft50);
+			pressToPlay.setFont(Fonts.minecraft30);
+			pressToResume.setFont(Fonts.minecraft30);
+			lifeAmount.setFont(Fonts.minecraft30);
 			new Pulse(scoreField).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 			new Pulse(mute).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 			new Pulse(burger).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
@@ -179,6 +183,8 @@ public class GameView implements Initializable {
 			new Pulse(pressToPlay).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(arrows).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
+			new Pulse(space).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
+			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.5).play();
 
 			// Setting the snake at the center of the board
@@ -265,14 +271,7 @@ public class GameView implements Initializable {
 				}
 				// when game is over
 				if (state == GameState.GameOver) {
-					/**
-					 String nickname;
-					 int score = board.getScore();
-					 Player p = new Player(nickname, score);
-					 HistoryController history = new HistoryController();
-					 history.addScoreIfTopTen(p);
-					 */
-
+				
 					audio.stop();
 					stop();
 				}
@@ -431,6 +430,8 @@ public class GameView implements Initializable {
 					{
 						arrows.setVisible(true);
 						pressToPlay.setVisible(true);
+						pressToResume.setVisible(true);
+						space.setVisible(true);
 						pane.setEffect(null);
 						arrows.setVisible(false);
 						pressToPlay.setVisible(false);
@@ -450,6 +451,8 @@ public class GameView implements Initializable {
 						pane.setEffect(null);
 						arrows.setVisible(false);
 						pressToPlay.setVisible(false);
+						pressToResume.setVisible(false);
+						space.setVisible(false);
 						start = false;
 						restart();
 					}
@@ -685,7 +688,7 @@ public class GameView implements Initializable {
 			life1.setVisible(true);
 			life2.setVisible(false);
 			life3.setVisible(false);
-			life = "X" + board.getLife();
+			life = "x" + board.getLife();
 			lifeAmount.setText(life);
 			break;
 		}
