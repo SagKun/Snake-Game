@@ -16,7 +16,7 @@ import javafx.util.Pair;
 public class GameController {
 
 	private static GameController controllerInstance = null;
-	
+
 	/**
 	 * Random number for generating points to place objects on them
 	 */
@@ -167,9 +167,13 @@ public class GameController {
 			}
 		}
 		else {
-			//ObjectList.add(factory.getQuestion(Level.valueOf (type), foodX, foodY));
-
-			//TODO Change
+			for(SnakeFood sf : this.board.getObjectList()) {
+				if(sf instanceof Question && ((Question) sf).getLevel() == Level.valueOf(type))
+					return;
+			}
+			Question question = factory.getQuestion(Level.valueOf (type));
+			if(question != null)
+				this.board.getObjectList().add(question);
 		}		
 
 	}
@@ -298,18 +302,49 @@ public class GameController {
 						updateObjects(type);
 					}
 				}
-
-				else{ 		//if the snake ate a question
-					Level level = ((Question)ObjectList.get(i)).getLevel();
-					//TODO Handle the questions
-
-					ObjectList.remove(i);
-					updateObjects(level);
-				}
 			}		
 		}
 	}
 
+
+	public Question checkQuestionEaten() {
+
+		int headX, headY, objectX, objectY;
+		BodyPart head = this.board.getHead();		
+
+		headX = head.getX();
+		headY = head.getY();
+		ArrayList<SnakeFood> ObjectList = this.board.getObjectList();
+
+		for(int i = 0; i < ObjectList.size(); ++i){			
+			objectX = ObjectList.get(i).getX();
+			objectY = ObjectList.get(i).getY();
+			if(objectX == headX && objectY == headY) {	//if the snake actually "eated" an object	
+				if (ObjectList.get(i) instanceof Question) { //if the snake ate a question
+					return (Question) ObjectList.get(i);
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public void checkUserAnswer(Question question,String answer) {
+		//If user answered right
+		if(answer.equals(question.getCorrect_ans())) {
+			this.board.setScore(this.board.getScore() + question.getLevel().getPoints());
+		}
+		//If user answered wrong
+		else {
+			//If after losing points the player has a score that is lower than 0, hes points will be set to 0
+			if(this.board.getScore() - question.getSetBack() < 0)
+				this.board.setScore(0);
+			else
+				this.board.setScore((this.board.getScore() - question.getSetBack()));
+		}
+		this.board.getObjectList().remove(question);
+		updateObjects(question.getLevel());
+	}
 
 	/**
 	 * Add new part to snake's body after eating a food
