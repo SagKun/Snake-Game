@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import Main.Main;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomOut;
@@ -152,6 +154,7 @@ public class GamePaused implements Initializable {
     	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
+				Main.f.delete();
 				Platform.exit();
 				System.exit(0);;
 			}

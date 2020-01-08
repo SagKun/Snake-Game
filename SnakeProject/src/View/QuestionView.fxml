@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="761.0" styleClass="AnchorPane" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.QuestionView">
+   <children>
+      <Label fx:id="question" layoutX="34.0" layoutY="14.0" prefHeight="190.0" prefWidth="915.0" text="bla bla bla bla bla bla bla bla bla bla bla bla bla&#10;bla bla bla bla bla bla bla bla bla bla bla bla bla" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label fx:id="ans1" layoutX="97.0" layoutY="218.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="940.0" text="sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="ans2" layoutX="97.0" layoutY="336.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="831.0" text="sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="ans3" layoutX="97.0" layoutY="444.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="831.0" text="sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="ans4" layoutX="91.0" layoutY="568.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="825.0" text="sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf &#10;sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf sfs sfsf sfs f fsf " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="one" layoutX="40.0" layoutY="197.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="54.0" text="1." textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="two" layoutX="40.0" layoutY="315.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="29.0" text="2." textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="three" layoutX="40.0" layoutY="425.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="29.0" text="3." textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="four" layoutX="40.0" layoutY="548.0" onMouseClicked="#resumeGame" prefHeight="86.0" prefWidth="29.0" text="4." textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

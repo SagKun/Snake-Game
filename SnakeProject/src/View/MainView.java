@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import Main.Main;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomOut;
@@ -34,6 +35,7 @@ public class MainView implements Initializable{
 	boolean playPressed=false;
 	boolean highscoresPressed=false;
 	boolean wizardPressed=false;
+	boolean exitPressed=false;
 	 @FXML
 	    private AnchorPane mainView;
 
@@ -67,6 +69,21 @@ public class MainView implements Initializable{
 
 		}
 		
+		public void exit(MouseEvent event) {
+			if(!exitPressed)	
+			{
+				exitPressed=true;
+	    	new ZoomOut(exit).setCycleCount(1).setSpeed(0.2).play();
+				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						Main.f.delete();
+						System.exit(0);
+					}
+				}) , new KeyFrame(Duration.seconds(1.5)));
+				timeline.play();
+			}
+		}
 		
 	    public void play(MouseEvent event) {
 	    	

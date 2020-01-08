@@ -101,12 +101,14 @@ public class GameView implements Initializable {
 	@FXML
 	private BorderPane borderPane;
 	
+	
 	 @FXML
 	    private ImageView space;
 	/**
 	 * Actual state of the game
 	 */
 	protected static GameState state;
+	protected static boolean answeredRight;
 
 	/**
 	 * Boolean variables describing user input
@@ -767,7 +769,7 @@ public class GameView implements Initializable {
 	public void loadPause()
 	{
 		try {
-			pressToResume.setVisible(true);
+			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
 			AnchorPane popupPane;
 			popupPane = loader.load();
@@ -780,6 +782,28 @@ public class GameView implements Initializable {
 			e1.printStackTrace();
 		}
 	}
+	
+	
+	//help method to load the question screen
+		public void loadQuestion(Question q)
+		{
+			try {
+				answeredRight=false;
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
+				AnchorPane popupPane;
+				popupPane = loader.load();
+				popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+				popup.getChildren().removeAll(popup.getChildren());
+				popup.getChildren().add(popupPane);
+				popup.setVisible(true);
+				
+				QuestionView view = (QuestionView)loader.getController();		
+				view.setQuestion(q);
+
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
 
 //delay method for gameOver screen display
 	public void loadGameoverDelay()

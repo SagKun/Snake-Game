@@ -16,10 +16,10 @@ import javafx.stage.StageStyle;
 public class Main extends Application{
 
 	
-	
+	public static File f = new File("checkFile");
 
 	public static void main(String args[]) {
-		File f = new File("checkFile");
+		
 		Fonts.loadMinecraftFont();
 		if(NoOtherInstanceRunning(f))
 		{	
@@ -59,7 +59,9 @@ public class Main extends Application{
 		}
 
 
-
-
 	}
+	
+	
+	
+
 }

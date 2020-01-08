@@ -22,7 +22,7 @@ public class Fonts {
 	      Font smFont = Font.loadFont(fontStream2, 30);
 	      minecraft30=smFont;
 	      InputStream fontStream3 = Fonts.class.getResourceAsStream(currentFontFile);
-	      Font smsmFont = Font.loadFont(fontStream2, 15);
+	      Font smsmFont = Font.loadFont(fontStream3, 15);
 	      minecraft15=smsmFont;
 	      try {
 			fontStream.close();
