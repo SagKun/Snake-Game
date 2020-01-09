@@ -15,7 +15,7 @@ public class QuestionsTableInstructions {
 		public QuestionsTableInstructions(Level level) {
 			super();
 			FoodFactory factory = new FoodFactory();
-			Question q = factory.getQuestion(level, 0, 0, "", null, "", "");
+			Question q = factory.getQuestion(level, 0, 0, "", null, 0, "");
 			this.level = q.getLevel().toString();
 			points = q.getPoints();
 			penalty = q.getSetBack();
