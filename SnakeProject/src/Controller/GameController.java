@@ -24,6 +24,8 @@ public class GameController {
 
 	private Board board;
 
+	private NormalState normalState;
+	private SuperState superState;
 
 	public static GameController getInstance() {
 		if(controllerInstance == null)
@@ -34,6 +36,8 @@ public class GameController {
 	public GameController() {
 		rand = new Random();
 		this.board = Board.getInstance();
+		normalState = new NormalState();
+		superState = new SuperState();
 	}
 
 	/**
@@ -41,6 +45,7 @@ public class GameController {
 	 */
 	public void initializeObjects() {
 
+		setNormalState();
 		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
 		int []place; // place on board, will hold X and Y
 		Boolean isFruit = true;
@@ -443,6 +448,14 @@ public class GameController {
 		return true;	
 	}
 
+	
+	public void setSuperState() {
+		superState.setSnakeState(this.board.getSnake());
+	}
+	
+	public void setNormalState() {
+		normalState.setSnakeState(this.board.getSnake());
+	}
 
 	public void fullReset() {
 		this.board.getSnake().setStart();

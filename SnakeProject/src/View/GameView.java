@@ -149,6 +149,7 @@ public class GameView implements Initializable {
 	private int k = 0;
 	private int lastIndex;
 
+	private int stateCounter = 1;
 	private GameController gameController;
 
 	/**
@@ -291,7 +292,7 @@ public class GameView implements Initializable {
 					if(wasMuted)
 						audio.play();
 					//Control the snake movement
-					if (i == speedConstraint) { // control the speed of snake
+					if (i == board.getSnake().getSnakeSpeed()) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
 						i = 0; // counter to slow down the snake
@@ -453,6 +454,20 @@ public class GameView implements Initializable {
 		}
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
+		
+		//Set the snake in super state if the score is a multiply of 100
+		if(this.board.getScore() > 100 * stateCounter) {
+			stateCounter++;
+			this.gameController.setSuperState();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					gameController.setNormalState();
+				}
+			}));
+			timeline.setCycleCount(1);
+			timeline.play();
+		}
+		
 		int newScore=Integer.parseInt(scoreField.getText());		
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{

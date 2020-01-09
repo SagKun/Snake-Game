@@ -18,12 +18,17 @@ public class Snake {
 	//this fields define the current location of the snake(with initilization of the starting point)
 	private final int headX = GameView.WIDTH/2;
 	private final int headY = GameView.HEIGHT/2;
+	
+	
+	private SnakeState state;
+	private int snakeSpeed;
 
 	public Snake() {
 		
 		body = new ArrayList<>();
 		head = new BodyPart(headX, headY);
 		size = 0;
+		state = null;
 		setStart();
 	}
 	
@@ -89,6 +94,22 @@ public class Snake {
 		++size;
 	}
 
+	public int getSnakeSpeed() {
+		return snakeSpeed;
+	}
+
+	public void setSnakeSpeed(int snakeSpeed) {
+		this.snakeSpeed = snakeSpeed;
+	}
+
+	
+	public void setState(SnakeState state) {
+		this.state = state;
+	}
+	
+	public SnakeState getState() {
+		return this.state;
+	}
 	@Override
 	public String toString() {
 		return "Snake [head=" + head + ", size=" + size + "]";
