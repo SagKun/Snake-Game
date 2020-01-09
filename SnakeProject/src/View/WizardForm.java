@@ -140,10 +140,10 @@ public class WizardForm implements Initializable{
 			blanc = true;
 		}
 		if(correctSelected && !blanc) {
-			
+
 			FoodFactory factory = new FoodFactory();
 			ArrayList<String> answers = new ArrayList<>();
-			
+
 			answers.add(firstAnswer);
 			answers.add(secondAnswer);
 			answers.add(thirdAnswer);
@@ -172,25 +172,36 @@ public class WizardForm implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		ObservableList<Level> levels = FXCollections.observableArrayList();
 		for(Level l : Level.values()) {
 			levels.add(l);
 		}
 		levelCombo.setItems(levels);
 		if(isEdit) {
+			firstChoose.setSelected(false);
+			secondChoose.setSelected(false);
+			thirdChoose.setSelected(false);
+			fourthChoose.setSelected(false);
 			questionField.setText(oldQuestion.getQuestion());
 			authorField.setText(oldQuestion.getAuthor());
 			levelCombo.getSelectionModel().select(oldQuestion.getLevel());
-			firstField.setText(String.valueOf(oldQuestion.getCorrect_ans()));
+			firstField.setText(String.valueOf(oldQuestion.getAnswers().get(0)));
 			firstChoose.setSelected(true);
-			ArrayList<String> ans = new ArrayList<>();
-			for(String answer : oldQuestion.getAnswers()) {
-				if(!answer.equals(oldQuestion.getCorrect_ans()))
-					ans.add(answer);
+			secondField.setText(String.valueOf(oldQuestion.getAnswers().get(1)));
+			thirdField.setText(String.valueOf(oldQuestion.getAnswers().get(2)));
+			fourthField.setText(String.valueOf(oldQuestion.getAnswers().get(3)));
+			switch(oldQuestion.getCorrect_ans())
+			{
+			case 0: firstChoose.setSelected(true);
+					break;
+			case 1: secondChoose.setSelected(true);
+					break;
+			case 2:thirdChoose.setSelected(true);
+					break;
+			case 3:fourthChoose.setSelected(true);
+					break;
 			}
-			secondField.setText(ans.get(0));
-			thirdField.setText(ans.get(1));
-			fourthField.setText(ans.get(2));
 		}
 	}
 
