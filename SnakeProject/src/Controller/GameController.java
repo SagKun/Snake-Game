@@ -444,6 +444,13 @@ public class GameController {
 	}
 
 
+	public void fullReset() {
+		this.board.getSnake().setStart();
+		this.board.getObjectList().clear();
+		this.board.setScore(0);
+		this.board.setLife(3);
+	}
+	
 	private void semiReset() {
 		this.board.getSnake().setStart();
 		this.board.getObjectList().clear();

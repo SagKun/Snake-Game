@@ -709,6 +709,17 @@ public class GameView implements Initializable {
 		mouseSpeedConstraint = 12;
 		initialize=true;
 	}
+	
+	
+	public void resetGame() {
+		state = GameState.Running;
+		up = down = left = right = false;
+		dx = dy = k = 0;
+		speedConstraint = 8;
+		mouseSpeedConstraint = 12;
+		this.gameController.fullReset();
+		initialize=true;
+	}
 
 //this methods recieves a node and blur it
 	public void blur(Region reg) {
@@ -717,6 +728,8 @@ public class GameView implements Initializable {
 		adj.setInput(blur);
 		reg.setEffect(adj);
 	}
+	
+	
 	// update the gui of the life of a player
 	public void updateLife() {
 		String life;
