@@ -109,6 +109,8 @@ public class GameView implements Initializable {
 	 */
 	protected static GameState state;
 	protected static boolean answeredRight;
+	protected static Question questionForScreen;
+	
 
 	/**
 	 * Boolean variables describing user input
@@ -450,7 +452,11 @@ public class GameView implements Initializable {
 		if(question != null) {
 			//TODO Change this code depends on player answer
 			
-			gameController.checkUserAnswer(question, question.getCorrect_ans());
+				questionForScreen=question;
+			    loadQuestion();
+			
+			
+			//gameController.checkUserAnswer(question, question.getCorrect_ans());
 		}
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
@@ -476,6 +482,27 @@ public class GameView implements Initializable {
 			floatingScore.setFont(Fonts.minecraft30);
 			anchorPane.getChildren().add(floatingScore);
 			floatingScore.setText("+"+String.valueOf(newScore-currentScore));
+			floatingScore.setLayoutX(snake.getHead().getX());
+			floatingScore.setLayoutX(snake.getHead().getX());
+			new ZoomInUp(floatingScore).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(floatingScore).setCycleCount(1).setSpeed(0.5)).play();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent actionEvent) {
+
+					floatingScore.setVisible(false);		
+				}
+			}) , new KeyFrame(Duration.seconds(4)));
+			timeline.play();
+		}
+		
+		else if(currentScore > newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
+		{
+			System.out.println("test");
+			Label floatingScore=new Label();
+			floatingScore.setStyle("-fx-text-fill: white;");
+			floatingScore.setFont(Fonts.minecraft30);
+			anchorPane.getChildren().add(floatingScore);
+			floatingScore.setText("-"+String.valueOf(newScore-currentScore));
 			floatingScore.setLayoutX(snake.getHead().getX());
 			floatingScore.setLayoutX(snake.getHead().getX());
 			new ZoomInUp(floatingScore).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(floatingScore).setCycleCount(1).setSpeed(0.5)).play();
@@ -813,9 +840,13 @@ public class GameView implements Initializable {
 	
 	
 	//help method to load the question screen
-		public void loadQuestion(Question q)
+		public void loadQuestion()
 		{
 			try {
+				
+
+				pause = true;
+				resume = false;	
 				answeredRight=false;
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
 				AnchorPane popupPane;
@@ -825,8 +856,8 @@ public class GameView implements Initializable {
 				popup.getChildren().add(popupPane);
 				popup.setVisible(true);
 				
-				QuestionView view = (QuestionView)loader.getController();		
-				view.setQuestion(q);
+					
+				
 
 			} catch (IOException e1) {
 				e1.printStackTrace();

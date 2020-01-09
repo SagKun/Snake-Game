@@ -18,6 +18,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import Utils.Utils;
 
 
 public class SysData{
@@ -33,6 +34,8 @@ public class SysData{
 
 	public static boolean InitializeGame()
 	{
+		
+		
 		loadHighScores();
 		questionsByLevelDB.put(Level.EASY,new LinkedList<Question>());
 		questionsByLevelDB.put(Level.MODERATE,new LinkedList<Question>());
@@ -96,7 +99,8 @@ public class SysData{
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
-		try (Reader reader = new FileReader("SnakeProject/src/Data/Questions.json")) {
+		Utils utils=new Utils();
+		try (Reader reader = new FileReader(utils.getDataPath())) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 			JSONArray jsonArray = (JSONArray) jsonObject.get("questions");
@@ -123,11 +127,11 @@ public class SysData{
 			answers.add((String) rawAnswer);
 		}
 
-		String correct_ans  = (String) jsonQuestion.get("correct_ans");
+		String correct_ans  = (String) jsonQuestion.get("correct_answer");
 		String level = (String) jsonQuestion.get("level");
 		String team = (String) jsonQuestion.get("team");
 		FoodFactory f = new FoodFactory();
-		Question q = f.getQuestion(Level.getLevel(Integer.parseInt(level)), 0, 0, question, answers, correct_ans, team);
+		Question q = f.getQuestion(Level.getLevel(Integer.parseInt(level)), 0, 0, question, answers, Integer.parseInt(correct_ans), team);
 		questionsDB.add(q);
 		questionsByLevelDB.get(q.getLevel()).add(q);
 		System.out.println(q.getQuestion()+ " was imported successfully.");

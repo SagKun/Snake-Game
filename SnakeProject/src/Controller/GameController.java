@@ -337,10 +337,14 @@ public class GameController {
 	}
 
 
-	public void checkUserAnswer(Question question,String answer) {
+	public boolean checkUserAnswer(Question question,int ans) {
+		
+
+		boolean wasRight;
 		//If user answered right
-		if(answer.equals(question.getCorrect_ans())) {
+		if(ans==question.getCorrect_ans()) {
 			this.board.setScore(this.board.getScore() + question.getLevel().getPoints());
+			wasRight=true;
 		}
 		//If user answered wrong
 		else {
@@ -349,9 +353,11 @@ public class GameController {
 				this.board.setScore(0);
 			else
 				this.board.setScore((this.board.getScore() - question.getSetBack()));
+			wasRight=false;
 		}
 		this.board.getObjectList().remove(question);
 		updateObjects(question.getLevel());
+		return wasRight;
 	}
 
 	/**
