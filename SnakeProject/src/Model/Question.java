@@ -15,11 +15,12 @@ public class Question extends SnakeFood{
 	//the person that wrote the question
 	private String author;
 	//the correct answer
-	private String correct_ans;
+	private int correct_ans;
+	
 	
 
 	
-	public Question(int x,int y,String question, int points, Level level, ArrayList<String> answers, String correct_ans,String team, int reducePoints) {
+	public Question(int x,int y,String question, int points, Level level, ArrayList<String> answers, int correct_ans,String team, int reducePoints) {
 		super(x,y, points);
 		Question = question;
 		this.level = level;
@@ -75,14 +76,26 @@ public class Question extends SnakeFood{
 		this.author = team;
 	}
 
-	public String getCorrect_ans() {
+	public int getCorrect_ans() {
 		return correct_ans;
 	}
 
-	public void setCorrect_ans(String correct_ans) {
+	public void setCorrect_ans(int correct_ans) {
 		this.correct_ans = correct_ans;
 	}
 
+	
+	public String getAnswerToGui(int i) {
+		String ans=getAnswers().get(i);
+		String newAns="";
+		newAns=newAns + (i+1)+".  ";
+		newAns=newAns+ans;
+		return newAns;
+		
+	}
+	
+	
+	
 	
 
 	public String getAuthor() {

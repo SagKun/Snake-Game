@@ -24,6 +24,8 @@ public class GameController {
 
 	private Board board;
 
+	private NormalState normalState;
+	private SuperState superState;
 
 	public static GameController getInstance() {
 		if(controllerInstance == null)
@@ -34,6 +36,8 @@ public class GameController {
 	public GameController() {
 		rand = new Random();
 		this.board = Board.getInstance();
+		normalState = new NormalState();
+		superState = new SuperState();
 	}
 
 	/**
@@ -41,6 +45,7 @@ public class GameController {
 	 */
 	public void initializeObjects() {
 
+		setNormalState();
 		int objectX = 0, objectY = 0; // Coordinates for the object to be placed
 		int []place; // place on board, will hold X and Y
 		Boolean isFruit = true;
@@ -332,10 +337,14 @@ public class GameController {
 	}
 
 
-	public void checkUserAnswer(Question question,String answer) {
+	public boolean checkUserAnswer(Question question,int ans) {
+		
+
+		boolean wasRight;
 		//If user answered right
-		if(answer.equals(question.getCorrect_ans())) {
+		if(ans==question.getCorrect_ans()) {
 			this.board.setScore(this.board.getScore() + question.getLevel().getPoints());
+			wasRight=true;
 		}
 		//If user answered wrong
 		else {
@@ -344,9 +353,11 @@ public class GameController {
 				this.board.setScore(0);
 			else
 				this.board.setScore((this.board.getScore() - question.getSetBack()));
+			wasRight=false;
 		}
 		this.board.getObjectList().remove(question);
 		updateObjects(question.getLevel());
+		return wasRight;
 	}
 
 	/**
@@ -443,7 +454,22 @@ public class GameController {
 		return true;	
 	}
 
+	
+	public void setSuperState() {
+		superState.setSnakeState(this.board.getSnake());
+	}
+	
+	public void setNormalState() {
+		normalState.setSnakeState(this.board.getSnake());
+	}
 
+	public void fullReset() {
+		this.board.getSnake().setStart();
+		this.board.getObjectList().clear();
+		this.board.setScore(0);
+		this.board.setLife(3);
+	}
+	
 	private void semiReset() {
 		this.board.getSnake().setStart();
 		this.board.getObjectList().clear();

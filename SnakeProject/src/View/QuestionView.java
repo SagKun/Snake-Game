@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import Controller.GameController;
 import Model.Question;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
@@ -43,41 +44,41 @@ public class QuestionView implements Initializable{
 
 	@FXML
 	private Label ans4;
-	@FXML
-	private Label one;
-	@FXML
-	private Label two;
-	@FXML
-	private Label three;
-	@FXML
-	private Label four;
-
+	
+	private GameController gameController;
 
 	Question questionObject;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-
+		this.questionObject = GameView.questionForScreen;
+		gameController = GameController.getInstance();
 		question.setFont(Fonts.minecraft30);
 		ans1.setFont(Fonts.minecraft15);
 		ans2.setFont(Fonts.minecraft15);
 		ans3.setFont(Fonts.minecraft15);
 		ans4.setFont(Fonts.minecraft15);
-		one.setFont(Fonts.minecraft15);
-		two.setFont(Fonts.minecraft15);
-		three.setFont(Fonts.minecraft15);
-		four.setFont(Fonts.minecraft15);
+		question.setWrapText(true);
+		ans1.setWrapText(true);
+		ans2.setWrapText(true);
+		ans3.setWrapText(true);
+		ans4.setWrapText(true);
+
+
 		
+		
+		question.setText(questionObject.getQuestion());
+		 ans1.setText(questionObject.getAnswerToGui(0));
+		 ans2.setText(questionObject.getAnswerToGui(1));		
+		 ans3.setText(questionObject.getAnswerToGui(2));
+		 ans4.setText(questionObject.getAnswerToGui(3));
+		 
 		
 		new Pulse(ans1).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
 		new Pulse(ans2).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
 		new Pulse(ans3).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
 		new Pulse(ans4).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(one).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(two).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(three).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(four).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
+		
 		
 		
 	
@@ -94,12 +95,15 @@ public class QuestionView implements Initializable{
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if((answerLabel.getText().equals(questionObject.getCorrect_ans())))
+				
+				if(gameController.checkUserAnswer(questionObject, (Integer.parseInt(answerLabel.getText().substring(0, 1)))-1))
 				{
 					GameView.answeredRight=true;
+					answerLabel.setStyle("fx-text-color: green");
 				}
 				else
 				{
+					answerLabel.setStyle("fx-text-color: red");
 					GameView.answeredRight=false;
 				}
 				Robot robot = null;
@@ -120,8 +124,16 @@ public class QuestionView implements Initializable{
 
 	void setQuestion(Question q)
 	{
+		System.out.println(questionObject);
 		questionObject=q;
+		System.out.println(questionObject);
+
 	}
+
+
+
+
+	
 
 
 }

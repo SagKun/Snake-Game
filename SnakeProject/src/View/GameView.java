@@ -109,6 +109,8 @@ public class GameView implements Initializable {
 	 */
 	protected static GameState state;
 	protected static boolean answeredRight;
+	protected static Question questionForScreen;
+	
 
 	/**
 	 * Boolean variables describing user input
@@ -149,6 +151,7 @@ public class GameView implements Initializable {
 	private int k = 0;
 	private int lastIndex;
 
+	private int stateCounter = 1;
 	private GameController gameController;
 
 	/**
@@ -291,7 +294,7 @@ public class GameView implements Initializable {
 					if(wasMuted)
 						audio.play();
 					//Control the snake movement
-					if (i == speedConstraint) { // control the speed of snake
+					if (i == board.getSnake().getSnakeSpeed()) { // control the speed of snake
 						snakeMove(dx, dy);
 						keyActive = true; // unlock possibility to press another key after snake made it's move
 						i = 0; // counter to slow down the snake
@@ -449,10 +452,28 @@ public class GameView implements Initializable {
 		if(question != null) {
 			//TODO Change this code depends on player answer
 			
-			gameController.checkUserAnswer(question, question.getCorrect_ans());
+				questionForScreen=question;
+			    loadQuestion();
+			
+			
+			//gameController.checkUserAnswer(question, question.getCorrect_ans());
 		}
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
+		
+		//Set the snake in super state if the score is a multiply of 100
+		if(this.board.getScore() > 100 * stateCounter) {
+			stateCounter++;
+			this.gameController.setSuperState();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					gameController.setNormalState();
+				}
+			}));
+			timeline.setCycleCount(1);
+			timeline.play();
+		}
+		
 		int newScore=Integer.parseInt(scoreField.getText());		
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
@@ -461,6 +482,27 @@ public class GameView implements Initializable {
 			floatingScore.setFont(Fonts.minecraft30);
 			anchorPane.getChildren().add(floatingScore);
 			floatingScore.setText("+"+String.valueOf(newScore-currentScore));
+			floatingScore.setLayoutX(snake.getHead().getX());
+			floatingScore.setLayoutX(snake.getHead().getX());
+			new ZoomInUp(floatingScore).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(floatingScore).setCycleCount(1).setSpeed(0.5)).play();
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent actionEvent) {
+
+					floatingScore.setVisible(false);		
+				}
+			}) , new KeyFrame(Duration.seconds(4)));
+			timeline.play();
+		}
+		
+		else if(currentScore > newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
+		{
+			System.out.println("test");
+			Label floatingScore=new Label();
+			floatingScore.setStyle("-fx-text-fill: white;");
+			floatingScore.setFont(Fonts.minecraft30);
+			anchorPane.getChildren().add(floatingScore);
+			floatingScore.setText("-"+String.valueOf(newScore-currentScore));
 			floatingScore.setLayoutX(snake.getHead().getX());
 			floatingScore.setLayoutX(snake.getHead().getX());
 			new ZoomInUp(floatingScore).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(floatingScore).setCycleCount(1).setSpeed(0.5)).play();
@@ -709,6 +751,17 @@ public class GameView implements Initializable {
 		mouseSpeedConstraint = 12;
 		initialize=true;
 	}
+	
+	
+	public void resetGame() {
+		state = GameState.Running;
+		up = down = left = right = false;
+		dx = dy = k = 0;
+		speedConstraint = 8;
+		mouseSpeedConstraint = 12;
+		this.gameController.fullReset();
+		initialize=true;
+	}
 
 //this methods recieves a node and blur it
 	public void blur(Region reg) {
@@ -717,6 +770,8 @@ public class GameView implements Initializable {
 		adj.setInput(blur);
 		reg.setEffect(adj);
 	}
+	
+	
 	// update the gui of the life of a player
 	public void updateLife() {
 		String life;
@@ -785,9 +840,13 @@ public class GameView implements Initializable {
 	
 	
 	//help method to load the question screen
-		public void loadQuestion(Question q)
+		public void loadQuestion()
 		{
 			try {
+				
+
+				pause = true;
+				resume = false;	
 				answeredRight=false;
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
 				AnchorPane popupPane;
@@ -797,8 +856,8 @@ public class GameView implements Initializable {
 				popup.getChildren().add(popupPane);
 				popup.setVisible(true);
 				
-				QuestionView view = (QuestionView)loader.getController();		
-				view.setQuestion(q);
+					
+				
 
 			} catch (IOException e1) {
 				e1.printStackTrace();

@@ -80,6 +80,7 @@ public class Nickname implements Initializable{
 					
 					GameView view = (GameView)loader.getController();	
 					view.setStage((Stage)pane.getScene().getWindow());
+					view.resetGame();
 					view.resume();	
 				
 				}
@@ -89,14 +90,7 @@ public class Nickname implements Initializable{
 				}
 			}
 		}) , new KeyFrame(Duration.seconds(1.5)));
-		timeline.play();
-    	
-				
-    	
-    	
-    	
-    	
-    	
+		timeline.play();   	
     }
 
     @FXML

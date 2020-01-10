@@ -95,39 +95,32 @@ public class WizardForm implements Initializable{
 		String question = questionField.getText();
 		String author = authorField.getText();
 		Level level = levelCombo.getSelectionModel().getSelectedItem();
-		String correct = "";
+		int correct=0 ;
 		String firstAnswer = "";
 		String secondAnswer = "";
 		String thirdAnswer = "";
+		String fourthAnswer="";
 		boolean correctSelected = false;
 		boolean blanc = false;
+		firstAnswer = firstField.getText();
+		secondAnswer = secondField.getText();
+		thirdAnswer = thirdField.getText();
+		fourthAnswer=fourthField.getText();
 		if(firstChoose.isSelected())
 		{
-			correct = firstField.getText();
-			firstAnswer = secondField.getText();
-			secondAnswer = thirdField.getText();
-			thirdAnswer = fourthField.getText();
+			correct = 0;
 			correctSelected = true;
 		}
 		else if(secondChoose.isSelected()) {
-			correct = secondField.getText();
-			firstAnswer = firstField.getText();
-			secondAnswer = thirdField.getText();
-			thirdAnswer = fourthField.getText();
+			correct = 1;
 			correctSelected = true;
 		}
 		else if(thirdChoose.isSelected()) {
-			correct = thirdField.getText();
-			firstAnswer = firstField.getText();
-			secondAnswer = secondField.getText();
-			thirdAnswer = fourthField.getText();
+			correct = 2;
 			correctSelected = true;
 		}
 		else if(fourthChoose.isSelected()) {
-			correct = fourthField.getText();
-			firstAnswer = firstField.getText();
-			secondAnswer = secondField.getText();
-			thirdAnswer = thirdField.getText();
+			correct = 3;
 			correctSelected = true;
 		}
 		else {
@@ -137,7 +130,7 @@ public class WizardForm implements Initializable{
 			al.setResizable(false);
 			al.show();
 		}
-		if(correctSelected  && (question.equals("") || author.equals("") || correct.equals("")|| firstAnswer.equals("")
+		if(correctSelected  && (question.equals("") || author.equals("")|| firstAnswer.equals("")
 				|| secondAnswer.equals("") || thirdAnswer.equals(""))) {
 			Alert al = new Alert(Alert.AlertType.ERROR);
 			al.setHeaderText("Need To Fill All Fields");
@@ -147,13 +140,15 @@ public class WizardForm implements Initializable{
 			blanc = true;
 		}
 		if(correctSelected && !blanc) {
-			
+
 			FoodFactory factory = new FoodFactory();
 			ArrayList<String> answers = new ArrayList<>();
-			answers.add(correct);
+
 			answers.add(firstAnswer);
 			answers.add(secondAnswer);
 			answers.add(thirdAnswer);
+			answers.add(fourthAnswer);
+
 			if(isEdit) {
 				newQuestion = factory.getQuestion(level, 0, 0, question, answers, correct, author);
 				controller.editQuestion(oldQuestion, newQuestion);
@@ -188,25 +183,36 @@ public class WizardForm implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		ObservableList<Level> levels = FXCollections.observableArrayList();
 		for(Level l : Level.values()) {
 			levels.add(l);
 		}
 		levelCombo.setItems(levels);
 		if(isEdit) {
+			firstChoose.setSelected(false);
+			secondChoose.setSelected(false);
+			thirdChoose.setSelected(false);
+			fourthChoose.setSelected(false);
 			questionField.setText(oldQuestion.getQuestion());
 			authorField.setText(oldQuestion.getAuthor());
 			levelCombo.getSelectionModel().select(oldQuestion.getLevel());
-			firstField.setText(oldQuestion.getCorrect_ans());
+			firstField.setText(String.valueOf(oldQuestion.getAnswers().get(0)));
 			firstChoose.setSelected(true);
-			ArrayList<String> ans = new ArrayList<>();
-			for(String answer : oldQuestion.getAnswers()) {
-				if(!answer.equals(oldQuestion.getCorrect_ans()))
-					ans.add(answer);
+			secondField.setText(String.valueOf(oldQuestion.getAnswers().get(1)));
+			thirdField.setText(String.valueOf(oldQuestion.getAnswers().get(2)));
+			fourthField.setText(String.valueOf(oldQuestion.getAnswers().get(3)));
+			switch(oldQuestion.getCorrect_ans())
+			{
+			case 0: firstChoose.setSelected(true);
+					break;
+			case 1: secondChoose.setSelected(true);
+					break;
+			case 2:thirdChoose.setSelected(true);
+					break;
+			case 3:fourthChoose.setSelected(true);
+					break;
 			}
-			secondField.setText(ans.get(0));
-			thirdField.setText(ans.get(1));
-			fourthField.setText(ans.get(2));
 		}
 	}
 

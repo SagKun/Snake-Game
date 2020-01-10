@@ -96,7 +96,7 @@ public class GamePaused implements Initializable {
 
     @FXML
     void newGameBtn(ActionEvent event) {
-
+    	
     }
 
     @FXML

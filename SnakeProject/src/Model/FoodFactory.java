@@ -29,7 +29,7 @@ public class FoodFactory {
 		return null;
 	}
 	//returns a question based on the level you requested with his correct values to fields
-	public Question getQuestion(Level level, int x, int y, String question, ArrayList<String> answers, String correct_ans,String team) {
+	public Question getQuestion(Level level, int x, int y, String question, ArrayList<String> answers, int correct_ans,String team) {
 		if(level.equals(Level.EASY))
 			return new Question(x, y, question, 1, level, answers, correct_ans, team, -10);
 		else if(level.equals(Level.MODERATE))
