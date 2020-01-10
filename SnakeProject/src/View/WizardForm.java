@@ -172,6 +172,17 @@ public class WizardForm implements Initializable{
 				al.setResizable(false);
 				al.show();
 			}
+			AnchorPane pane;
+			try {
+				pane = FXMLLoader.load(getClass().getResource("WizardView.fxml"));
+				pane.setPrefSize(anchorPane.getWidth(), anchorPane.getHeight());
+				anchorPane.getChildren().removeAll(anchorPane.getChildren());
+				anchorPane.getChildren().add(pane);
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
