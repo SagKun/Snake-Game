@@ -45,6 +45,8 @@ public class Question extends SnakeFood{
 	}
 
 	public int getSetBack() {
+		System.out.println("setback  is" + reducePoints);
+
 		return reducePoints;
 	}
 

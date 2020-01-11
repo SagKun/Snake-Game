@@ -30,7 +30,7 @@ public class SysData{
 
 	public static HashMap<Level,Queue<Question>> questionsByLevelDB = new HashMap<Level,Queue<Question>>();
 	public static final String fileName = "highScores.ser";
-
+	public static Utils utils=new Utils();
 
 	public static boolean InitializeGame()
 	{
@@ -99,7 +99,7 @@ public class SysData{
 	@SuppressWarnings("unchecked")
 	public static void readQuestions() {
 		questionsDB.clear();
-		Utils utils=new Utils();
+		
 		try (Reader reader = new FileReader(utils.getDataPath())) {
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
@@ -153,14 +153,14 @@ public class SysData{
 				answers.add(ans);
 			}
 			question.put("answers",answers);
-			question.put("correct_ans",q.getCorrect_ans());
+			question.put("correct_answer",String.valueOf(q.getCorrect_ans()));
 			question.put("level",Integer.toString(Level.getValue(q.getLevel())));
 			question.put("team",q.getTeam());
 			list.add(question);
 		}
 		fullObject.put("questions", list);
 
-		try (FileWriter file = new FileWriter("SnakeProject/src/Data/Questions.json")) {
+		try (FileWriter file = new FileWriter(utils.getDataPath())) {
 			file.write(fullObject.toJSONString());
 			System.out.println("all data was written to file successfully.");
 			file.close();

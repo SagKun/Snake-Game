@@ -103,6 +103,14 @@
             <Insets bottom="300.0" left="100.0" />
          </StackPane.margin>
       </Label>
+      <ImageView fx:id="snakeCryGif" fitHeight="255.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+         <image>
+            <Image url="@icons/GameObjects/snake%20crying.gif" />
+         </image>
+      </ImageView>
       <AnchorPane fx:id="popup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="518.0" />
       <Label fx:id="floatingScore" text="Label" textFill="WHITE" visible="false">
          <font>

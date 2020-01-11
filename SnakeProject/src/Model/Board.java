@@ -62,6 +62,7 @@ public class Board {
 	}
 
 	public int getScore() {
+
 		return score;
 	}
 

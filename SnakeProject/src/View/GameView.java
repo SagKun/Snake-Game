@@ -95,6 +95,8 @@ public class GameView implements Initializable {
 	private Label livesLabel;
 	@FXML
 	private ImageView arrows;
+	@FXML
+	private ImageView snakeCryGif;
 	
 	@FXML
 	private AnchorPane popup;
@@ -478,9 +480,9 @@ public class GameView implements Initializable {
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
 			Label floatingScore=new Label();
-			floatingScore.setStyle("-fx-text-fill: white;");
 			floatingScore.setFont(Fonts.minecraft30);
 			anchorPane.getChildren().add(floatingScore);
+			floatingScore.setStyle("-fx-text-fill: green;");
 			floatingScore.setText("+"+String.valueOf(newScore-currentScore));
 			floatingScore.setLayoutX(snake.getHead().getX());
 			floatingScore.setLayoutX(snake.getHead().getX());
@@ -497,12 +499,12 @@ public class GameView implements Initializable {
 		
 		else if(currentScore > newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
-			System.out.println("test");
+			
 			Label floatingScore=new Label();
-			floatingScore.setStyle("-fx-text-fill: white;");
+			floatingScore.setStyle("-fx-text-fill: red;");
 			floatingScore.setFont(Fonts.minecraft30);
 			anchorPane.getChildren().add(floatingScore);
-			floatingScore.setText("-"+String.valueOf(newScore-currentScore));
+			floatingScore.setText(String.valueOf(newScore-currentScore));
 			floatingScore.setLayoutX(snake.getHead().getX());
 			floatingScore.setLayoutX(snake.getHead().getX());
 			new ZoomInUp(floatingScore).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(floatingScore).setCycleCount(1).setSpeed(0.5)).play();
@@ -783,8 +785,9 @@ public class GameView implements Initializable {
 			life = "";
 			lifeAmount.setText(life);
 			gameOver.setVisible(true);
+			snakeCryGif.setVisible(true);
 			gameOver.setFont(Fonts.minecraft50);
-
+			
 			new Hinge(gameOver).setCycleCount(1).setSpeed(0.5).play();                                
 			loadGameoverDelay();
 
@@ -881,6 +884,7 @@ public class GameView implements Initializable {
 	{
 		try {
 			initialize=true;
+			snakeCryGif.setVisible(false);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
 			AnchorPane popupPane;
 			popupPane = loader.load();

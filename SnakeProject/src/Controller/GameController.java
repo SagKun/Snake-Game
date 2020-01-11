@@ -3,6 +3,8 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import Model.*;
 import View.GameView;
 import javafx.animation.KeyFrame;
@@ -352,7 +354,7 @@ public class GameController {
 			if(this.board.getScore() - question.getSetBack() < 0)
 				this.board.setScore(0);
 			else
-				this.board.setScore((this.board.getScore() - question.getSetBack()));
+				this.board.setScore((this.board.getScore() + question.getSetBack()));
 			wasRight=false;
 		}
 		this.board.getObjectList().remove(question);
