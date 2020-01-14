@@ -478,9 +478,11 @@ public class GameView implements Initializable {
 		if(this.board.getScore() > 100 * stateCounter) {
 			stateCounter++;
 			this.gameController.setSuperState();
+			audio.setRate(1.25);
 			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 					gameController.setNormalState();
+					audio.setRate(1.0);
 				}
 			}));
 			timeline.setCycleCount(1);
