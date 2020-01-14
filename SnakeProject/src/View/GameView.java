@@ -139,6 +139,7 @@ public class GameView implements Initializable {
 	 * MediaPlayer object, controls the music played in game
 	 */
 	private MediaPlayer audio;
+	private MediaPlayer gameOverVoice;
 	public static boolean initialize=true;
 
 	/**
@@ -169,6 +170,7 @@ public class GameView implements Initializable {
 		head = snake.getHead();
 		keyActive = startup = true;
 		audio = new Sound().getAudio();
+		gameOverVoice = new Sound().getGameOverVoice();
 	}
 
 	/**
@@ -258,6 +260,8 @@ public class GameView implements Initializable {
 				}
 				// when game paused
 				if (pause && !resume) {
+					Sound.startTime = audio.getStartTime().toSeconds();
+					audio.setStartTime(Duration.seconds(audio.getCurrentTime().toSeconds()));
 					audio.stop();
 					state = GameState.Paused;
 					stop();
@@ -289,6 +293,7 @@ public class GameView implements Initializable {
 				if (state == GameState.GameOver) {
 					initialize=true;
 					audio.stop();
+					gameOverVoice.play();
 					stop();
 				}
 				// when game is running, make movement
@@ -920,6 +925,8 @@ public class GameView implements Initializable {
 
 		if(wasMuted)
 		{
+			Sound.startTime = audio.getStartTime().toSeconds();
+			audio.setStartTime(Duration.seconds(audio.getCurrentTime().toSeconds()));
 			audio.stop();
 			mute.setImage(muteImage);
 			mute.setVisible(true);
