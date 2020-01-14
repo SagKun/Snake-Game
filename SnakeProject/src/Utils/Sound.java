@@ -14,10 +14,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class Sound {
-	private Media sound;
+	private MediaPlayer eatSound;
 	private MediaPlayer audio;
 	private MediaPlayer gameOverVoice;
 	private Media gameOver;
+	private Media sound;
+	private Media eat;
 	public static Double startTime = 0.0;
 	public static Double endTime = 153.0;
 
@@ -30,6 +32,7 @@ public class Sound {
 		try {
 			sound = new Media(getClass().getResource("/Utils/Sound/Motivated.mp3").toURI().toString());
 			gameOver = new Media(getClass().getResource("/Utils/Sound/gameOver.mp3").toURI().toString());
+			eat = new Media(getClass().getResource("/Utils/Sound/eating.mp3").toURI().toString());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,6 +40,7 @@ public class Sound {
 		// initializing media player with the music
 		audio = new MediaPlayer(sound);
 		gameOverVoice = new MediaPlayer(gameOver);
+		eatSound = new MediaPlayer(eat);
 	}
 	
 	/**
@@ -50,6 +54,11 @@ public class Sound {
 	public MediaPlayer getGameOverVoice() {
 		return gameOverVoice;
 	}
+
+	public MediaPlayer getEatSound() {
+		return eatSound;
+	}
+	
 	
 	
 	

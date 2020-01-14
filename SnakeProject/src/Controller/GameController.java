@@ -275,8 +275,8 @@ public class GameController {
 	/**
 	 * Method to check if snake ate an object on the board
 	 */
-	public void checkEaten() {
-
+	public boolean checkEaten() {
+		boolean isEaten = false;
 		int headX, headY, objectX, objectY;
 		BodyPart head = this.board.getHead();		
 
@@ -289,6 +289,7 @@ public class GameController {
 				addLength(this.board.getMouse().getExtraLength());
 				delay(FoodType.Mouse,this.board.getMouse().getSecondsBuffer());
 				this.board.setMouse(null);
+				isEaten = true;
 			}
 
 		ArrayList<SnakeFood> ObjectList = this.board.getObjectList();
@@ -304,7 +305,7 @@ public class GameController {
 					this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints());//add points to the player
 					int time = ObjectList.get(i).getSecondsBuffer();
 					ObjectList.remove(i);
-
+					isEaten = true;
 					if(type == FoodType.Apple || type == FoodType.Banana) {
 						delay(type,time);
 					}
@@ -314,6 +315,7 @@ public class GameController {
 				}
 			}		
 		}
+		return isEaten;
 	}
 
 

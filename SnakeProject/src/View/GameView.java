@@ -97,22 +97,22 @@ public class GameView implements Initializable {
 	private ImageView arrows;
 	@FXML
 	private ImageView snakeCryGif;
-	
+
 	@FXML
 	private AnchorPane popup;
 	@FXML
 	private BorderPane borderPane;
-	
-	
-	 @FXML
-	    private ImageView space;
+
+
+	@FXML
+	private ImageView space;
 	/**
 	 * Actual state of the game
 	 */
 	protected static GameState state;
 	protected static boolean answeredRight;
 	protected static Question questionForScreen;
-	
+
 
 	/**
 	 * Boolean variables describing user input
@@ -131,7 +131,7 @@ public class GameView implements Initializable {
 
 	private Stage stage;
 	private ImageView headImage;
-	
+
 	private Image muteImage;
 	private Image unmuteImage;
 
@@ -140,6 +140,7 @@ public class GameView implements Initializable {
 	 */
 	private MediaPlayer audio;
 	private MediaPlayer gameOverVoice;
+	private MediaPlayer eatSound;
 	public static boolean initialize=true;
 
 	/**
@@ -171,6 +172,7 @@ public class GameView implements Initializable {
 		keyActive = startup = true;
 		audio = new Sound().getAudio();
 		gameOverVoice = new Sound().getGameOverVoice();
+		eatSound = new Sound().getEatSound();
 	}
 
 	/**
@@ -202,23 +204,23 @@ public class GameView implements Initializable {
 			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.5).play();
 		}
-			// Setting the snake at the center of the board
-			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
-			headImage.setX(snake.getHead().getX());
-			headImage.setY(snake.getHead().getY());
-			pane.getChildren().add(headImage);
+		// Setting the snake at the center of the board
+		headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
+		headImage.setX(snake.getHead().getX());
+		headImage.setY(snake.getHead().getY());
+		pane.getChildren().add(headImage);
 
-			int snakeY, snakeX;
+		int snakeY, snakeX;
 
-			for(int i = 1; i < snake.getSize(); ++i) {
-				snakeX = snake.getBodyPart(i).getX();
-				snakeY = snake.getBodyPart(i).getY();
-				ImageView bodyImage =  new ImageView("View/icons/GameObjects/bodyLarge.png");
-				bodyImage.setX(snakeX);
-				bodyImage.setY(snakeY);
-				pane.getChildren().add(bodyImage);
-			}
-		
+		for(int i = 1; i < snake.getSize(); ++i) {
+			snakeX = snake.getBodyPart(i).getX();
+			snakeY = snake.getBodyPart(i).getY();
+			ImageView bodyImage =  new ImageView("View/icons/GameObjects/bodyLarge.png");
+			bodyImage.setX(snakeX);
+			bodyImage.setY(snakeY);
+			pane.getChildren().add(bodyImage);
+		}
+
 	}
 
 
@@ -239,7 +241,7 @@ public class GameView implements Initializable {
 
 					dy = -1;
 					dx = 0;
-					
+
 				}
 				// when moving down
 				if (!up && down) {
@@ -282,12 +284,12 @@ public class GameView implements Initializable {
 				}
 				//when the user has lost a life but game isn't over.
 				if (state == GameState.Finished) {
-					
+
 					updateLife();
 					up = down = left = right = false;
 					restart();
 					gameController.initializeObjects();
-					
+
 				}
 				// when game is over
 				if (state == GameState.GameOver) {
@@ -336,37 +338,37 @@ public class GameView implements Initializable {
 
 		if(state == GameState.Running) {
 
-			
+
 			pane.getChildren().clear(); //Clear the screen and then place the objects at their updated place
 
-			
+
 			//Render the snake graphics
 			pane.getChildren().remove(headImage);
-			
+
 			//this section positions the snake head to fit the vector of the snake.
 			if(up) {
-			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
-			headImage.setX(snake.getHead().getX());
-			headImage.setY(snake.getHead().getY());
-			pane.getChildren().add(headImage);
+				headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
+				headImage.setX(snake.getHead().getX());
+				headImage.setY(snake.getHead().getY());
+				pane.getChildren().add(headImage);
 			}
 			else if(down)
 			{
-				
-					headImage =  new ImageView("View/icons/GameObjects/snakeDown.png");
-					headImage.setX(snake.getHead().getX());
-					headImage.setY(snake.getHead().getY());
-					pane.getChildren().add(headImage);
-					
+
+				headImage =  new ImageView("View/icons/GameObjects/snakeDown.png");
+				headImage.setX(snake.getHead().getX());
+				headImage.setY(snake.getHead().getY());
+				pane.getChildren().add(headImage);
+
 			}
 			else if(right)
 			{
-				
-					headImage =  new ImageView("View/icons/GameObjects/snakeRight.png");
-					headImage.setX(snake.getHead().getX());
-					headImage.setY(snake.getHead().getY());
-					pane.getChildren().add(headImage);
-					
+
+				headImage =  new ImageView("View/icons/GameObjects/snakeRight.png");
+				headImage.setX(snake.getHead().getX());
+				headImage.setY(snake.getHead().getY());
+				pane.getChildren().add(headImage);
+
 			}
 			else if(left)
 			{
@@ -377,11 +379,11 @@ public class GameView implements Initializable {
 			}
 			else
 			{	
-			headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
-			headImage.setX(snake.getHead().getX());
-			headImage.setY(snake.getHead().getY());
-			pane.getChildren().add(headImage);
-				
+				headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
+				headImage.setX(snake.getHead().getX());
+				headImage.setY(snake.getHead().getY());
+				pane.getChildren().add(headImage);
+
 			}
 
 			int helpX, helpY, snakeY, snakeX;
@@ -411,7 +413,7 @@ public class GameView implements Initializable {
 				}
 				else if(board.getObjectList().get(i) instanceof Question) {
 					Question question = (Question) board.getObjectList().get(i);
-					
+
 					if(question.getLevel() == Level.EASY)
 						imagePath = "View/icons/GameObjects/question_white.png";
 					else if(question.getLevel() == Level.MODERATE)
@@ -421,10 +423,10 @@ public class GameView implements Initializable {
 				}
 				if(!imagePath.contentEquals(""))
 				{
-				ImageView fruitIcon =  new ImageView(imagePath);
-				fruitIcon.setX(helpX);
-				fruitIcon.setY(helpY);
-				pane.getChildren().add(fruitIcon);
+					ImageView fruitIcon =  new ImageView(imagePath);
+					fruitIcon.setX(helpX);
+					fruitIcon.setY(helpY);
+					pane.getChildren().add(fruitIcon);
 				}
 			}
 
@@ -454,20 +456,24 @@ public class GameView implements Initializable {
 			startup = false;
 		}
 
-		gameController.checkEaten(); // check if a fruit has been eaten
+		if(gameController.checkEaten()) { // check if a fruit has been eaten
+			eatSound.play();
+			eatSound.seek(Duration.ZERO);
+		}
 		Question question = gameController.checkQuestionEaten();
 		if(question != null) {
 			//TODO Change this code depends on player answer
-			
-				questionForScreen=question;
-			    loadQuestion();
-			
-			
+			eatSound.play();
+			eatSound.seek(Duration.ZERO);
+			questionForScreen=question;
+			loadQuestion();
+
+
 			//gameController.checkUserAnswer(question, question.getCorrect_ans());
 		}
 		//Set the game score
 		this.scoreField.setText(String.valueOf(board.getScore()));
-		
+
 		//Set the snake in super state if the score is a multiply of 100
 		if(this.board.getScore() > 100 * stateCounter) {
 			stateCounter++;
@@ -480,7 +486,7 @@ public class GameView implements Initializable {
 			timeline.setCycleCount(1);
 			timeline.play();
 		}
-		
+
 		int newScore=Integer.parseInt(scoreField.getText());		
 		if(currentScore < newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
@@ -501,10 +507,10 @@ public class GameView implements Initializable {
 			}) , new KeyFrame(Duration.seconds(4)));
 			timeline.play();
 		}
-		
+
 		else if(currentScore > newScore && state.equals(GameState.Running)) //if the score changes,this section makes an animation for the score gained,that comes out of the snake head position when it was eaten.
 		{
-			
+
 			Label floatingScore=new Label();
 			floatingScore.setStyle("-fx-text-fill: red;");
 			floatingScore.setFont(Fonts.minecraft30);
@@ -546,7 +552,7 @@ public class GameView implements Initializable {
 				case UP:
 					if (state == GameState.Started)
 					{
-					//	pane.getChildren().remove();
+						//	pane.getChildren().remove();
 						arrows.setVisible(true);
 						pressToPlay.setVisible(true);
 						pressToResume.setVisible(true);
@@ -758,8 +764,8 @@ public class GameView implements Initializable {
 		mouseSpeedConstraint = 12;
 		initialize=true;
 	}
-	
-	
+
+
 	public void resetGame() {
 		state = GameState.Running;
 		up = down = left = right = false;
@@ -770,15 +776,15 @@ public class GameView implements Initializable {
 		initialize=true;
 	}
 
-//this methods recieves a node and blur it
+	//this methods recieves a node and blur it
 	public void blur(Region reg) {
 		ColorAdjust adj = new ColorAdjust(0, -0.9, -0.5, 0);
 		GaussianBlur blur = new GaussianBlur(55); // 55 is just to show edge effect more clearly.
 		adj.setInput(blur);
 		reg.setEffect(adj);
 	}
-	
-	
+
+
 	// update the gui of the life of a player
 	public void updateLife() {
 		String life;
@@ -792,7 +798,7 @@ public class GameView implements Initializable {
 			gameOver.setVisible(true);
 			snakeCryGif.setVisible(true);
 			gameOver.setFont(Fonts.minecraft50);
-			
+
 			new Hinge(gameOver).setCycleCount(1).setSpeed(0.5).play();                                
 			loadGameoverDelay();
 
@@ -832,7 +838,7 @@ public class GameView implements Initializable {
 	public void loadPause()
 	{
 		try {
-			
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
 			AnchorPane popupPane;
 			popupPane = loader.load();
@@ -845,34 +851,34 @@ public class GameView implements Initializable {
 			e1.printStackTrace();
 		}
 	}
-	
-	
+
+
 	//help method to load the question screen
-		public void loadQuestion()
-		{
-			try {
-				
+	public void loadQuestion()
+	{
+		try {
 
-				pause = true;
-				resume = false;	
-				answeredRight=false;
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
-				AnchorPane popupPane;
-				popupPane = loader.load();
-				popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-				popup.getChildren().removeAll(popup.getChildren());
-				popup.getChildren().add(popupPane);
-				popup.setVisible(true);
-				
-					
-				
 
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			pause = true;
+			resume = false;	
+			answeredRight=false;
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
+			AnchorPane popupPane;
+			popupPane = loader.load();
+			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+			popup.getChildren().removeAll(popup.getChildren());
+			popup.getChildren().add(popupPane);
+			popup.setVisible(true);
+
+
+
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+	}
 
-//delay method for gameOver screen display
+	//delay method for gameOver screen display
 	public void loadGameoverDelay()
 	{
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
@@ -884,7 +890,7 @@ public class GameView implements Initializable {
 		timeline.play();
 	}
 
-//help method for loading game over screen.
+	//help method for loading game over screen.
 	public void loadGameOver()
 	{
 		try {
@@ -944,7 +950,7 @@ public class GameView implements Initializable {
 	}
 
 
-	
+
 	/**************************** GETTERS & SETTERS *************************************/
 
 	public Board getBoard() {
