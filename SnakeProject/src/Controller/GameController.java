@@ -283,9 +283,11 @@ public class GameController {
 		headX = head.getX();
 		headY = head.getY();
 		if(this.board.getMouse() != null)
+			
 			if(headX == this.board.getMouse().getX() && headY == this.board.getMouse().getY()) {
 				this.board.setScore(this.board.getScore() + this.board.getMouse().getPoints());
 				this.board.setLife(this.board.getLife() + this.board.getMouse().getExtraLife());
+				GameView.mouseWasEaten=true;
 				addLength(this.board.getMouse().getExtraLength());
 				delay(FoodType.Mouse,this.board.getMouse().getSecondsBuffer());
 				this.board.setMouse(null);

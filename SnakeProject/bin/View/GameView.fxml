@@ -15,9 +15,9 @@
    <children>
       <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0">
          <center>
-            <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+            <AnchorPane id="game" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="960.0" stylesheets="@.css" BorderPane.alignment="CENTER">
                <children>
-                  <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="960.0" style="-fx-background-color: black;">
+                  <Pane id="game" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="960.0" style="-fx-background-color: black;">
                      <children>
                         <Label fx:id="pressToResume" layoutX="541.0" layoutY="437.0" prefHeight="58.0" prefWidth="260.0" text="PAUSE/RESUME" textFill="WHITE">
                            <font>

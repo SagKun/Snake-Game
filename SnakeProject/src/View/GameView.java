@@ -143,6 +143,8 @@ public class GameView implements Initializable {
 	private MediaPlayer eatSound;
 	public static boolean initialize=true;
 
+	public static boolean mouseWasEaten;
+
 	/**
 	 * The size of the game board size.
 	 */
@@ -202,7 +204,7 @@ public class GameView implements Initializable {
 			new Pulse(arrows).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(space).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
 			new Pulse(pressToResume).setCycleCount(Timeline.INDEFINITE).setSpeed(1.5).play();
-			new Pulse(scoreField).setCycleCount(15).setCycleCount(4).setSpeed(0.5).play();
+			new Pulse(scoreField).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 		}
 		// Setting the snake at the center of the board
 		headImage =  new ImageView("View/icons/GameObjects/snakeUp.png");
@@ -284,7 +286,7 @@ public class GameView implements Initializable {
 				}
 				//when the user has lost a life but game isn't over.
 				if (state == GameState.Finished) {
-
+					new Shake(stackPane).setCycleCount(1).setSpeed(1.5).play();
 					updateLife();
 					up = down = left = right = false;
 					restart();
@@ -460,6 +462,34 @@ public class GameView implements Initializable {
 			eatSound.play();
 			eatSound.seek(Duration.ZERO);
 		}
+		if(mouseWasEaten)
+		{  
+			Timeline waitAfterScore= new Timeline(new KeyFrame(Duration.seconds(0.25), new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent actionEvent) {
+					ImageView heart=new ImageView();
+					Image image=new Image("/View/icons/Heart-icon.png");
+					heart.setImage(image);
+					anchorPane.getChildren().add(heart);
+					heart.setLayoutX(snake.getHead().getX());
+					heart.setLayoutX(snake.getHead().getX());
+					new ZoomInUp(heart).setCycleCount(1).setSpeed(0.5).playOnFinished(new ZoomOutUp(heart).setCycleCount(1).setSpeed(0.5)).play();
+					Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent actionEvent) {
+
+							heart.setVisible(false);
+							
+						}
+					}) , new KeyFrame(Duration.seconds(4)));
+					timeline.play();
+					
+					}}) , new KeyFrame(Duration.seconds(0.5)));
+			mouseWasEaten=false;
+			waitAfterScore.play();
+				}
+			
+		
 		Question question = gameController.checkQuestionEaten();
 		if(question != null) {
 			//TODO Change this code depends on player answer
@@ -475,14 +505,25 @@ public class GameView implements Initializable {
 		this.scoreField.setText(String.valueOf(board.getScore()));
 
 		//Set the snake in super state if the score is a multiply of 100
-		if(this.board.getScore() > 100 * stateCounter) {
+		if(this.board.getScore() >= 100 * stateCounter) {
+			Label superMode=new Label();
+			superMode.setFont(Fonts.minecraft50);
+			anchorPane.getChildren().add(superMode);
+			superMode.setVisible(true);
+			superMode.setLayoutX(350);
+			superMode.setLayoutY(50);
+			superMode.setText("Super Mode");
+			superMode.setVisible(true);
+			superMode.setStyle("-fx-text-fill: white;");
+			new JackInTheBox(superMode).setCycleCount(15).setSpeed(1.5).play();
 			stateCounter++;
 			this.gameController.setSuperState();
 			audio.setRate(1.25);
-			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
 					gameController.setNormalState();
 					audio.setRate(1.0);
+					superMode.setVisible(false);
 				}
 			}));
 			timeline.setCycleCount(1);
@@ -834,141 +875,144 @@ public class GameView implements Initializable {
 			lifeAmount.setText(life);
 			break;
 		}
+		
+	
 	}
 
-	//help method to load the pause screen
-	public void loadPause()
-	{
-		try {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
-			AnchorPane popupPane;
-			popupPane = loader.load();
-			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-			popup.getChildren().removeAll(popup.getChildren());
-			popup.getChildren().add(popupPane);
-			popup.setVisible(true);
+//help method to load the pause screen
+public void loadPause()
+{
+	try {
 
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+		AnchorPane popupPane;
+		popupPane = loader.load();
+		popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+		popup.getChildren().removeAll(popup.getChildren());
+		popup.getChildren().add(popupPane);
+		popup.setVisible(true);
+
+	} catch (IOException e1) {
+		e1.printStackTrace();
+	}
+}
+
+
+//help method to load the question screen
+public void loadQuestion()
+{
+	try {
+
+
+		pause = true;
+		resume = false;	
+		answeredRight=false;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
+		AnchorPane popupPane;
+		popupPane = loader.load();
+		popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+		popup.getChildren().removeAll(popup.getChildren());
+		popup.getChildren().add(popupPane);
+		popup.setVisible(true);
+
+
+
+
+	} catch (IOException e1) {
+		e1.printStackTrace();
+	}
+}
+
+//delay method for gameOver screen display
+public void loadGameoverDelay()
+{
+	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+		@Override
+		public void handle(ActionEvent actionEvent) {
+			loadGameOver();;
 		}
+	}) , new KeyFrame(Duration.seconds(5)));
+	timeline.play();
+}
+
+//help method for loading game over screen.
+public void loadGameOver()
+{
+	try {
+		initialize=true;
+		snakeCryGif.setVisible(false);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
+		AnchorPane popupPane;
+		popupPane = loader.load();
+		popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
+		popup.getChildren().removeAll(popup.getChildren());
+		popup.getChildren().add(popupPane);
+		popup.setVisible(true);
+	} catch (IOException e1) {
+		e1.printStackTrace();
 	}
 
-
-	//help method to load the question screen
-	public void loadQuestion()
-	{
-		try {
+}
 
 
+public void openPauseMenu(MouseEvent event) {
+	if (state == GameState.Running || state == GameState.Paused) {
+		if (pause == false) {
 			pause = true;
 			resume = false;	
-			answeredRight=false;
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/QuestionView.fxml"));
-			AnchorPane popupPane;
-			popupPane = loader.load();
-			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-			popup.getChildren().removeAll(popup.getChildren());
-			popup.getChildren().add(popupPane);
-			popup.setVisible(true);
+			loadPause();
 
-
-
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} else {
+			popup.setVisible(false);
+			resume = true;
+			pause = false;
+			resume();
 		}
 	}
+}
 
-	//delay method for gameOver screen display
-	public void loadGameoverDelay()
+
+public void mute(MouseEvent event) {
+
+	if(wasMuted)
 	{
-		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				loadGameOver();;
-			}
-		}) , new KeyFrame(Duration.seconds(5)));
-		timeline.play();
+		Sound.startTime = audio.getStartTime().toSeconds();
+		audio.setStartTime(Duration.seconds(audio.getCurrentTime().toSeconds()));
+		audio.stop();
+		mute.setImage(muteImage);
+		mute.setVisible(true);
+		System.out.println("muted");
+		wasMuted=false;
 	}
-
-	//help method for loading game over screen.
-	public void loadGameOver()
+	else
 	{
-		try {
-			initialize=true;
-			snakeCryGif.setVisible(false);
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Nickname.fxml"));
-			AnchorPane popupPane;
-			popupPane = loader.load();
-			popupPane.setPrefSize(popup.getWidth(), popup.getHeight());
-			popup.getChildren().removeAll(popup.getChildren());
-			popup.getChildren().add(popupPane);
-			popup.setVisible(true);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
+		audio.play();
+		mute.setImage(unmuteImage);
+		mute.setVisible(true);
+		System.out.println("unmuted");
+		wasMuted=true;
 	}
-
-
-	public void openPauseMenu(MouseEvent event) {
-		if (state == GameState.Running || state == GameState.Paused) {
-			if (pause == false) {
-				pause = true;
-				resume = false;	
-				loadPause();
-
-			} else {
-				popup.setVisible(false);
-				resume = true;
-				pause = false;
-				resume();
-			}
-		}
-	}
-
-
-	public void mute(MouseEvent event) {
-
-		if(wasMuted)
-		{
-			Sound.startTime = audio.getStartTime().toSeconds();
-			audio.setStartTime(Duration.seconds(audio.getCurrentTime().toSeconds()));
-			audio.stop();
-			mute.setImage(muteImage);
-			mute.setVisible(true);
-			System.out.println("muted");
-			wasMuted=false;
-		}
-		else
-		{
-			audio.play();
-			mute.setImage(unmuteImage);
-			mute.setVisible(true);
-			System.out.println("unmuted");
-			wasMuted=true;
-		}
-	}
+}
 
 
 
-	/**************************** GETTERS & SETTERS *************************************/
+/**************************** GETTERS & SETTERS *************************************/
 
-	public Board getBoard() {
-		return board;
-	}
+public Board getBoard() {
+	return board;
+}
 
-	public Snake getSnake() {
-		return snake;
-	}
+public Snake getSnake() {
+	return snake;
+}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
+public void setStage(Stage stage) {
+	this.stage = stage;
+}
 
-	public static GameState getState() {
-		return state;
-	}
+public static GameState getState() {
+	return state;
+}
 
 }

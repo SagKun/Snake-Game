@@ -13,6 +13,9 @@
 -fx-background-image: url("photos/wall.jpg");
 }
 
+#game{
+-fx-background-image: url("photos/game.jpg");
+}
 
 
 .jfx-button{

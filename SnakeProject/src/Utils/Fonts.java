@@ -11,7 +11,7 @@ public class Fonts {
 	public static Font minecraft50;
 	public static Font minecraft30;
 	public static Font minecraft15;
-	
+	public static Font minecraft70;
 	public static void loadMinecraftFont()
 	{
 		String currentFontFile = "/View/Minecraft.ttf";
@@ -24,6 +24,9 @@ public class Fonts {
 	      InputStream fontStream3 = Fonts.class.getResourceAsStream(currentFontFile);
 	      Font smsmFont = Font.loadFont(fontStream3, 15);
 	      minecraft15=smsmFont;
+	      InputStream fontStream4 = Fonts.class.getResourceAsStream(currentFontFile);
+	      Font bigFont = Font.loadFont(fontStream4, 70);
+	      minecraft70=bigFont;
 	      try {
 			fontStream.close();
 			fontStream2.close();

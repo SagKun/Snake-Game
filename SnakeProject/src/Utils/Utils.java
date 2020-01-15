@@ -3,7 +3,8 @@ package Utils;
 import java.util.Objects;
 
 public class Utils {
- 
+
+public static int counter=3;
 public  String dataPath;
 
 public Utils() {
