@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import Controller.GameController;
 import Model.Question;
 import Utils.Fonts;
+import Utils.Sound;
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomOut;
 import javafx.animation.KeyFrame;
@@ -22,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class QuestionView implements Initializable{
@@ -51,6 +53,8 @@ public class QuestionView implements Initializable{
 	private Label answerFeedBack;
 
 	Question questionObject;
+	
+	private MediaPlayer clapSound;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -69,7 +73,7 @@ public class QuestionView implements Initializable{
 		ans3.setWrapText(true);
 		ans4.setWrapText(true);
 		anchorPane.getChildren().add(answerFeedBack);
-
+		clapSound = new Sound().getClapSound();
 		
 		
 		question.setText(questionObject.getQuestion());
@@ -99,7 +103,7 @@ public class QuestionView implements Initializable{
 		if(gameController.checkUserAnswer(questionObject, (Integer.parseInt(answerLabel.getText().substring(0, 1)))-1))
 		{
 			
-			
+			clapSound.play();
 			answerFeedBack.setStyle("-fx-text-fill: green;");
 			answerFeedBack.setText("CORRECT ANSWER!");
 			answerFeedBack.setLayoutX(answerLabel.getLayoutX()+100);

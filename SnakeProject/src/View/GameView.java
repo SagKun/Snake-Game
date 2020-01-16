@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import com.sun.corba.se.spi.extension.ZeroPortPolicy;
+
 import Controller.GameController;
 import Model.*;
 import Utils.Fonts;
@@ -141,6 +143,8 @@ public class GameView implements Initializable {
 	private MediaPlayer audio;
 	private MediaPlayer gameOverVoice;
 	private MediaPlayer eatSound;
+	private MediaPlayer crashSound;
+	
 	public static boolean initialize=true;
 
 	public static boolean mouseWasEaten;
@@ -175,6 +179,7 @@ public class GameView implements Initializable {
 		audio = new Sound().getAudio();
 		gameOverVoice = new Sound().getGameOverVoice();
 		eatSound = new Sound().getEatSound();
+		crashSound = new Sound().getCrashSound();
 	}
 
 	/**
@@ -575,10 +580,15 @@ public class GameView implements Initializable {
 		updateLife(); //Update life
 
 		if (gameController.checkCollision() == GameState.Finished) { // check if a collision occurred but life > 0
-			state = GameState.Finished; //
+			crashSound.play();
+			crashSound.seek(Duration.ZERO);
+			state = GameState.Finished; 
 		}
-		else if(gameController.checkCollision() == GameState.GameOver) //check if a collision occurred but life = 0
+		else if(gameController.checkCollision() == GameState.GameOver) {//check if a collision occurred but life = 0
+			crashSound.play();
+			crashSound.seek(Duration.ZERO);
 			state = GameState.GameOver;
+		}
 	}
 
 	/**
