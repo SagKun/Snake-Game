@@ -48,4 +48,19 @@ public class FoodFactory {
 			return hardQuestions.poll();
 		return null;
 	}
+	
+	
+	public void insertQuestionBack(Question q) {
+		if(q != null) {
+			if(q.getLevel().equals(Level.EASY)) {
+				easyQuestions.add(q);
+			}
+			else if(q.getLevel().equals(Level.MODERATE)){
+				moderateQuestions.add(q);
+			}
+			else if(q.getLevel().equals(Level.HARD)){
+				hardQuestions.add(q);
+			}
+		}
+	}
 }

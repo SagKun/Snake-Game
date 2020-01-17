@@ -688,9 +688,7 @@ public class GameView implements Initializable {
 						}
 					}
 					break;
-				case ESCAPE: // exit program
-					System.exit(0);
-					break;
+					
 				default:
 					break;
 				}

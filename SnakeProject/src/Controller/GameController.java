@@ -283,7 +283,7 @@ public class GameController {
 		headX = head.getX();
 		headY = head.getY();
 		if(this.board.getMouse() != null)
-			
+
 			if(headX == this.board.getMouse().getX() && headY == this.board.getMouse().getY()) {
 				this.board.setScore(this.board.getScore() + this.board.getMouse().getPoints());
 				this.board.setLife(this.board.getLife() + this.board.getMouse().getExtraLife());
@@ -304,7 +304,10 @@ public class GameController {
 				if (ObjectList.get(i) instanceof SnakeFood && !(ObjectList.get(i) instanceof Question)) { //if the snake ate a fruit/mouse
 					FoodType type = ObjectList.get(i).getType();
 					addLength(ObjectList.get(i).getExtraLength()); //adds body parts to snake
-					this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints());//add points to the player
+					if(this.board.getSnake().getState() instanceof SuperState) //If superstate doubles the pointes earned
+						this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints() * 2);
+					else
+						this.board.setScore(this.board.getScore() + ObjectList.get(i).getPoints());//add points to the player
 					int time = ObjectList.get(i).getSecondsBuffer();
 					ObjectList.remove(i);
 					isEaten = true;
@@ -344,7 +347,7 @@ public class GameController {
 
 
 	public boolean checkUserAnswer(Question question,int ans) {
-		
+
 
 		boolean wasRight;
 		//If user answered right
@@ -355,7 +358,7 @@ public class GameController {
 		//If user answered wrong
 		else {
 			//If after losing points the player has a score that is lower than 0, hes points will be set to 0
-			if(this.board.getScore() - question.getSetBack() < 0)
+			if(this.board.getScore() + question.getSetBack() < 0)
 				this.board.setScore(0);
 			else
 				this.board.setScore((this.board.getScore() + question.getSetBack()));
@@ -460,13 +463,20 @@ public class GameController {
 		return true;	
 	}
 
-	
+
 	public void setSuperState() {
 		superState.setSnakeState(this.board.getSnake());
 	}
-	
+
 	public void setNormalState() {
 		normalState.setSnakeState(this.board.getSnake());
+	}
+
+	private void returnQuestionsUnanswered() {
+		for(GameObject g : this.board.getObjectList()) {
+			if(g instanceof Question)
+				this.board.getFactory().insertQuestionBack((Question)g);
+		}
 	}
 
 	public void fullReset() {
@@ -474,10 +484,14 @@ public class GameController {
 		this.board.getObjectList().clear();
 		this.board.setScore(0);
 		this.board.setLife(3);
+		setNormalState();
+		returnQuestionsUnanswered();
 	}
-	
-	private void semiReset() {
+
+	public void semiReset() {
 		this.board.getSnake().setStart();
 		this.board.getObjectList().clear();
+		setNormalState();
+		returnQuestionsUnanswered();
 	}
 }
