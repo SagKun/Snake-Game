@@ -129,7 +129,15 @@ public class GamePaused implements Initializable {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 			Stage stage=(Stage) pauseAnchor.getScene().getWindow();
+						
 			try {
+				FXMLLoader gameViewLoader = new FXMLLoader(getClass().getResource("/View/GameView.fxml"));
+				
+				gameViewLoader.load();
+				GameView view = (GameView)gameViewLoader.getController();
+				System.out.println(view);
+				view.resetGame();
+				
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainView.fxml"));
 				AnchorPane pane  = loader.load();
 				Scene scene = new Scene(pane);
