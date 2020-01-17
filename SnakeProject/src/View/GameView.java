@@ -144,7 +144,7 @@ public class GameView implements Initializable {
 	private MediaPlayer gameOverVoice;
 	private MediaPlayer eatSound;
 	private MediaPlayer crashSound;
-	
+	private Label superMode;
 	public static boolean initialize=true;
 
 	public static boolean mouseWasEaten;
@@ -189,6 +189,9 @@ public class GameView implements Initializable {
 		//the first section of this method sets the custom font and animations to the relevant nodes in the screen.
 		if(initialize)
 		{
+			superMode=new Label();
+			superMode.setVisible(false);
+			anchorPane.getChildren().add(superMode);
 			wasMuted=true;
 			muteImage=new Image("/View/icons/mute-32.png");
 			unmuteImage=new Image("/View/icons/volume.png");
@@ -291,7 +294,9 @@ public class GameView implements Initializable {
 				}
 				//when the user has lost a life but game isn't over.
 				if (state == GameState.Finished) {
+					superMode.setVisible(false);
 					new Shake(stackPane).setCycleCount(1).setSpeed(1.5).play();
+					audio.setRate(1);
 					updateLife();
 					up = down = left = right = false;
 					restart();
@@ -511,9 +516,8 @@ public class GameView implements Initializable {
 
 		//Set the snake in super state if the score is a multiply of 100
 		if(this.board.getScore() >= 100 * stateCounter) {
-			Label superMode=new Label();
 			superMode.setFont(Fonts.minecraft50);
-			anchorPane.getChildren().add(superMode);
+			
 			superMode.setVisible(true);
 			superMode.setLayoutX(350);
 			superMode.setLayoutY(50);
@@ -529,6 +533,7 @@ public class GameView implements Initializable {
 					gameController.setNormalState();
 					audio.setRate(1.0);
 					superMode.setVisible(false);
+					
 				}
 			}));
 			timeline.setCycleCount(1);

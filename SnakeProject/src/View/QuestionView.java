@@ -24,6 +24,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class QuestionView implements Initializable{
@@ -31,7 +33,7 @@ public class QuestionView implements Initializable{
 	@FXML
 	private AnchorPane anchorPane;
 
-	
+
 
 	@FXML
 	private Label question;
@@ -47,13 +49,14 @@ public class QuestionView implements Initializable{
 
 	@FXML
 	private Label ans4;
-	
+
+
 	private GameController gameController;
-	
+
 	private Label answerFeedBack;
 
 	Question questionObject;
-	
+	Rectangle rec;
 	private MediaPlayer clapSound;
 
 	@Override
@@ -74,23 +77,26 @@ public class QuestionView implements Initializable{
 		ans4.setWrapText(true);
 		anchorPane.getChildren().add(answerFeedBack);
 		clapSound = new Sound().getClapSound();
-		
-		
+		rec=new Rectangle();
+		anchorPane.getChildren().add(rec);
+
 		question.setText(questionObject.getQuestion());
-		 ans1.setText(questionObject.getAnswerToGui(0));
-		 ans2.setText(questionObject.getAnswerToGui(1));		
-		 ans3.setText(questionObject.getAnswerToGui(2));
-		 ans4.setText(questionObject.getAnswerToGui(3));
-		 
-		
-		new Pulse(ans1).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(ans2).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(ans3).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		new Pulse(ans4).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-		
-		
-		
-	
+		ans1.setText(questionObject.getAnswerToGui(0));
+		ans2.setText(questionObject.getAnswerToGui(1));		
+		ans3.setText(questionObject.getAnswerToGui(2));
+		ans4.setText(questionObject.getAnswerToGui(3));
+
+		anchorPane.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() {
+
+			public void handle(javafx.scene.input.KeyEvent e) {
+				System.out.println(e.getCode());
+				
+			}
+		});
+
+
+
+
 	}
 
 
@@ -98,11 +104,12 @@ public class QuestionView implements Initializable{
 
 	@FXML
 	void resumeGame(MouseEvent event ) {
+
 		Node answer = (Node) event.getSource();
 		Label answerLabel=(Label)answer;
 		if(gameController.checkUserAnswer(questionObject, (Integer.parseInt(answerLabel.getText().substring(0, 1)))-1))
 		{
-			
+
 			clapSound.play();
 			answerFeedBack.setStyle("-fx-text-fill: green;");
 			answerFeedBack.setText("CORRECT ANSWER!");
@@ -111,18 +118,64 @@ public class QuestionView implements Initializable{
 		}
 		else
 		{
+			rec.setVisible(true);
+			rec.setX(50);
+			rec.setY(50);
+			rec.setOpacity(0.4);
+
+			rec.setArcWidth(20);
+			rec.setArcHeight(20);
+			rec.setFill(Paint.valueOf("green"));
 			answerFeedBack.setStyle("-fx-text-fill: red;");
 			answerFeedBack.setText("WRONG ANSWER!");
 			answerFeedBack.setLayoutX(answerLabel.getLayoutX()+100);
 			answerFeedBack.setLayoutY(answerLabel.getLayoutY()+20);
+			int corrAns=questionObject.getCorrect_ans();
+			switch(corrAns)
+			{
+			case 0:
+
+				rec.setX(ans1.getLayoutX());
+				rec.setY(ans1.getLayoutY());
+				rec.setWidth(ans1.getWidth());
+				rec.setHeight(ans1.getHeight());
+				break;
+			case 1:
+
+				rec.setX(ans2.getLayoutX());
+				rec.setY(ans2.getLayoutY());
+				rec.setWidth(ans2.getWidth());
+				rec.setHeight(ans2.getHeight());
+				break;
+			case 2:
+
+				rec.setX(ans3.getLayoutX());
+				rec.setY(ans3.getLayoutY());
+				rec.setWidth(ans3.getWidth());
+				rec.setHeight(ans3.getHeight());
+				break;
+			case 3: 
+
+				rec.setX(ans4.getLayoutX());
+				rec.setY(ans4.getLayoutY());
+				rec.setWidth(ans4.getWidth());
+				rec.setHeight(ans4.getHeight());
+				break;
+			default:
+				break;
+			}
+			new Pulse(rec).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
+			System.out.println(rec);
+
 
 		}
 		new ZoomOut(answer).setCycleCount(1).setSpeed(0.7).play();
-		
+
 		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				answerFeedBack.setVisible(true);
+				rec.setVisible(true);
 				Robot robot = null;
 				try {
 					robot = new Robot();
@@ -136,15 +189,10 @@ public class QuestionView implements Initializable{
 		}) , new KeyFrame(Duration.seconds(2)));
 		timeline.play();
 
+	
+
+
+	
+
 	}
-
-
-	
-
-
-
-
-	
-
-
 }

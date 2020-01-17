@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -69,7 +70,36 @@ public class GamePaused implements Initializable {
 		 new Pulse(restartLabel).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 	}
     
-   
+    @FXML
+    void restart(MouseEvent event) {
+    	
+    	
+    	new ZoomOut(restartLabel).setCycleCount(1).setSpeed(0.2).play();
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				try {
+					StackPane popupInGameView=(StackPane) pauseAnchor.getParent().getParent();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+					StackPane pane  = loader.load();
+					pane.setPrefSize(popupInGameView.getWidth(), popupInGameView.getHeight());
+					popupInGameView.getChildren().removeAll(popupInGameView.getChildren());
+					popupInGameView.getChildren().add(pane);
+					
+					GameView view = (GameView)loader.getController();	
+					view.setStage((Stage)pane.getScene().getWindow());
+					view.resetGame();
+					view.resume();	
+				
+				}
+
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}) , new KeyFrame(Duration.seconds(1.5)));
+		timeline.play();   	
+    }
 
     @FXML
     void instructionBtn(MouseEvent event) {
@@ -79,6 +109,7 @@ public class GamePaused implements Initializable {
 			public void handle(ActionEvent actionEvent) {
 			
 			try {
+				Instructions.cameFromMainMenu=false;
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Instructions.fxml"));
 				AnchorPane pane  = loader.load();
 				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
@@ -94,10 +125,7 @@ public class GamePaused implements Initializable {
 	timeline.play();
     }
 
-    @FXML
-    void newGameBtn(ActionEvent event) {
-    	
-    }
+    
 
     @FXML
     void resumeGame(MouseEvent event ) {

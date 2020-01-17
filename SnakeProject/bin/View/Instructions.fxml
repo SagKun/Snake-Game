@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="Snake_Image" fx:id="pauseAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="552.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
+<AnchorPane id="Snake_Image" fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="552.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
    <children>
-      <AnchorPane layoutY="-6.0" prefHeight="630.0" prefWidth="552.0" styleClass="AnchorPane">
+      <AnchorPane fx:id="subAnchor" layoutY="-6.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="552.0" styleClass="AnchorPane">
          <children>
             <TableView fx:id="foodTable" layoutX="60.0" layoutY="90.0" prefHeight="214.0" prefWidth="405.0" styleClass="tableInstructions">
               <columns>
@@ -29,7 +29,8 @@
             <Label fx:id="instructions" layoutX="106.0" layoutY="14.0" text="INSTRUCTIONS" textFill="WHITE">
                <font>
                   <Font size="50.0" />
-               </font></Label>
+               </font>
+            </Label>
             <Label fx:id="returnBtn" layoutX="202.0" layoutY="544.0" onMouseClicked="#returnToMenu" text="BACK" textFill="WHITE">
                <font>
                   <Font size="50.0" />

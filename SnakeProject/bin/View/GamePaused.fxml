@@ -14,7 +14,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="restartLabel" layoutX="114.0" layoutY="215.0" text="RESTART GAME" textFill="#fffdfd">
+            <Label fx:id="restartLabel" layoutX="114.0" layoutY="215.0" onMouseClicked="#restart" text="RESTART GAME" textFill="#fffdfd">
                <font>
                   <Font size="30.0" />
                </font>

@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class Instructions implements Initializable  {
@@ -34,12 +35,18 @@ public class Instructions implements Initializable  {
 
 	@FXML
 	private Label instructions;
+	
+
+    @FXML
+    private Text text;
 
 	@FXML
 	private Label returnBtn;
 	@FXML
-	private AnchorPane pauseAnchor;
-
+	private AnchorPane anchor;
+	@FXML
+	private AnchorPane subAnchor;
+	
 	@FXML
 	private TableView<FoodTableForInstructions> foodTable;
 
@@ -70,7 +77,7 @@ public class Instructions implements Initializable  {
 	@FXML
 	private TableColumn<QuestionsTableInstructions, Integer> penalty;
 
-	
+	static boolean cameFromMainMenu= false;
 
 	private ObservableList<FoodTableForInstructions> foodList = FXCollections.observableArrayList();
 
@@ -78,6 +85,12 @@ public class Instructions implements Initializable  {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		if(cameFromMainMenu)
+		{
+
+		subAnchor.setPrefWidth(anchor.getPrefWidth());
+		subAnchor.setPrefHeight(anchor.getPrefHeight());
+		}
 		returnBtn.setFont(Fonts.minecraft30);
 		instructions.setFont(Fonts.minecraft50);
 		 new Pulse(returnBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
@@ -110,12 +123,16 @@ public class Instructions implements Initializable  {
     	Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.7), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-			
+			String path="/View/GamePaused.fxml";
+				if(cameFromMainMenu)
+				{
+					path="/View/MainView.fxml";
+				}
 			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GamePaused.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 				AnchorPane pane  = loader.load();
-				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
-				pauseAnchor.getChildren().add(pane);
+				anchor.getChildren().removeAll(anchor.getChildren());
+				anchor.getChildren().add(pane);
 			}
 			
 			catch (IOException e) {

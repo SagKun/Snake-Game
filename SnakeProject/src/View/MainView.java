@@ -36,6 +36,7 @@ public class MainView implements Initializable{
 	boolean highscoresPressed=false;
 	boolean wizardPressed=false;
 	boolean exitPressed=false;
+	boolean instructionsPressed=false;
 	 @FXML
 	    private AnchorPane mainView;
 
@@ -47,6 +48,9 @@ public class MainView implements Initializable{
 
 	    @FXML
 	    private Label questions;
+	    
+	    @FXML
+	    private Label instructions;
 	    
 	    @FXML
 	    private Label exit;
@@ -61,11 +65,12 @@ public class MainView implements Initializable{
 			highscores.setFont(Fonts.minecraft50);
 			questions.setFont(Fonts.minecraft50);
 			exit.setFont(Fonts.minecraft50);
+			instructions.setFont(Fonts.minecraft50);
 			new Pulse(play).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 			new Pulse(highscores).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 			new Pulse(questions).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 			new Pulse(exit).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
-
+			new Pulse(instructions).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 
 		}
 		
@@ -79,6 +84,38 @@ public class MainView implements Initializable{
 					public void handle(ActionEvent actionEvent) {
 						Main.f.delete();
 						System.exit(0);
+					}
+				}) , new KeyFrame(Duration.seconds(1.5)));
+				timeline.play();
+			}
+		}
+		
+	
+		
+		public void instructions(MouseEvent event) {
+			if(!instructionsPressed)	
+			{
+				instructionsPressed=true;
+	    	new ZoomOut(instructions).setCycleCount(1).setSpeed(0.2).play();
+				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/InstructionsFromMenu.fxml"));
+						Instructions.cameFromMainMenu=true;
+						
+						try {
+							AnchorPane pane= loader.load();
+							pane.setMaxSize(mainView.getWidth(), mainView.getHeight());
+							pane.setMinSize(mainView.getWidth(), mainView.getHeight());
+
+							mainView.getChildren().removeAll(mainView.getChildren());
+							mainView.getChildren().add(pane);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
 					}
 				}) , new KeyFrame(Duration.seconds(1.5)));
 				timeline.play();
@@ -181,6 +218,7 @@ public class MainView implements Initializable{
 		public void setStage(Stage stage) {
 			this.stage = stage;
 		}
+	
 	
 		
 		
