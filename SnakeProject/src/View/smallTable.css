@@ -67,7 +67,7 @@
 .table-view .column-header .label{
    -fx-text-fill: white;
    -fx-font-weight: bold; 
-    -fx-font-size: 30px 'david';
+    -fx-font-size: 18px 'david';
    -fx-alignment: CENTER;
    
 }
@@ -77,18 +77,18 @@
   -fx-background-color: transparent;
   -fx-border-color: transparent;
   -fx-text-fill: lightgray;
-  -fx-alignment: CENTER_LEFT;
+  -fx-alignment: CENTER;
    
 }
 .table-row-cell{
    -fx-background-color: #005797; 
-   -fx-font-size: 20px 'david';
+   -fx-font-size: 15px 'david';
    
        
 }
 .table-row-cell:selected {
    -fx-background-color: #005797; 
-   -fx-font-size: 25px 'david';
+   -fx-font-size: 17px 'david';
    -fx-font-weight: bold; 
 }
 

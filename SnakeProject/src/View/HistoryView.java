@@ -40,6 +40,8 @@ import javafx.util.Duration;
 public class HistoryView implements Initializable {
 
 
+    @FXML
+    private Label top;
 	@FXML
 	private StackPane stackPane;
 	@FXML
@@ -72,6 +74,8 @@ public class HistoryView implements Initializable {
 	//a method that initialize the table
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		top.setFont(Fonts.minecraft50);
+		new Pulse(top).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 		if(SysData.highScores != null) {
 			nickname.setCellValueFactory(new PropertyValueFactory<PlayersForTable, String>("nickForTable"));
 			score.setCellValueFactory(new PropertyValueFactory<PlayersForTable, Integer>("scoreForTable"));

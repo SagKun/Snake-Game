@@ -77,7 +77,7 @@
   -fx-background-color: transparent;
   -fx-border-color: transparent;
   -fx-text-fill: lightgray;
-  -fx-alignment: CENTER_LEFT;
+  -fx-alignment: CENTER;
    
 }
 .table-row-cell{

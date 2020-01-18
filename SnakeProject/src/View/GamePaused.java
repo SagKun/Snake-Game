@@ -112,6 +112,7 @@ public class GamePaused implements Initializable {
 				Instructions.cameFromMainMenu=false;
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Instructions.fxml"));
 				AnchorPane pane  = loader.load();
+				pane.setPrefSize(pauseAnchor.getWidth(), pauseAnchor.getHeight());
 				pauseAnchor.getChildren().removeAll(pauseAnchor.getChildren());
 				pauseAnchor.getChildren().add(pane);
 			}

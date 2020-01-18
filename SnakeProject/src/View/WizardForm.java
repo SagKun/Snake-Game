@@ -9,9 +9,16 @@ import Controller.WizardController;
 import Model.FoodFactory;
 import Model.Level;
 import Model.Question;
+import Utils.Fonts;
+import animatefx.animation.Pulse;
+import animatefx.animation.Shake;
+import animatefx.animation.ZoomOut;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,9 +26,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class WizardForm implements Initializable{
 
@@ -62,10 +72,12 @@ public class WizardForm implements Initializable{
 	private TextArea fourthField;
 
 	@FXML
-	private Button returnBtn;
+	private Label returnBtn;
 
 	@FXML
-	private Button submitBtn;
+	private Label submitBtn;
+	@FXML
+	private Label header;
 
 	public static boolean isEdit;
 
@@ -76,22 +88,33 @@ public class WizardForm implements Initializable{
 	private WizardController controller = new WizardController();
 
 	@FXML
-	void returnToWizard(ActionEvent event) {
-		AnchorPane pane;
-		try {
-			pane = FXMLLoader.load(getClass().getResource("WizardView.fxml"));
-			pane.setPrefSize(anchorPane.getWidth(), anchorPane.getHeight());
-			anchorPane.getChildren().removeAll(anchorPane.getChildren());
-			anchorPane.getChildren().add(pane);
-		}
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	void returnToWizard(MouseEvent event) {
+		
+		new ZoomOut(returnBtn).setCycleCount(1).setSpeed(0.2).play();
+		Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				AnchorPane pane;
+				try {
+					pane = FXMLLoader.load(getClass().getResource("WizardView.fxml"));
+					pane.setPrefSize(anchorPane.getWidth(), anchorPane.getHeight());
+					anchorPane.getChildren().removeAll(anchorPane.getChildren());
+					anchorPane.getChildren().add(pane);
+				}
+				catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		}) , new KeyFrame(Duration.seconds(1.5)));
+		timeline.play();
+		
 	}
 
 	@FXML
-	void submitForm(ActionEvent event) {
+	void submitForm(MouseEvent event) {
+		new Shake(submitBtn).setCycleCount(1).setSpeed(1).play();
 		String question = questionField.getText();
 		String author = authorField.getText();
 		Level level = levelCombo.getSelectionModel().getSelectedItem();
@@ -183,7 +206,12 @@ public class WizardForm implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		header.setFont(Fonts.minecraft50);
+		returnBtn.setFont(Fonts.minecraft30);
+		submitBtn.setFont(Fonts.minecraft30);
+		new Pulse(returnBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		new Pulse(submitBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		
 		ObservableList<Level> levels = FXCollections.observableArrayList();
 		for(Level l : Level.values()) {
 			levels.add(l);

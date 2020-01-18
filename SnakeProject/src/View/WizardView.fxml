@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" styleClass="AnchorPane" stylesheets="@.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" styleClass="AnchorPane" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WizardView">
    <children>
-      <Label id="Snake_Label" layoutX="364.0" layoutY="71.0" text="Questions Wizard" />
-      <TableView fx:id="questionsTable" layoutX="35.0" layoutY="147.0" prefHeight="343.0" prefWidth="903.0">
+      <Label fx:id="header" layoutX="248.0" layoutY="25.0" text="QUESTIONS WIZARD" textFill="WHITE">
+         <font>
+            <Font size="50.0" />
+         </font></Label>
+      <TableView fx:id="questionsTable" layoutX="35.0" layoutY="114.0" prefHeight="425.0" prefWidth="903.0" stylesheets="@.css">
         <columns>
-          <TableColumn fx:id="questionColumn" prefWidth="902.0000076293945" text="Question" />
+          <TableColumn fx:id="questionColumn" prefWidth="902.0000076293945" text="Questions" />
         </columns>
       </TableView>
-      <Label fx:id="resume" layoutX="447.0" layoutY="638.0" onMouseClicked="#resumeToMenu" text="BACK" textFill="WHITE" />
-      <JFXButton fx:id="removeBtn" layoutX="616.0" layoutY="558.0" onAction="#removeQuestion" styleClass="small-jfx-button" text="Remove Question" />
-      <JFXButton fx:id="addBtn" layoutX="323.0" layoutY="558.0" onAction="#addQuestion" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Add Question" />
-      <JFXButton fx:id="editBtn" layoutX="477.0" layoutY="558.0" onAction="#editQuestion" prefHeight="30.0" prefWidth="115.0" styleClass="small-jfx-button" text="Edit Question" />
+      <Label fx:id="resume" layoutX="432.0" layoutY="644.0" onMouseClicked="#resumeToMenu" prefHeight="73.0" prefWidth="206.0" text="BACK" textFill="WHITE">
+         <font>
+            <Font size="50.0" />
+         </font></Label>
+      <Label fx:id="addBtn" layoutX="306.0" layoutY="567.0" onMouseClicked="#addQuestion" text="ADD" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="editBtn" layoutX="447.0" layoutY="567.0" onMouseClicked="#editQuestion" text="EDIT" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="removeBtn" layoutX="563.0" layoutY="567.0" onMouseClicked="#removeQuestion" text="REMOVE" textFill="WHITE">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

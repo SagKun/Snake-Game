@@ -17,6 +17,7 @@ import Model.Question;
 import Model.SysData;
 import Utils.Fonts;
 import animatefx.animation.Pulse;
+import animatefx.animation.Shake;
 import animatefx.animation.ZoomOut;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -62,20 +63,23 @@ public class WizardView implements Initializable{
 	private Label resume;
 
 	@FXML
-	private JFXButton removeBtn;
+	private Label removeBtn;
 
 	@FXML
-	private JFXButton editBtn;
+	private Label editBtn;
 
 	@FXML
-	private JFXButton addBtn;
+	private Label addBtn;
+	@FXML
+	private Label header;
 
 	private ObservableList<Question> questionsList = FXCollections.observableArrayList();
 
 	private WizardController controller = new WizardController();
 
 	@FXML
-	void addQuestion(ActionEvent event) {
+	void addQuestion(MouseEvent event) {
+		new Shake(addBtn).setCycleCount(1).setSpeed(1).play();
 		AnchorPane pane;
 		WizardForm.isEdit = false;
 		try {
@@ -91,7 +95,8 @@ public class WizardView implements Initializable{
 	}
 
 	@FXML
-	void editQuestion(ActionEvent event) {
+	void editQuestion(MouseEvent event) {
+		new Shake(editBtn).setCycleCount(1).setSpeed(1).play();
 		AnchorPane pane;
 		WizardForm.isEdit = true;
 		if(questionsTable.getSelectionModel().isEmpty()) {
@@ -115,7 +120,8 @@ public class WizardView implements Initializable{
 	}
 
 	@FXML
-	void removeQuestion(ActionEvent event) {
+	void removeQuestion(MouseEvent event) {
+		new Shake(removeBtn).setCycleCount(1).setSpeed(1).play();
 		if(questionsTable.getSelectionModel().isEmpty()) {
 			Alert al = new Alert(Alert.AlertType.ERROR);
 			al.setHeaderText("You Need To Pick An Answer!");
@@ -166,9 +172,16 @@ public class WizardView implements Initializable{
 		// setting the cells to the data
 		questionColumn.setCellValueFactory(new PropertyValueFactory<Question, String>("question"));
 
-
-		new Pulse(resume).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		
+		header.setFont(Fonts.minecraft50);
+		new Pulse(resume).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
 		resume.setFont(Fonts.minecraft50);
+		new Pulse(addBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		addBtn.setFont(Fonts.minecraft30);
+		new Pulse(editBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		editBtn.setFont(Fonts.minecraft30);
+		new Pulse(removeBtn).setCycleCount(Timeline.INDEFINITE).setSpeed(0.5).play();
+		removeBtn.setFont(Fonts.minecraft30);
 		questionsList.addAll(SysData.questionsDB);
 		questionsTable.setItems(questionsList);
 	}

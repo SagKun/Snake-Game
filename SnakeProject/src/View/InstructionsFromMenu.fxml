@@ -7,24 +7,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="Snake_Image" fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" stylesheets="@.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.0" prefWidth="960.0" stylesheets="@smallTable.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Instructions">
    <children>
       <AnchorPane fx:id="subAnchor" layoutY="-6.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="724.0" prefWidth="960.0" styleClass="AnchorPane">
          <children>
-            <TableView fx:id="foodTable" layoutX="520.0" layoutY="362.0" prefHeight="214.0" prefWidth="405.0" styleClass="tableInstructions">
+            <TableView fx:id="foodTable" layoutX="440.0" layoutY="362.0" prefHeight="214.0" prefWidth="485.0" styleClass="tableInstructions">
               <columns>
-                <TableColumn fx:id="food" prefWidth="107.0" text="Food" />
-                <TableColumn fx:id="foodPoints" prefWidth="115.0" text="Points" />
-                  <TableColumn fx:id="lengthAdd" prefWidth="99.0" text="Length Add" />
-                  <TableColumn fx:id="lifeAdd" prefWidth="83.0" text="Life Add" />
+                <TableColumn fx:id="food" prefWidth="96.0" text="Food" />
+                <TableColumn fx:id="foodPoints" prefWidth="126.0" text="Points" />
+                  <TableColumn fx:id="lengthAdd" prefWidth="137.0" text="Length Added" />
+                  <TableColumn fx:id="lifeAdd" prefWidth="125.0" text="Life Points" />
               </columns>
             </TableView>
-            <TableView fx:id="questionTable" layoutX="520.0" layoutY="103.0" prefHeight="203.0" prefWidth="405.0" styleClass="tableInstructions">
+            <TableView fx:id="questionTable" layoutX="440.0" layoutY="95.0" prefHeight="203.0" prefWidth="507.0" styleClass="tableInstructions">
               <columns>
-                <TableColumn fx:id="question" prefWidth="76.0" text="Question" />
-                <TableColumn fx:id="level" prefWidth="79.0" text="Level" />
-                  <TableColumn fx:id="questionPoints" prefWidth="131.0" text="Right Answer Points" />
-                  <TableColumn fx:id="penalty" prefWidth="118.0" text="Penalty For Mistake" />
+                <TableColumn fx:id="question" prefWidth="113.0" text="Question" />
+                <TableColumn fx:id="level" prefWidth="118.0" text="Level" />
+                  <TableColumn fx:id="questionPoints" prefWidth="89.0" text="Points" />
+                  <TableColumn fx:id="penalty" prefWidth="186.0" text="Penalty" />
               </columns>
             </TableView>
             <Label fx:id="instructions" layoutX="295.0" layoutY="14.0" text="INSTRUCTIONS" textFill="WHITE">
