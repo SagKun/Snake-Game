@@ -828,6 +828,7 @@ public class GameView implements Initializable {
 		speedConstraint = 8;
 		mouseSpeedConstraint = 12;
 		this.gameController.fullReset();
+		SysData.InitializeGame();
 		initialize=true;
 	}
 
@@ -961,7 +962,7 @@ public void loadGameOver()
 		popup.getChildren().removeAll(popup.getChildren());
 		popup.getChildren().add(popupPane);
 		popup.setVisible(true);
-		resetGame();
+		
 	} catch (IOException e1) {
 		e1.printStackTrace();
 	}
