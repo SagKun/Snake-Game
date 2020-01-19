@@ -126,6 +126,7 @@ public class MainView implements Initializable{
 	    	
 			if(!playPressed)	
 			{
+				
 			playPressed=true;
 	    	new ZoomOut(play).setCycleCount(1).setSpeed(0.2).play();
 				Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), new EventHandler<ActionEvent>() {

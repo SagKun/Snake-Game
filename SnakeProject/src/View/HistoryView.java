@@ -123,6 +123,12 @@ public class HistoryView implements Initializable {
 						AnchorPane pane  = loader.load();
 						Scene scene = new Scene(pane);
 						stage.setScene(scene);
+						
+						FXMLLoader viewLoader = new FXMLLoader(getClass().getResource("GameView.fxml"));
+						viewLoader.load();
+						GameView view = (GameView)viewLoader.getController();
+						
+						view.resetGame();
 					}
 
 					catch (IOException e) {

@@ -481,17 +481,17 @@ public class GameController {
 
 	public void fullReset() {
 		this.board.getSnake().setStart();
+		returnQuestionsUnanswered();
 		this.board.getObjectList().clear();
 		this.board.setScore(0);
 		this.board.setLife(3);
 		setNormalState();
-		returnQuestionsUnanswered();
 	}
 
 	public void semiReset() {
 		this.board.getSnake().setStart();
+		returnQuestionsUnanswered();
 		this.board.getObjectList().clear();
 		setNormalState();
-		returnQuestionsUnanswered();
 	}
 }
