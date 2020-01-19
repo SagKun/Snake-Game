@@ -21,12 +21,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class GamePaused implements Initializable {
@@ -79,9 +76,9 @@ public class GamePaused implements Initializable {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				try {
-					StackPane popupInGameView=(StackPane) pauseAnchor.getParent().getParent();
+					AnchorPane popupInGameView= (AnchorPane)pauseAnchor.getParent().getParent();
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("GameView.fxml"));
-					StackPane pane  = loader.load();
+					AnchorPane pane  = loader.load();
 					pane.setPrefSize(popupInGameView.getWidth(), popupInGameView.getHeight());
 					popupInGameView.getChildren().removeAll(popupInGameView.getChildren());
 					popupInGameView.getChildren().add(pane);

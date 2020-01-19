@@ -287,7 +287,6 @@ public class GameView implements Initializable {
 				}
 				// when game started or restarted
 				if (start && (state == GameState.Finished || state == GameState.Started)) {
-					System.out.println("game started");
 					up = down = left = right = false;
 					restart();
 					start = false;
@@ -962,6 +961,7 @@ public void loadGameOver()
 		popup.getChildren().removeAll(popup.getChildren());
 		popup.getChildren().add(popupPane);
 		popup.setVisible(true);
+		resetGame();
 	} catch (IOException e1) {
 		e1.printStackTrace();
 	}

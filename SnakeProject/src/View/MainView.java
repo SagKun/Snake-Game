@@ -140,7 +140,7 @@ public class MainView implements Initializable{
 							
 							GameView view = (GameView)loader.getController();		
 							view.setStage((Stage)pane.getScene().getWindow());
-							view.resume();			
+							view.resume();	
 						}
 						
 						catch (IOException e) {
