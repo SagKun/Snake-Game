@@ -58,6 +58,7 @@ public class QuestionView implements Initializable{
 	Question questionObject;
 	Rectangle rec;
 	private MediaPlayer clapSound;
+	private MediaPlayer buzzSound;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -77,6 +78,7 @@ public class QuestionView implements Initializable{
 		ans4.setWrapText(true);
 		anchorPane.getChildren().add(answerFeedBack);
 		clapSound = new Sound().getClapSound();
+		buzzSound = new Sound().getBuzzSound();
 		rec=new Rectangle();
 		anchorPane.getChildren().add(rec);
 
@@ -118,6 +120,7 @@ public class QuestionView implements Initializable{
 		}
 		else
 		{
+			buzzSound.play();
 			rec.setVisible(true);
 			rec.setX(50);
 			rec.setY(50);

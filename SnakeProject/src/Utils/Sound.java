@@ -19,11 +19,13 @@ public class Sound {
 	private MediaPlayer clapSound;
 	private MediaPlayer gameOverVoice;
 	private MediaPlayer crashSound;
+	private MediaPlayer buzzSound;
 	private Media gameOver;
 	private Media sound;
 	private Media eat;
 	private Media clap;
 	private Media crash;
+	private Media buzzer;
 	public static Double startTime = 0.0;
 	public static Double endTime = 153.0;
 
@@ -39,6 +41,7 @@ public class Sound {
 			eat = new Media(getClass().getResource("/Utils/Sound/eating.mp3").toURI().toString());
 			clap = new Media(getClass().getResource("/Utils/Sound/clap.mp3").toURI().toString());
 			crash = new Media(getClass().getResource("/Utils/Sound/crash.mp3").toURI().toString());
+			buzzer = new Media(getClass().getResource("/Utils/Sound/buzzer.mp3").toURI().toString());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,6 +52,7 @@ public class Sound {
 		eatSound = new MediaPlayer(eat);
 		clapSound = new MediaPlayer(clap);
 		crashSound = new MediaPlayer(crash);
+		buzzSound = new MediaPlayer(buzzer);
 	}
 	
 	/**
@@ -74,6 +78,11 @@ public class Sound {
 	public MediaPlayer getCrashSound() {
 		return crashSound;
 	}
+
+	public MediaPlayer getBuzzSound() {
+		return buzzSound;
+	}
+	
 	
 	
 }
