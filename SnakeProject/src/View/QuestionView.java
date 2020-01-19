@@ -168,7 +168,7 @@ public class QuestionView implements Initializable{
 				break;
 			}
 			new Pulse(rec).setCycleCount(Timeline.INDEFINITE).setSpeed(0.3).play();
-			System.out.println(rec);
+			
 
 
 		}

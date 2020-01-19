@@ -166,7 +166,7 @@ public class Nickname implements Initializable{
 		yourScoreIS.setFont(Fonts.minecraft30);
 		returnMenu.setFont(Fonts.minecraft30);
 		gameOver.setFont(Fonts.minecraft50);
-		new Pulse(score).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
+		
 		new Pulse(newGame).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		new Pulse(submit).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();
 		new Pulse(returnMenu).setCycleCount(Timeline.INDEFINITE).setSpeed(1).play();

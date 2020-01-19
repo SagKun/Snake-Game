@@ -37,7 +37,7 @@ public class Main extends Application{
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);
-		stage.initStyle(StageStyle.DECORATED);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.show();
 	}
 

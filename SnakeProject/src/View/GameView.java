@@ -514,7 +514,7 @@ public class GameView implements Initializable {
 		this.scoreField.setText(String.valueOf(board.getScore()));
 
 		//Set the snake in super state if the score is a multiply of 100
-		if(this.board.getScore() >= 100 * stateCounter) {
+		if(this.board.getScore() >= 50 * stateCounter) {
 			superMode.setFont(Fonts.minecraft50);
 			
 			superMode.setVisible(true);

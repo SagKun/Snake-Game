@@ -19,7 +19,7 @@
                <font>
                   <Font size="29.0" />
                </font></Label>
-            <Text fx:id="score" fill="WHITE" layoutX="296.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.999999769032">
+            <Text fx:id="score" fill="WHITE" layoutX="296.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.999999769032">
                <font>
                   <Font size="30.0" />
                </font></Text>

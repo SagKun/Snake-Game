@@ -137,8 +137,8 @@ public class WizardView implements Initializable{
 			Optional<ButtonType> result = al.showAndWait();
 			if(result.get() == ButtonType.OK) {
 				int index = questionsTable.getSelectionModel().getSelectedIndex();
-				questionsList.remove(index);
 				Question q = questionsList.get(index);
+				questionsList.remove(index);
 				controller.deleteQuestion(q);
 			}
 		}
