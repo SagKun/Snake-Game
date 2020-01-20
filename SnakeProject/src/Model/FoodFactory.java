@@ -49,6 +49,12 @@ public class FoodFactory {
 		return null;
 	}
 	
+	public void resetQuestions() {
+		easyQuestions = SysData.questionsByLevelDB.get(Level.EASY);
+		moderateQuestions = SysData.questionsByLevelDB.get(Level.MODERATE);
+		hardQuestions = SysData.questionsByLevelDB.get(Level.HARD);
+	}
+	
 	
 	public void insertQuestionBack(Question q) {
 		if(q != null) {
